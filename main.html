@@ -52,29 +52,38 @@
         <div class="card">
             <h2>Strength</h2>
             <p>Build muscle with resistance training.</p>
-            <button onclick="showResult('Strength Training Completed!')">Start</button>
+            <button onclick="startWorkout('Strength')">Start</button>
         </div>
         <div class="card">
             <h2>HIIT</h2>
             <p>High-Intensity Interval Training for fat loss.</p>
-            <button onclick="showResult('HIIT Session Completed!')">Start</button>
+            <button onclick="startWorkout('HIIT')">Start</button>
         </div>
         <div class="card">
             <h2>Light Cardio</h2>
             <p>Low-impact exercises for endurance.</p>
-            <button onclick="showResult('Light Cardio Completed!')">Start</button>
+            <button onclick="startWorkout('Light Cardio')">Start</button>
         </div>
         <div class="card">
             <h2>Martial Arts</h2>
             <p>Improve agility and self-defense skills.</p>
-            <button onclick="showResult('Martial Arts Training Completed!')">Start</button>
+            <button onclick="startWorkout('Martial Arts')">Start</button>
         </div>
     </div>
     <div id="result"></div>
     <script>
-        function showResult(message) {
-            document.getElementById('result').innerText = message;
+        const workouts = {
+            "Strength": ["Push-ups - 3 sets of 15 reps", "Squats - 3 sets of 20 reps", "Lunges - 3 sets of 10 reps each leg", "Plank - 3 sets of 30 seconds"],
+            "HIIT": ["Jumping Jacks - 30 seconds", "Burpees - 15 reps", "Mountain Climbers - 30 seconds", "High Knees - 30 seconds"],
+            "Light Cardio": ["Brisk Walking - 5 minutes", "Side Steps - 2 minutes", "Arm Circles - 1 minute", "Toe Touches - 1 minute"],
+            "Martial Arts": ["Jab-Cross Combo - 3 sets of 20 reps", "Front Kicks - 3 sets of 15 reps", "Squat to Punch - 3 sets of 15 reps", "Shadow Boxing - 1 minute"]
+        };
+
+        function startWorkout(type) {
+            let routine = workouts[type].join("<br>");
+            document.getElementById('result').innerHTML = `<h3>${type} Workout:</h3>${routine}`;
         }
     </script>
 </body>
 </html>
+
