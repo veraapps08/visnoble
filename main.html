@@ -3,87 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness App</title>
+    <title>Bubbly Fitness App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            padding: 50px;
         }
         .container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
             max-width: 600px;
-        }
-        .card {
-            background: white;
+            margin: auto;
+            background-color: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        button {
-            margin-top: 10px;
-            padding: 10px;
+        h1 {
+            color: #ff6347;
+        }
+        .button {
+            background-color: #ff6347;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 10px;
             border: none;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
             border-radius: 5px;
+            cursor: pointer;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
+        .button:hover {
+            background-color: #e5533d;
         }
     </style>
 </head>
 <body>
-    <h1>Fitness App</h1>
     <div class="container">
-        <div class="card">
-            <h2>Strength</h2>
-            <p>Build muscle with resistance training.</p>
-            <button onclick="startWorkout('Strength')">Start</button>
-        </div>
-        <div class="card">
-            <h2>HIIT</h2>
-            <p>High-Intensity Interval Training for fat loss.</p>
-            <button onclick="startWorkout('HIIT')">Start</button>
-        </div>
-        <div class="card">
-            <h2>Light Cardio</h2>
-            <p>Low-impact exercises for endurance.</p>
-            <button onclick="startWorkout('Light Cardio')">Start</button>
-        </div>
-        <div class="card">
-            <h2>Martial Arts</h2>
-            <p>Improve agility and self-defense skills.</p>
-            <button onclick="startWorkout('Martial Arts')">Start</button>
-        </div>
+        <h1>Bubbly Fitness App</h1>
+        <p>Welcome to your fun and bubbly fitness journey!</p>
+        <button class="button" onclick="startWorkout()">Start Workout</button>
     </div>
-    <div id="result"></div>
     <script>
-        const workouts = {
-            "Strength": ["Push-ups - 3 sets of 15 reps", "Squats - 3 sets of 20 reps", "Lunges - 3 sets of 10 reps each leg", "Plank - 3 sets of 30 seconds"],
-            "HIIT": ["Jumping Jacks - 30 seconds", "Burpees - 15 reps", "Mountain Climbers - 30 seconds", "High Knees - 30 seconds"],
-            "Light Cardio": ["Brisk Walking - 5 minutes", "Side Steps - 2 minutes", "Arm Circles - 1 minute", "Toe Touches - 1 minute"],
-            "Martial Arts": ["Jab-Cross Combo - 3 sets of 20 reps", "Front Kicks - 3 sets of 15 reps", "Squat to Punch - 3 sets of 15 reps", "Shadow Boxing - 1 minute"]
-        };
-
-        function startWorkout(type) {
-            let routine = workouts[type].join("<br>");
-            document.getElementById('result').innerHTML = `<h3>${type} Workout:</h3>${routine}`;
+        function startWorkout() {
+            alert('Time to get moving!');
         }
     </script>
 </body>
 </html>
-
