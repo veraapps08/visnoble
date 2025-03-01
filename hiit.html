@@ -1,29 +1,88 @@
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIIT Exercises</title>
-    <style>
-        /* Make the entire card clickable */
-.card {
-    position: relative;
-    display: block;
-    text-decoration: none;
-    color: inherit;
+        <style>
+
+                /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3f51b5;
+    color: white;
+    padding: 15px;
 }
 
 .back-btn {
     text-decoration: none;
     color: white;
     font-size: 18px;
-    margin-right: 20px;
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px 10px;
+    padding: 5px 15px;
     border-radius: 5px;
 }
 
-    </style>
+/* Exercise List */
+.exercise-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.exercise-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin: 15px;
+    width: 300px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.exercise-card:hover {
+    transform: scale(1.05);
+}
+
+.exercise-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.exercise-card h2 {
+    color: #333;
+    font-size: 22px;
+    margin: 10px 0;
+}
+
+.exercise-card p {
+    font-size: 16px;
+    color: #555;
+    padding: 0 15px 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .exercise-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+        </style>
 </head>
 <body>
 
@@ -32,25 +91,45 @@
         <h1>HIIT Exercises</h1>
     </div>
 
-    <div class="exercise-list">
-        <div class="exercise-item">
+    <div class="exercise-container">
+        <div class="exercise-card">
             <img src="jump-squats.jpg" alt="Jump Squats">
-            <div class="exercise-text">Jump Squats</div>
+            <h2>Jump Squats</h2>
+            <p>Explosive squat jumps to build lower body strength and endurance.</p>
         </div>
-        <div class="exercise-item">
+        <div class="exercise-card">
             <img src="burpees.jpg" alt="Burpees">
-            <div class="exercise-text">Burpees</div>
+            <h2>Burpees</h2>
+            <p>A full-body workout move that combines a squat, jump, and push-up.</p>
         </div>
-        <div class="exercise-item">
+        <div class="exercise-card">
             <img src="mountain-climbers.jpg" alt="Mountain Climbers">
-            <div class="exercise-text">Mountain Climbers</div>
+            <h2>Mountain Climbers</h2>
+            <p>Great for core stability and cardiovascular endurance.</p>
         </div>
-        <div class="exercise-item">
+        <div class="exercise-card">
             <img src="high-knees.jpg" alt="High Knees">
-            <div class="exercise-text">High Knees</div>
+            <h2>High Knees</h2>
+            <p>A high-energy move to boost heart rate and burn calories quickly.</p>
         </div>
     </div>
 
+    <script>
+            document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".exercise-card");
+
+    cards.forEach(card => {
+        card.addEventListener("mouseenter", () => {
+            card.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.3)";
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+        });
+    });
+});
+
+    </script>
 </body>
 </html>
-
+       
