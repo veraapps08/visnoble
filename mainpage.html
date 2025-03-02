@@ -9,23 +9,36 @@
             margin: 0;
             padding: 0;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0; /* Light gray background */
         }
         .container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            justify-content: space-between;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            width: 90%;
+            height: 90%;
+            gap: 10px; /* Adjust gap between sections */
         }
         .section {
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ccc;
+            background-color: #ccc; /* Adjust background color */
+            border-radius: 15px; /* Rounded corners */
+            overflow: hidden; /* Ensures content stays within rounded corners */
         }
         .section img {
             max-width: 100%;
             max-height: 100%;
+            border-radius: 15px; /* Matches container rounded corners */
+        }
+        .section p {
+            position: absolute;
+            color: #fff; /* Adjust text color */
+            font-size: 1.5rem; /* Adjust text size */
+            margin: 0;
         }
     </style>
 </head>
@@ -50,6 +63,3 @@
     </div>
 </body>
 </html>
-
-  
-     
