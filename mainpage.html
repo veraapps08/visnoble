@@ -28,38 +28,41 @@
             background-color: #ccc; /* Adjust background color */
             border-radius: 15px; /* Rounded corners */
             overflow: hidden; /* Ensures content stays within rounded corners */
+            position: relative;
         }
         .section img {
             max-width: 100%;
             max-height: 100%;
             border-radius: 15px; /* Matches container rounded corners */
         }
-        .section p {
+        .section a {
             position: absolute;
             color: #fff; /* Adjust text color */
             font-size: 1.5rem; /* Adjust text size */
-            margin: 0;
+            text-decoration: none;
+            z-index: 1; /* Ensures link is on top */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="section">
-            <img src="1.png" alt="HIIT">
-            <p>HIIT</p>
+            <img src="hiit.png" alt="HIIT">
+            <a href="hiit.html">HIIT</a>
         </div>
         <div class="section">
-            <img src="2.png" alt="Strength training">
-            <p>Strength training</p>
+            <img src="strength.png" alt="Strength training">
+            <a href="strength.html">Strength training</a>
         </div>
         <div class="section">
-            <img src="3.png" alt="Martial Arts">
-            <p>Martial Arts</p>
+            <img src="martial_arts.png" alt="Martial Arts">
+            <a href="martial_arts.html">Martial Arts</a>
         </div>
         <div class="section">
-            <img src="4.png" alt="Full Body">
-            <p>Full Body</p>
+            <img src="full_body.png" alt="Full Body">
+            <a href="full_body.html">Full Body</a>
         </div>
     </div>
 </body>
 </html>
+
