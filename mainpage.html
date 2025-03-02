@@ -3,180 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardio Workouts</title>
+    <title>Vis Noble</title>
     <style>
-
-.container {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-}
-
-.image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.background-image {
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-        
-
-        .exercise-card {
-    width: 100vw; /* Make each card full screen width */
-    height: 200px; /* Adjust height as needed */
-    position: relative; /* Needed for text overlay */
-    border-radius: 10px; /* Optional: rounded corners */
-    overflow: hidden; /* Ensures images don’t overflow */
-    margin-bottom: 10px; /* Space between cards */
-}
-
-.exercise-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures images cover the area without distortion */
-}
-
-.exercise-text {
-    position: absolute;
-    bottom: 10px;
-    left: 20px;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-
-
-        
-    
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    background-color: #3f51b5;
-    color: white;
-    padding: 15px;
-}
-
-.menu-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    margin-right: 15px;
-    cursor: pointer;
-}
-
-h1 {
-    margin: 0;
-}
-
-.container {
-    padding: 15px;
-}
-
-.card {
-    position: relative;
-    background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.card img {
-    width: 100%;
-    height: 100px;
-    object-fit: fill ;
-}
-
-.text {
-    position: absolute;
-    bottom: 10px;
-    left: 20px;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-/* Styling for the exercise list */
-.exercise-list {
-    padding: 20px;
-    display: none;
-}
-
-.exercise-item {
-    background-color: white;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.exercise-item img {
-    width: 50%;
-    height: 50px;
-    object-fit: cover;
-}
-
-.exercise-text {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-        
-
-</style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+        .section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ccc;
+        }
+        .section img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
 <body>
-        
-
-
-    <div class="header">
-        <button class="menu-btn">☰</button>
-        <h1>Vis Noble</h1>
-    </div>
-
-
-<div class="exercise-card">
-    <img src="1.png" alt="HIIT Workout">
-    <div class="exercise-text">HIIT</div>
+    <div class="container">
+        <div class="section">
+            <img src="hiit.png" alt="HIIT">
+            <p>HIIT</p>
         </div>
-     
-
-<div class="exercise-card">
-    <img src="2.png" alt="Strength tranning">
-    <div class="exercise-text">Strength tranning</div>
-</div>
-
-<div class="exercise-card">
-    <img src="3.png" alt="Martial Arts">
-    <div class="exercise-text">Martial Arts</div>
-</div>
-
-<div class="exercise-card">
-    <img src="4.png" alt="Full Body">
-    <div class="exercise-text">Full Body</div>
-</div>
-
-
+        <div class="section">
+            <img src="strength.png" alt="Strength training">
+            <p>Strength training</p>
+        </div>
+        <div class="section">
+            <img src="martial_arts.png" alt="Martial Arts">
+            <p>Martial Arts</p>
+        </div>
+        <div class="section">
+            <img src="full_body.png" alt="Full Body">
+            <p>Full Body</p>
+        </div>
+    </div>
 </body>
 </html>
 
-     
   
      
