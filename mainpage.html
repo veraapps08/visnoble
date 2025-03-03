@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vis Noble</title>
     <style>
-        .menu-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    margin-right: 15px;
-    cursor: pointer;
-}
-
         body, html {
             margin: 0;
             padding: 0;
@@ -25,7 +16,7 @@
         }
         .container {
             display: grid;
-            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-template-rows: repeat(4, 1fr);
             width: 90%;
             height: 90%;
             gap: 10px; /* Adjust gap between sections */
@@ -37,7 +28,7 @@
             background-color: #ccc; /* Adjust background color */
             border-radius: 15px; /* Rounded corners */
             overflow: hidden; /* Ensures content stays within rounded corners */
-            position: relative;
+            height: 150px; /* Adjust height to make rectangular */
         }
         .section img {
             max-width: 100%;
@@ -51,16 +42,21 @@
             text-decoration: none;
             z-index: 1; /* Ensures link is on top */
         }
+        .menu-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
-
- <div class="header">
-        <button class="menu-btn">☰</button>
-        <h1>Vis Noble</h1>
-    </div>
-
-    
+    <a href="menu.html" class="menu-button">Menu</a>
     <div class="container">
         <div class="section">
             <img src="1.png" alt="HIIT">
@@ -81,4 +77,5 @@
     </div>
 </body>
 </html>
+
 
