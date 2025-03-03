@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Workouts</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+/* Header */
+header {
+    background: linear-gradient(to right, #003366, #3366cc);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.header-icons i {
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+/* Workout Section */
+.workout-section {
+    background: linear-gradient(to right, #0084ff, #00c6ff);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.timer {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.workout-stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+}
+
+/* Week Goal */
+.week-goal {
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.days {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.days span {
+    padding: 8px;
+    background: #ddd;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    cursor: pointer;
+}
+
+.days .active {
+    background: blue;
+    color: white;
+}
+
+/* Food Tracker */
+.food-tracker {
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-food {
+    background: #ccc;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Classes */
+.classes {
+    margin: 10px;
+}
+
+.class-card {
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.HIIT {
+    background: brown;
+}
+
+   
+
+.strength-tranning {
+    background: gold;
+}
+
+        .martial-arts{
+    background: orange;
+}
+
+        .full-body {
+    background: blue;
+}
+
+
+<body>
+
+  
+    
+
+    <!-- Classes -->
+    <section class="classes">
+        <h3>CLASS</h3>
+        <div class="class-card HIIT">
+            <h4>HIIT</h4>
+            <p>0 Days left</p>
+        </div>
+        <div class="class-card strength-tranning">
+            <h4>Strength tranning</h4>
+        </div>
+
+<div class="class-card martial-arts">
+            <h4>Martial Arts</h4>
+            
+        </div>
+        <div class="class-card full-body">
+            <h4>Full Body</h4>
+            
+        </div>
+        
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+         
+        <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a>
+    <a href="hiit.html"><i class="fas fa-dumbbell"></i> Workouts</a>
+        
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    </nav>
+<script>
+
+
+// Function to toggle menu (if needed for future expansion)
+function toggleMenu() {
+    alert("Menu clicked!");
+}
+
+    
+</script>
+</body>
+</html>
+
+
+     
