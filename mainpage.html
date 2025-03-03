@@ -6,6 +6,25 @@
     <title>Cardio Workouts</title>
     <style>
 
+img {
+    width: 100%; /* Makes the image stretch to fit the container */
+    height: auto; /* Keeps the aspect ratio */
+    object-fit: contain; /* Ensures the whole image is shown */
+    display: block; /* Removes any extra inline spacing */
+}
+
+
+        .image-container {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents extra space */
+}
+
+        .image-container {
+    background-size: contain; /* Ensures the full image is visible */
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 
         
@@ -137,6 +156,11 @@ h1 {
     </div>
 
 
+<div class="image-container">
+    <img src="1.png" alt="Workout Image">
+</div>
+
+    
 <div class="exercise-card">
     <img src="1.png" alt="HIIT Workout">
     <div class="exercise-text">HIIT</div>
