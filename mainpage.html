@@ -6,6 +6,99 @@
     <title>Cardio Workouts</title>
     <style>
 
+/* General Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(to right, #003366, #3366cc);
+    color: white;
+    position: fixed;
+    left: -250px;
+    top: 0;
+    transition: 0.3s ease-in-out;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background: #002244;
+}
+
+/* Menu Items */
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu li a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.menu li a i {
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+/* Highlight active menu item */
+.menu li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    margin-left: 0;
+    transition: 0.3s ease-in-out;
+    padding: 20px;
+    width: 100%;
+}
+
+.sidebar.open + .content {
+    margin-left: 250px;
+}
+
+/* Menu Button */
+#menu-toggle {
+    font-size: 24px;
+    padding: 10px;
+    border: none;
+    background: #003366;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+#menu-toggle:hover {
+    background: #002244;
+}
+
+
+
+        
 img {
     width: 100%; /* Makes the image stretch to fit the container */
     height: 10; /* Keeps the aspect ratio */
@@ -63,14 +156,7 @@ body {
     padding: 15px;
 }
 
-.menu-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: white;
-    margin-right: 15px;
-    cursor: pointer;
-}
+
 
 h1 {
     margin: 0;
@@ -137,13 +223,30 @@ h1 {
 </style>
 </head>
 <body>
-        
 
 
-    <div class="header">
-        <button class="menu-btn">☰</button>
-        <h1>Vis Noble</h1>
+<div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Vis Noble</h2>
+        </div>
+        <ul class="menu">
+            <li><a href="#"><i class="fas fa-th-large"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-dumbbell"></i> Custom Workouts</a></li>
+            <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+            <li><a href="#"><i class="fas fa-list"></i> Exercise List</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> Alerts</a></li>
+            <li><a href="#"><i class="fas fa-lock"></i> Get Premium</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> About Fitify</a></li>
+        </ul>
     </div>
+
+    <div class="content">
+        <button id="menu-toggle">☰</button>
+        <h1>VisNoble</h1>
+    </div>
+    
+
 
 
 <div class="image-container">
@@ -153,23 +256,35 @@ h1 {
 
     <div class="image-container">
     <img src="2.png" alt="Workout Image">
-    <div class="exercise-text">HIIT</div>
+    <div class="strength">strength</div>
 </div>
 
 
 <div class="image-container">
     <img src="3.png" alt="Workout Image">
-    <div class="exercise-text">HIIT</div>
+    <div class="Martial arts">martial arts</div>
 </div>
 
 <div class="image-container">
     <img src="4.png" alt="Workout Image">
-    <div class="exercise-text">HIIT</div>
+    <div class="Full body">Full body</div>
 </div>
 
 
 
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.getElementById("menu-toggle");
+
+    menuToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("open");
+    });
+});
+
+    
+</script>
 </body>
 </html>
 
