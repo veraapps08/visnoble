@@ -135,29 +135,56 @@ body {
         .streches {
     background: purple;
 }
-    .bubbly-button {
+    
+
+
+
+
+body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .bubbly-button {
             font-family: 'Arial', sans-serif;
             font-size: 20px;
-            color: #fff;
             padding: 15px 30px;
+            color: #fff;
+            background-color: #ff4081;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(145deg, #ff6b6b, #ff8e8e);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            transition: all 0.3s ease;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
         }
-
         .bubbly-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background-color: #ff79a6;
         }
-
         .bubbly-button:active {
-            transform: scale(0.9);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            background-color: #ff1a57;
         }
-
+        .bubbly-button:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+        }
+        .bubbly-button:active:after {
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0s;
+        }
+    
 /* Bottom Navigation */
 .bottom-nav {
     display: flex;
