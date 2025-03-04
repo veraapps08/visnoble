@@ -179,9 +179,23 @@
                 input.type = "checkbox";
                 input.id = `checkbox-${month + 1}-${day}-${year}`;
 
+                // Check if the checkbox state is saved in localStorage
+                if (localStorage.getItem(input.id) === 'checked') {
+                    input.checked = true;
+                }
+
                 const label = document.createElement("label");
                 label.setAttribute("for", input.id);
                 label.textContent = day;
+
+                // Add event listener to save the checkbox state
+                input.addEventListener('change', function () {
+                    if (input.checked) {
+                        localStorage.setItem(input.id, 'checked');
+                    } else {
+                        localStorage.removeItem(input.id);
+                    }
+                });
 
                 dayBox.appendChild(input);
                 dayBox.appendChild(label);
@@ -207,3 +221,4 @@
     </script>
 </body>
 </html>
+
