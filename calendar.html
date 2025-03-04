@@ -205,6 +205,26 @@
             return calendar;
         }
 
+        // Function to mark the current day as complete automatically
+        function markTodayAsCompleted() {
+            const today = new Date();
+            const todayMonth = today.getMonth();
+            const todayDate = today.getDate();
+            const todayYear = today.getFullYear();
+
+            // Create the ID for today's checkbox
+            const todayCheckboxId = `checkbox-${todayMonth + 1}-${todayDate}-${todayYear}`;
+            
+            // Check if the checkbox is already saved as checked in localStorage
+            if (!localStorage.getItem(todayCheckboxId)) {
+                // If not, mark it as checked automatically
+                localStorage.setItem(todayCheckboxId, 'checked');
+
+                // You might want to reload the page to visually update the checkbox (optional)
+                window.location.reload();
+            }
+        }
+
         // Generate calendars for all months from January 2025 to December 2042
         function generateAllCalendars() {
             const container = document.getElementById("calendarContainer");
@@ -216,9 +236,11 @@
             }
         }
 
+        // Mark today's date as complete
+        markTodayAsCompleted();
+
         // Call the function to generate all calendars
         generateAllCalendars();
     </script>
 </body>
 </html>
-
