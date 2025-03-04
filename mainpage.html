@@ -3,222 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomePage</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <title>Fitness Hub</title>
     <style>
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f4f4f4;
-}
-
-/* Header */
-header {
-    background: linear-gradient(to right, #003366, #3366cc);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.header-icons i {
-    margin-left: 10px;
-    font-size: 20px;
-}
-
-/* Workout Section */
-.workout-section {
-    background: linear-gradient(to right, #0084ff, #00c6ff);
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-.timer {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.workout-stats {
-    display: flex;
-    justify-content: space-around;
-    font-size: 16px;
-}
-
-/* Week Goal */
-.week-goal {
-    background: white;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 8px;
-}
-
-.days {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.days span {
-    padding: 8px;
-    background: #ddd;
-    border-radius: 50%;
-    text-align: center;
-    width: 30px;
-    cursor: pointer;
-}
-
-.days .active {
-    background: blue;
-    color: white;
-}
-
-/* Food Tracker */
-.food-tracker {
-    background: white;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.add-food {
-    background: #ccc;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Classes */
-.classes {
-    margin: 10px;
-}
-
-.class-card {
-    padding: 20px;
-    border-radius: 8px;
-    color: white;
-    margin-bottom: 10px;
-}
-
-.HIIT {
-    background: brown;
-}
-
-   
-
-.strength-tranning {
-    background: gold;
-}
-
-        .martial-arts{
-    background: orange;
-}
-
-        .full-body {
-    background: blue;
-}
-
-/* Bottom Navigation */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.bottom-nav a {
-    text-decoration: none;
-    color: gray;
-    text-align: center;
-}
-
-.bottom-nav a.active {
-    color: blue;
-}
-
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: black;
+            color: white;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: purple;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 50px;
+            font-weight: bold;
+            color: purple;
+        }
+        .hero p {
+            font-size: 20px;
+            max-width: 600px;
+            margin-top: 10px;
+        }
+        .cta {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background: purple;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cta:hover {
+            background: white;
+            color: purple;
+        }
     </style>
-    
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-    <!-- Header -->
     <header>
-        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-        <h1>VisNoble</h1>
-        <div class="header-icons">
-            <i class="fas fa-ban"></i>
-            <i class="fas fa-gem"></i>
-        </div>
+        <div class="logo">Fitness Hub</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Workouts</a></li>
+                <li><a href="#">Nutrition</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-
-    
-    <!-- Week Goal -->
-    
-
-    
-
-    <!-- Classes -->
-    <section class="classes">
-        <h3>CLASS</h3>
-        <div class="class-card ">
-            <h4></h4>
-            <p></p>
-        </div>
-        <div class="class-card strength-tranning">
-            <h4>Strength tranning</h4>
-        </div>
-
-<div class="class-card martial-arts">
-            <h4>Martial Arts</h4>
-            
-        </div>
-        <div class="class-card full-body">
-            <h4>Full Body</h4>
-            
-        </div>
-        
+    <section class="hero">
+        <h1>Unleash Your Inner Strength</h1>
+        <p>Join our community and start your journey towards a healthier and stronger you. Get access to workouts, meal plans, and expert advice.</p>
+        <button class="cta">Get Started</button>
     </section>
-
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-         
-        <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
-        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
-    <a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a>
-        
-        <a href="#"><i class="fas fa-cog"></i> Settings</a>
-    </nav>
-<script>
-
-
-// Function to toggle menu (if needed for future expansion)
-function toggleMenu() {
-    alert("Menu clicked!");
-}
-
-    
-</script>
 </body>
 </html>
+
 
 
      
