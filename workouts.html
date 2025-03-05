@@ -154,18 +154,44 @@ body {
 
 
 
-body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            margin: 0;
-        }
+
+
+    
+/* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: gray;
+    text-align: center;
+}
+
+.bottom-nav a.active {
+    color: blue;
+}
+
+
+    body {
+  background-image: url('DALL·E 2025-03-03 20.10.14 - A stunning abstract background with a smooth blend of deep purple and black hues. The colors should flow together seamlessly, creating a modern and el.webp');
+}
 
 
 
-  
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
 
 #funButton {
     padding: 15px 30px;
@@ -196,33 +222,6 @@ body {
     transform: translate(-50%, -50%) scale(1);
 }
 
-    
-/* Bottom Navigation */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.bottom-nav a {
-    text-decoration: none;
-    color: gray;
-    text-align: center;
-}
-
-.bottom-nav a.active {
-    color: blue;
-}
-
-
-    body {
-  background-image: url('DALL·E 2025-03-03 20.10.14 - A stunning abstract background with a smooth blend of deep purple and black hues. The colors should flow together seamlessly, creating a modern and el.webp');
-}
-          
     </style>
     
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -261,7 +260,7 @@ body {
 
 <div class="class-card martial-arts">
             <h4>Martial Arts</h4>
-            
+            <button id="funButton" onclick="redirect()">Click Me!</button>
         </div>
         <div class="class-card full-body">
             <h4>Full Body</h4>
