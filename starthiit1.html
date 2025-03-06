@@ -122,15 +122,14 @@ circle {
     color: #b300ff; /* Purple hover effect */
 }
 
-
-    .quit-dialog {
+.quit-dialog {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.7); /* Dark background overlay */
     justify-content: center;
     align-items: center;
 }
@@ -172,30 +171,32 @@ circle {
 </style>
     </head>
 <body>
-<nav>
-    <div class="workout-container">
-        <div class="top-icons">
-            <i class="fas fa-arrow-left"></i>
-              
 
-<!-- Quit Confirmation Dialog -->
-<div id="quit-dialog" class="quit-dialog">
-    <div class="dialog-box">
-        <h2>Quit Workout</h2>
-        <p>Are you sure you want to quit the current workout session?</p>
-        <div class="dialog-buttons">
-            <button id="cancel-quit" class="cancel-btn">CANCEL</button>
-            <button id="confirm-quit" class="quit-btn">QUIT</button>
+<div class="workout-container">
+    <div class="top-icons">
+        <!-- Back Button -->
+        <i class="fas fa-arrow-left" id="back-button"></i>
+
+        <!-- Quit Confirmation Dialog -->
+        <div id="quit-dialog" class="quit-dialog">
+            <div class="dialog-box">
+                <h2>Quit Workout</h2>
+                <p>Are you sure you want to quit the current workout session?</p>
+                <div class="dialog-buttons">
+                    <button id="cancel-quit" class="cancel-btn">CANCEL</button>
+                    <button id="confirm-quit" class="quit-btn">QUIT</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-icons">
+            <i class="fas fa-cog"></i>
+            <i class="fas fa-video"></i>
+            <i class="fas fa-music"></i>
         </div>
     </div>
 </div>
-          </nav>
-            <div class="right-icons">
-                <i class="fas fa-cog"></i>
-                <i class="fas fa-video"></i>
-                <i class="fas fa-music"></i>
-            </div>
-        </div>
+
 
         <div class="exercise">
             <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Sqauts"> <!-- Replace with actual image -->
@@ -261,24 +262,29 @@ startTimer(10);
 
 document.addEventListener("DOMContentLoaded", function () {
     const backButton = document.getElementById("back-button");
+    const quitDialog = document.getElementById("quit-dialog");
+    const cancelQuit = document.getElementById("cancel-quit");
+    const confirmQuit = document.getElementById("confirm-quit");
 
-    backButton.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent default navigation
-
-        // Show the custom quit dialog
-        document.getElementById("quit-dialog").style.display = "flex";
+    // When the back button is clicked, show the quit dialog
+    backButton.addEventListener("click", function () {
+        quitDialog.style.display = "flex"; // Show the popup
     });
 
-    // Cancel button
-    document.getElementById("cancel-quit").addEventListener("click", function () {
-        document.getElementById("quit-dialog").style.display = "none";
+    // When the CANCEL button is clicked, close the popup
+    cancelQuit.addEventListener("click", function () {
+        quitDialog.style.display = "none";
     });
 
-    // Quit button (Replace with actual quit functionality)
-    document.getElementById("confirm-quit").addEventListener("click", function () {
+    // When the QUIT button is clicked, go back to the previous page
+    confirmQuit.addEventListener("click", function () {
         window.history.back(); // Simulate going back
     });
 });
+
+
+
+
 
         
     </script>
