@@ -122,6 +122,53 @@ circle {
     color: #b300ff; /* Purple hover effect */
 }
 
+
+    .quit-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-box {
+    background: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+.dialog-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel-btn {
+    background: transparent;
+    color: purple;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.quit-btn {
+    background: purple;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
 </style>
     </head>
 <body>
@@ -137,12 +184,12 @@ circle {
         </div>
 
         <div class="exercise">
-            <img src="jumping-jacks.png" alt="Jumping Jacks"> <!-- Replace with actual image -->
+            <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Sqauts"> <!-- Replace with actual image -->
         </div>
 
         <div class="exercise-info">
             <h2>Ready to go!</h2>
-            <p>JUMPING JACKS <i class="fas fa-question-circle"></i></p>
+            <p>SQAUTS <i class="fas fa-question-circle"></i></p>
         </div>
 
         <div class="timer-container">
@@ -159,28 +206,78 @@ circle {
         </div>
     </div>
 
+
+
+    <!-- Back Button -->
+<button id="back-button" class="back-btn">←</button>
+
+<!-- Quit Confirmation Dialog -->
+<div id="quit-dialog" class="quit-dialog">
+    <div class="dialog-box">
+        <h2>Quit Workout</h2>
+        <p>Are you sure you want to quit the current workout session?</p>
+        <div class="dialog-buttons">
+            <button id="cancel-quit" class="cancel-btn">CANCEL</button>
+            <button id="confirm-quit" class="quit-btn">QUIT</button>
+        </div>
+    </div>
+</div>
+
     <script>
-let countdown = 10;
+let countdown = 10; // First countdown (10 seconds)
+let isSecondTimer = false; // Flag to track the second timer
 const countdownEl = document.getElementById("countdown");
 const progressCircle = document.getElementById("progress-circle");
 
-function startTimer() {
+function startTimer(duration) {
+    let timeLeft = duration;
+    countdownEl.innerText = timeLeft;
+
     const interval = setInterval(() => {
-        countdown--;
-        countdownEl.innerText = countdown;
-        let progress = (countdown / 10) * 220;
+        timeLeft--;
+        countdownEl.innerText = timeLeft;
+        let progress = (timeLeft / duration) * 220;
         progressCircle.style.strokeDashoffset = progress;
 
-        if (countdown <= 0) {
+        if (timeLeft <= 0) {
             clearInterval(interval);
-            countdownEl.innerText = "Done!";
-            progressCircle.style.strokeDashoffset = 0;
+
+            if (!isSecondTimer) {
+                // Switch to 30-second countdown after the first one ends
+                isSecondTimer = true;
+                startTimer(30);
+            } else {
+                countdownEl.innerText = "Done!";
+                progressCircle.style.strokeDashoffset = 0;
+            }
         }
     }, 1000);
 }
 
-startTimer();
+// Start the first countdown (10 seconds)
+startTimer(10);
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    const backButton = document.getElementById("back-button");
+
+    backButton.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default navigation
+
+        // Show the custom quit dialog
+        document.getElementById("quit-dialog").style.display = "flex";
+    });
+
+    // Cancel button
+    document.getElementById("cancel-quit").addEventListener("click", function () {
+        document.getElementById("quit-dialog").style.display = "none";
+    });
+
+    // Quit button (Replace with actual quit functionality)
+    document.getElementById("confirm-quit").addEventListener("click", function () {
+        window.history.back(); // Simulate going back
+    });
+});
 
         
     </script>
