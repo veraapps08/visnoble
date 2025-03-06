@@ -3,63 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title>
+    <title>Workout Timer</title>
     <style>
+        /* General Styling */
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #2c003e, #5e2a7e);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+
+        /* Countdown Timer */
         #countdown-container {
             position: relative;
             display: inline-block;
             margin-top: 20px;
         }
+
         #countdown {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: bold;
-            color: #2d5dcc;
+            color: #ffffff;
         }
+
+        /* Circular Progress */
         .progress-circle {
-            width: 100px;
-            height: 100px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            border: 8px solid lightgray;
-            border-top-color: #2d5dcc;
-            animation: countdown-animation 10s linear forwards;
+            border: 10px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #a333ff;
+            animation: countdown-animation linear forwards;
         }
+
         @keyframes countdown-animation {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+
+        /* Status text */
+        #status {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffccff;
+        }
+
+        /* Workout Image */
+        #workout-image {
+            width: 250px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <h2>Get Ready!</h2>
+    <h2 id="status">Get Ready!</h2>
     
     <!-- Countdown Timer -->
     <div id="countdown-container">
-        <div class="progress-circle"></div>
+        <div id="progress" class="progress-circle"></div>
         <p id="countdown">10</p>
     </div>
 
-    <!-- Image -->
-    <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Sqauts" width="250" style="margin-top: 20px; display: block; margin-left: auto; margin-right: auto;">
+    <!-- Workout Image -->
+    <img id="workout-image" src="DALL·E 2025-03-03 19.47.37 - A fit woman holding dumbbells in both hands, wearing athletic workout attire. She has a confident and determined expression, standing in a strong post.webp" alt="Workout Image">
 
     <script>
-        let timeLeft = 10;
         let countdownElement = document.getElementById("countdown");
+        let statusElement = document.getElementById("status");
+        let progressElement = document.getElementById("progress");
+        let timeLeft = 10;
+        let phase = "prepare"; // Initial phase
 
         function updateCountdown() {
-            if (timeLeft >= 0) {
-                countdownElement.innerText = timeLeft;
-                timeLeft--;
-                setTimeout(updateCountdown, 1000);
+            countdownElement.innerText = timeLeft;
+
+            if (timeLeft === 0) {
+                if (phase === "prepare") {
+                    // Transition to 30s workout timer
+                    phase = "workout";
+                    timeLeft = 30;
+                    statusElement.innerText = "Workout!";
+                    progressElement.style.animationDuration = "30s"; // Adjust animation
+                    progressElement.style.animationName = "countdown-animation"; // Restart animation
+                } else {
+                    statusElement.innerText = "Workout Complete!";
+                    countdownElement.style.display = "none";
+                    progressElement.style.display = "none";
+                    return;
+                }
             }
+
+            timeLeft--;
+            setTimeout(updateCountdown, 1000);
         }
 
         updateCountdown();
@@ -67,5 +115,4 @@
 
 </body>
 </html>
-
 
