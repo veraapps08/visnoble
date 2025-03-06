@@ -1,0 +1,45 @@
+<div id="workout-container" style="text-align:center; font-family: Arial, sans-serif;">
+    <h2 id="status">Get Ready!</h2>
+    <p id="countdown" style="font-size: 2rem;">10</p>
+    <img id="workout-gif" src="your-gif-url.gif" style="display:none; width: 300px; height: auto;" />
+</div>
+
+<script>
+    let countdownElement = document.getElementById("countdown");
+    let statusElement = document.getElementById("status");
+    let gifElement = document.getElementById("workout-gif");
+
+    function startWorkoutTimer() {
+        let timeLeft = 10;
+        let phase = "prepare";
+
+        function updateTimer() {
+            countdownElement.innerText = timeLeft;
+
+            if (timeLeft === 0) {
+                if (phase === "prepare") {
+                    phase = "workout";
+                    timeLeft = 100;
+                    statusElement.innerText = "Workout!";
+                    gifElement.style.display = "block"; // Show GIF
+                } else if (phase === "workout") {
+                    phase = "cooldown";
+                    timeLeft = 30;
+                    statusElement.innerText = "Cooldown!";
+                } else {
+                    statusElement.innerText = "Workout Complete!";
+                    countdownElement.style.display = "none";
+                    gifElement.style.display = "none";
+                    return;
+                }
+            }
+
+            timeLeft--;
+            setTimeout(updateTimer, 1000);
+        }
+
+        updateTimer();
+    }
+
+    window.onload = startWorkoutTimer;
+</script>
