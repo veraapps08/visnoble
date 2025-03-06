@@ -5,200 +5,184 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Timer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        /* General Styling */
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #2c003e, #5e2a7e);
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
 
-        /* Countdown Timer */
-        #countdown-container {
-            position: relative;
-            display: inline-block;
-            margin-top: 20px;
-        }
+    /* General Styling */
+body {
+    background-color: #0d0d0d; /* Black background */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #fff; /* White text */
+}
 
-        #countdown {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            font-weight: bold;
-            color: #ffffff;
-        }
-
-        /* Circular Progress */
-        .progress-circle {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 10px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #a333ff;
-            animation: countdown-animation linear forwards;
-        }
-
-        @keyframes countdown-animation {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Status text */
-        #status {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #ffccff;
-        }
-
-       .timer-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Container */
+.workout-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
     position: relative;
 }
 
-.timer {
-    font-size: 2rem;
-    padding: 20px;
-    background-color: purple;
-    color: white;
-    border-radius: 50%;
-    text-align: center;
+/* Top Icons */
+.top-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#rewindButton {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    margin-left: 15px; /* Adjust spacing */
+.top-icons i {
+    font-size: 22px;
+    color: #b300ff; /* Purple icons */
     cursor: pointer;
 }
 
-#rewindButton:hover {
-    color: lightgray;
+.right-icons {
+    display: flex;
+    gap: 15px;
 }
 
+/* Exercise Image */
+.exercise img {
+    width: 100%;
+    max-width: 250px;
+}
 
-        /* Workout Image */
-        #workout-image {
-            width: 250px;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-    </style>
-</head>
+/* Exercise Info */
+.exercise-info h2 {
+    color: #b300ff; /* Purple text */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.exercise-info p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Timer Container */
+.timer-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 20px auto;
+}
+
+.timer-container span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* SVG Timer */
+svg {
+    width: 80px;
+    height: 80px;
+    transform: rotate(-90deg);
+}
+
+circle {
+    fill: none;
+    stroke: #333; /* Dark gray background circle */
+    stroke-width: 8;
+    cx: 40;
+    cy: 40;
+    r: 35;
+}
+
+#progress-circle {
+    stroke: #b300ff; /* Purple progress */
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+
+/* Feedback Buttons */
+.feedback {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.feedback i {
+    font-size: 24px;
+    color: #555; /* Dark gray thumbs */
+    cursor: pointer;
+}
+
+.feedback i:hover {
+    color: #b300ff; /* Purple hover effect */
+}
+
+</style>
+    </head>
 <body>
 
-    <h2 id="status">Get Ready!</h2>
+    <div class="workout-container">
+        <div class="top-icons">
+            <i class="fas fa-arrow-left"></i>
+            <div class="right-icons">
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-video"></i>
+                <i class="fas fa-music"></i>
+            </div>
+        </div>
 
-<!-- Workout Image -->
-    <img id="workout-image" src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Workout Image">
+        <div class="exercise">
+            <img src="jumping-jacks.png" alt="Jumping Jacks"> <!-- Replace with actual image -->
+        </div>
 
+        <div class="exercise-info">
+            <h2>Ready to go!</h2>
+            <p>JUMPING JACKS <i class="fas fa-question-circle"></i></p>
+        </div>
 
+        <div class="timer-container">
+            <span id="countdown">10</span>
+            <svg>
+                <circle cx="40" cy="40" r="35"></circle>
+                <circle cx="40" cy="40" r="35" id="progress-circle"></circle>
+            </svg>
+        </div>
 
-    <!-- Countdown Timer -->
-    <div id="countdown-container">
-        <div id="progress" class="progress-circle"></div>
-        <p id="countdown">10</p>
+        <div class="feedback">
+            <i class="far fa-thumbs-down"></i>
+            <i class="far fa-thumbs-up"></i>
+        </div>
     </div>
 
-    
- 
-
-
-    <div class="timer-container">
-    
-    <button id="rewindButton">
-       <i class="fa-solid fa-backward-step"></i> <!-- Font Awesome Rewind Icon -->
-    </button>
-</div>
     <script>
-        let countdownElement = document.getElementById("countdown");
-        let statusElement = document.getElementById("status");
-        let progressElement = document.getElementById("progress");
-        let timeLeft = 10;
-        let phase = "prepare"; // Initial phase
-        let countdownInterval;
-        let running = false;
+let countdown = 10;
+const countdownEl = document.getElementById("countdown");
+const progressCircle = document.getElementById("progress-circle");
 
-        function updateCountdown() {
-            countdownElement.innerText = timeLeft;
+function startTimer() {
+    const interval = setInterval(() => {
+        countdown--;
+        countdownEl.innerText = countdown;
+        let progress = (countdown / 10) * 220;
+        progressCircle.style.strokeDashoffset = progress;
 
-            if (timeLeft === 0) {
-                if (phase === "prepare") {
-                    phase = "workout";
-                    timeLeft = 30;
-                    statusElement.innerText = "Workout!";
-                    progressElement.style.animationDuration = "30s";
-                } else {
-                    statusElement.innerText = "Workout Complete!";
-                    clearInterval(countdownInterval);
-                    return;
-                }
-            }
-
-            timeLeft--;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            countdownEl.innerText = "Done!";
+            progressCircle.style.strokeDashoffset = 0;
         }
+    }, 1000);
+}
 
-        function startTimer() {
-            if (!running) {
-                running = true;
-                countdownInterval = setInterval(updateCountdown, 1000);
-            }
-        }
-
-        function pauseTimer() {
-            clearInterval(countdownInterval);
-            running = false;
-        }
-
-        function rewindTimer() {
-            clearInterval(countdownInterval);
-            running = false;
-            if (phase === "workout") {
-                timeLeft = 10;
-                phase = "prepare";
-                statusElement.innerText = "Get Ready!";
-            } else {
-                timeLeft = 30;
-                phase = "workout";
-                statusElement.innerText = "Workout!";
-            }
-            countdownElement.innerText = timeLeft;
-        }
-
-        function fastForwardTimer() {
-            clearInterval(countdownInterval);
-            running = false;
-            if (phase === "prepare") {
-                phase = "workout";
-                timeLeft = 30;
-                statusElement.innerText = "Workout!";
-            } else {
-                statusElement.innerText = "Workout Complete!";
-                timeLeft = 0;
-            }
-            countdownElement.innerText = timeLeft;
-        }
-
-        startTimer();
+startTimer();
 
 
-        document.getElementById("rewindButton").addEventListener("click", function() {
-    document.getElementById("countdown").innerText = "3"; // Reset the timer
-});
-
+        
     </script>
 
 </body>
