@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progress Calendar</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -115,12 +118,45 @@
             flex-wrap: wrap;
             justify-content: center;
         }
+
+
+            
+/* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: gray;
+    text-align: center;
+}
+
+.bottom-nav a.active {
+    color: blue;
+}
     </style>
 </head>
 <body>
 
     <div class="calendar-container" id="calendarContainer"></div>
 
+<!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+         
+        <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+    <a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a>
+        
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    </nav>
+    
     <script>
         // Function to check if a year is a leap year
         function isLeapYear(year) {
