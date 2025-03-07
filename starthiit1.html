@@ -3,101 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Timer</title>
+    <title>Exercise Timer</title>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
     <style>
         body {
-            background-color: black;
-            color: white;
-            text-align: center;
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
         }
         .container {
-            margin-top: 100px;
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .timer {
-            font-size: 50px;
+        .exercise-image {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        .exercise-text {
             color: purple;
-            margin: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .timer-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+        }
+        .timer-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid purple;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: purple;
+            background-color: white;
+        }
+        .controls {
+            margin-top: 20px;
         }
         .controls button {
-            background-color: purple;
+            background: purple;
             color: white;
             border: none;
-            padding: 10px 20px;
-            margin: 5px;
+            padding: 10px;
             font-size: 18px;
+            margin: 5px;
             cursor: pointer;
             border-radius: 5px;
         }
         .controls button:hover {
-            background-color: darkviolet;
-        }
-        #homeBtn {
-            margin-top: 20px;
-            background-color: white;
-            color: black;
-            font-size: 20px;
+            background: #6a0dad;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Jumping Jacks</h1>
-        <div class="timer" id="timer">10</div>
-        <div class="controls">
-            <button onclick="rewind()">⏪</button>
-            <button onclick="pause()">⏸</button>
-            <button onclick="fastForward()">⏩</button>
+        <div class="exercise-image">
+            <p>Image Placeholder</p>
         </div>
-        <button id="homeBtn" onclick="goHome()">Home</button>
+        <div class="exercise-text">JUMPING JACKS</div>
+        <div class="timer-container">
+            <div class="timer-circle" id="timer">10</div>
+        </div>
+        <div class="controls">
+            <button onclick="rewind()"><i class="fas fa-backward"></i></button>
+            <button onclick="pauseTimer()"><i class="fas fa-pause"></i></button>
+            <button onclick="resumeTimer()"><i class="fas fa-play"></i></button>
+            <button onclick="fastForward()"><i class="fas fa-forward"></i></button>
+        </div>
     </div>
 
     <script>
-        let timeLeft = 10;
-        let isPaused = false;
+        let time = 10;
+        let timerElement = document.getElementById("timer");
         let interval;
 
         function startTimer(duration) {
-            timeLeft = duration;
             clearInterval(interval);
+            time = duration;
+            timerElement.textContent = time;
             interval = setInterval(() => {
-                if (!isPaused) {
-                    document.getElementById("timer").textContent = timeLeft;
-                    if (timeLeft <= 0) {
-                        clearInterval(interval);
-                        if (duration === 10) {
-                            startTimer(30); // Switch to 30 seconds after 10 seconds
-                        }
-                    } else {
-                        timeLeft--;
+                if (time > 0) {
+                    time--;
+                    timerElement.textContent = time;
+                } else {
+                    clearInterval(interval);
+                    if (duration === 10) {
+                        startTimer(30);
                     }
                 }
             }, 1000);
         }
 
-        function rewind() {
-            timeLeft += 5; // Rewind by 5 seconds
-            document.getElementById("timer").textContent = timeLeft;
+        function pauseTimer() {
+            clearInterval(interval);
         }
 
-        function pause() {
-            isPaused = !isPaused;
+        function resumeTimer() {
+            startTimer(time);
+        }
+
+        function rewind() {
+            startTimer(10);
         }
 
         function fastForward() {
-            timeLeft -= 5; // Fast forward by 5 seconds
-            if (timeLeft < 0) timeLeft = 0;
-            document.getElementById("timer").textContent = timeLeft;
+            startTimer(30);
         }
 
-        function goHome() {
-            alert("Hi");
-            window.location.href = "index.html"; // Change to your homepage URL
-        }
-
-        startTimer(10);
+        window.onload = () => startTimer(10);
     </script>
 
 </body>
 </html>
+
