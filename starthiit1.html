@@ -65,8 +65,8 @@ body {
 /* Timer Container */
 .timer-container {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     margin: 20px auto;
 }
 
@@ -167,6 +167,39 @@ circle {
     border-radius: 5px;
 }
 
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.timer-controls button {
+    background-color: purple;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer-controls button:hover {
+    background-color: #5a2d82;
+}
+
+#timer {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin-top: 10px;
+}
 
     
 
@@ -223,6 +256,18 @@ circle {
     </div>
 </div>
 
+<!-- Timer Display -->
+<p id="timer">10</p>
+
+<!-- Timer Controls -->
+<div class="timer-controls">
+    <button id="rewind-btn"><i class="fas fa-backward"></i></button>
+    <button id="pause-btn"><i class="fas fa-pause"></i></button>
+    <button id="fast-forward-btn"><i class="fas fa-forward"></i></button>
+</div>
+
+<!-- Font Awesome Link (Add this in your <head>) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
  
 
@@ -285,6 +330,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const backButton = document.getElementById("back-button");
+    const quitDialog = document.getElementById("quit-dialog");
+    const cancelQuit = document.getElementById("cancel-quit");
+    const confirmQuit = document.getElementById("confirm-quit");
+    const pauseButton = document.getElementById("pause-btn");
+    const rewindButton = document.getElementById("rewind-btn");
+    const fastForwardButton = document.getElementById("fast-forward-btn");
+    const timerDisplay = document.getElementById("timer");
+    
+    let countdown = 10; // Initial countdown (10 seconds)
+    let timer;
+    let isPaused = false;
+
+    function startTimer() {
+        timer = setInterval(() => {
+            if (!isPaused && countdown > 0) {
+                countdown--;
+                timerDisplay.textContent = countdown;
+            } else if (countdown === 0) {
+                clearInterval(timer);
+                countdown = 30; // Reset to 30 seconds after reaching 0
+                startTimer();
+            }
+        }, 1000);
+    }
+
+    // Open quit dialog when clicking back button
+    backButton.addEventListener("click", function () {
+        quitDialog.style.display = "flex";
+    });
+
+    // Close dialog when clicking CANCEL
+    cancelQuit.addEventListener("click", function () {
+        quitDialog.style.display = "none";
+    });
+
+    // Redirect to workout page when clicking QUIT
+    confirmQuit.addEventListener("click", function () {
+        window.location.href = "workout.html"; // Update with actual workout page URL
+    });
+
+    // Pause button functionality
+    pauseButton.addEventListener("click", function () {
+        isPaused = !isPaused;
+        pauseButton.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+    });
+
+    // Rewind button: Go back 5 seconds
+    rewindButton.addEventListener("click", function () {
+        countdown = Math.max(countdown - 5, 0);
+        timerDisplay.textContent = countdown;
+    });
+
+    // Fast-forward button: Skip ahead 5 seconds
+    fastForwardButton.addEventListener("click", function () {
+        countdown = Math.min(countdown + 5, 30);
+        timerDisplay.textContent = countdown;
+    });
+
+    startTimer(); // Start countdown on page load
+});
 
 
 
