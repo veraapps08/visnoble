@@ -168,6 +168,8 @@ circle {
 }
 
 
+    
+
 </style>
     </head>
 <body>
@@ -266,21 +268,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const cancelQuit = document.getElementById("cancel-quit");
     const confirmQuit = document.getElementById("confirm-quit");
 
-    // When the back button is clicked, show the quit dialog
+    // Open the quit dialog when clicking the back button
     backButton.addEventListener("click", function () {
-        quitDialog.style.display = "flex"; // Show the popup
+        quitDialog.style.display = "flex";
     });
 
-    // When the CANCEL button is clicked, close the popup
+    // Close the dialog when clicking CANCEL
     cancelQuit.addEventListener("click", function () {
         quitDialog.style.display = "none";
     });
 
-    // When the QUIT button is clicked, go back to the previous page
+    // Redirect or close when clicking QUIT
     confirmQuit.addEventListener("click", function () {
-        window.history.back(); // Simulate going back
+        window.history.back();
     });
 });
+
 
 
 
