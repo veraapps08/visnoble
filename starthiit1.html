@@ -277,11 +277,12 @@ document.addEventListener("DOMContentLoaded", function () {
         quitDialog.style.display = "none";
     });
 
-    // Redirect or close when clicking QUIT
+    // Redirect to workout page when clicking QUIT
     confirmQuit.addEventListener("click", function () {
-        window.history.back();
+        window.location.href = "hiit.html"; // Change this to your actual workout page URL
     });
 });
+
 
 
 
