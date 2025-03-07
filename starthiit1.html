@@ -27,6 +27,13 @@
             align-items: center;
             justify-content: center;
             border-radius: 10px;
+            overflow: hidden;
+        }
+        .exercise-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
         }
         .exercise-text {
             color: purple;
@@ -75,9 +82,7 @@
 
     <div class="container">
         <div class="exercise-image">
-            <div class="exercise-image">
-    <img src="your-image-url.jpg" alt="Exercise Image" style="width: 100%; height: 100%; border-radius: 10px;">
-</div>
+            <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Exercise Image">
         </div>
         <div class="exercise-text">SQAUTS</div>
         <div class="timer-container">
@@ -85,8 +90,9 @@
         </div>
         <div class="controls">
             <button onclick="rewind()"><i class="fas fa-backward"></i></button>
-            <button onclick="pauseTimer()"><i class="fas fa-pause"></i></button>
-            <button onclick="resumeTimer()"><i class="fas fa-play"></i></button>
+            <button id="pausePlayButton" onclick="togglePausePlay()">
+                <i class="fas fa-pause"></i>
+            </button>
             <button onclick="fastForward()"><i class="fas fa-forward"></i></button>
         </div>
     </div>
@@ -95,6 +101,8 @@
         let time = 10;
         let timerElement = document.getElementById("timer");
         let interval;
+        let isPaused = false;
+        let pausePlayButton = document.getElementById("pausePlayButton");
 
         function startTimer(duration) {
             clearInterval(interval);
@@ -113,6 +121,17 @@
             }, 1000);
         }
 
+        function togglePausePlay() {
+            if (isPaused) {
+                resumeTimer();
+                pausePlayButton.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                pauseTimer();
+                pausePlayButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
+            isPaused = !isPaused;
+        }
+
         function pauseTimer() {
             clearInterval(interval);
         }
@@ -123,10 +142,14 @@
 
         function rewind() {
             startTimer(10);
+            pausePlayButton.innerHTML = '<i class="fas fa-pause"></i>';
+            isPaused = false;
         }
 
         function fastForward() {
             startTimer(30);
+            pausePlayButton.innerHTML = '<i class="fas fa-pause"></i>';
+            isPaused = false;
         }
 
         window.onload = () => startTimer(10);
@@ -134,4 +157,5 @@
 
 </body>
 </html>
+
 
