@@ -4,399 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<style>
-
-    /* General Styling */
-body {
-    background-color: #0d0d0d; /* Black background */
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    color: #fff; /* White text */
-}
-
-/* Container */
-.workout-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    position: relative;
-}
-
-/* Top Icons */
-.top-icons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.top-icons i {
-    font-size: 22px;
-    color: #b300ff; /* Purple icons */
-    cursor: pointer;
-}
-
-.right-icons {
-    display: flex;
-    gap: 15px;
-}
-
-/* Exercise Image */
-.exercise img {
-    width: 100%;
-    max-width: 250px;
-}
-
-/* Exercise Info */
-.exercise-info h2 {
-    color: #b300ff; /* Purple text */
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.exercise-info p {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-/* Timer Container */
-.timer-container {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    margin: 20px auto;
-}
-
-.timer-container span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-/* SVG Timer */
-svg {
-    width: 80px;
-    height: 80px;
-    transform: rotate(-90deg);
-}
-
-circle {
-    fill: none;
-    stroke: #333; /* Dark gray background circle */
-    stroke-width: 8;
-    cx: 40;
-    cy: 40;
-    r: 35;
-}
-
-#progress-circle {
-    stroke: #b300ff; /* Purple progress */
-    stroke-dasharray: 220;
-    stroke-dashoffset: 220;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 1s linear;
-}
-
-/* Feedback Buttons */
-.feedback {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-.feedback i {
-    font-size: 24px;
-    color: #555; /* Dark gray thumbs */
-    cursor: pointer;
-}
-
-.feedback i:hover {
-    color: #b300ff; /* Purple hover effect */
-}
-
-.quit-dialog {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Dark background overlay */
-    justify-content: center;
-    align-items: center;
-}
-
-.dialog-box {
-    background: black;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 80%;
-    max-width: 400px;
-}
-
-.dialog-buttons {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.cancel-btn {
-    background: transparent;
-    color: purple;
-    border: none;
-    font-weight: bold;
-    padding: 10px;
-}
-
-.quit-btn {
-    background: purple;
-    color: white;
-    border: none;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.timer-controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.timer-controls button {
-    background-color: purple;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.timer-controls button:hover {
-    background-color: #5a2d82;
-}
-
-#timer {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-    margin-top: 10px;
-}
-
-    
-
-</style>
-    </head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .timer {
+            font-size: 50px;
+            color: purple;
+            margin: 20px;
+        }
+        .controls button {
+            background-color: purple;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .controls button:hover {
+            background-color: darkviolet;
+        }
+        #homeBtn {
+            margin-top: 20px;
+            background-color: white;
+            color: black;
+            font-size: 20px;
+        }
+    </style>
+</head>
 <body>
 
-
-
-        <div class="exercise">
-            <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Sqauts"> <!-- Replace with actual image -->
+    <div class="container">
+        <h1>Jumping Jacks</h1>
+        <div class="timer" id="timer">10</div>
+        <div class="controls">
+            <button onclick="rewind()">⏪</button>
+            <button onclick="pause()">⏸</button>
+            <button onclick="fastForward()">⏩</button>
         </div>
-
-        <div class="exercise-info">
-            <h2>Ready to go!</h2>
-            <p>SQAUTS <i class="fas fa-question-circle"></i></p>
-        </div>
-
-        <div class="timer-container">
-            <span id="countdown">10</span>
-            <svg>
-                <circle cx="40" cy="40" r="35"></circle>
-                <circle cx="40" cy="40" r="35" id="progress-circle"></circle>
-            </svg>
-        </div>
-
-        <div class="feedback">
-            <i class="far fa-thumbs-down"></i>
-            <i class="far fa-thumbs-up"></i>
-        </div>
+        <button id="homeBtn" onclick="goHome()">Home</button>
     </div>
-
-<div class="workout-container">
-    <div class="top-icons">
-        <!-- Back Button -->
-        <i class="fas fa-arrow-left" id="back-button"></i>
-
-      <div id="quit-dialog" class="quit-dialog">
-    <div class="dialog-box">
-        <h2>Quit Workout</h2>
-        <p>Are you sure you want to quit the current workout session?</p>
-        <div class="dialog-buttons">
-            <button id="cancel-quit" class="cancel-btn">CANCEL</button>
-            <button id="confirm-quit" class="quit-btn">QUIT</button>
-        </div>
-    </div>
-</div>
-
-        <div class="right-icons">
-            <i class="fas fa-cog"></i>
-            <i class="fas fa-video"></i>
-            <i class="fas fa-music"></i>
-        </div>
-    </div>
-</div>
-
-<!-- Timer Display -->
-<p id="timer">10</p>
-
-<!-- Timer Controls -->
-<div class="timer-controls">
-    <button id="rewind-btn"><i class="fas fa-backward"></i></button>
-    <button id="pause-btn"><i class="fas fa-pause"></i></button>
-    <button id="fast-forward-btn"><i class="fas fa-forward"></i></button>
-</div>
-
-<!-- Font Awesome Link (Add this in your <head>) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
- 
 
     <script>
-let countdown = 10; // First countdown (10 seconds)
-let isSecondTimer = false; // Flag to track the second timer
-const countdownEl = document.getElementById("countdown");
-const progressCircle = document.getElementById("progress-circle");
+        let timeLeft = 10;
+        let isPaused = false;
+        let interval;
 
-function startTimer(duration) {
-    let timeLeft = duration;
-    countdownEl.innerText = timeLeft;
-
-    const interval = setInterval(() => {
-        timeLeft--;
-        countdownEl.innerText = timeLeft;
-        let progress = (timeLeft / duration) * 220;
-        progressCircle.style.strokeDashoffset = progress;
-
-        if (timeLeft <= 0) {
+        function startTimer(duration) {
+            timeLeft = duration;
             clearInterval(interval);
-
-            if (!isSecondTimer) {
-                // Switch to 30-second countdown after the first one ends
-                isSecondTimer = true;
-                startTimer(30);
-            } else {
-                countdownEl.innerText = "Done!";
-                progressCircle.style.strokeDashoffset = 0;
-            }
+            interval = setInterval(() => {
+                if (!isPaused) {
+                    document.getElementById("timer").textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(interval);
+                        if (duration === 10) {
+                            startTimer(30); // Switch to 30 seconds after 10 seconds
+                        }
+                    } else {
+                        timeLeft--;
+                    }
+                }
+            }, 1000);
         }
-    }, 1000);
-}
 
-// Start the first countdown (10 seconds)
-startTimer(10);
+        function rewind() {
+            timeLeft += 5; // Rewind by 5 seconds
+            document.getElementById("timer").textContent = timeLeft;
+        }
 
+        function pause() {
+            isPaused = !isPaused;
+        }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const backButton = document.getElementById("back-button");
-    const quitDialog = document.getElementById("quit-dialog");
-    const cancelQuit = document.getElementById("cancel-quit");
-    const confirmQuit = document.getElementById("confirm-quit");
+        function fastForward() {
+            timeLeft -= 5; // Fast forward by 5 seconds
+            if (timeLeft < 0) timeLeft = 0;
+            document.getElementById("timer").textContent = timeLeft;
+        }
 
-    // Open the quit dialog when clicking the back button
-    backButton.addEventListener("click", function () {
-        quitDialog.style.display = "flex";
-    });
+        function goHome() {
+            alert("Hi");
+            window.location.href = "index.html"; // Change to your homepage URL
+        }
 
-    // Close the dialog when clicking CANCEL
-    cancelQuit.addEventListener("click", function () {
-        quitDialog.style.display = "none";
-    });
-
-    // Redirect to workout page when clicking QUIT
-    confirmQuit.addEventListener("click", function () {
-        window.location.href = "hiit.html"; // Change this to your actual workout page URL
-    });
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const backButton = document.getElementById("back-button");
-    const quitDialog = document.getElementById("quit-dialog");
-    const cancelQuit = document.getElementById("cancel-quit");
-    const confirmQuit = document.getElementById("confirm-quit");
-    const pauseButton = document.getElementById("pause-btn");
-    const rewindButton = document.getElementById("rewind-btn");
-    const fastForwardButton = document.getElementById("fast-forward-btn");
-    const timerDisplay = document.getElementById("timer");
-    
-    let countdown = 10; // Initial countdown (10 seconds)
-    let timer;
-    let isPaused = false;
-
-    function startTimer() {
-        timer = setInterval(() => {
-            if (!isPaused && countdown > 0) {
-                countdown--;
-                timerDisplay.textContent = countdown;
-            } else if (countdown === 0) {
-                clearInterval(timer);
-                countdown = 30; // Reset to 30 seconds after reaching 0
-                startTimer();
-            }
-        }, 1000);
-    }
-
-    // Open quit dialog when clicking back button
-    backButton.addEventListener("click", function () {
-        quitDialog.style.display = "flex";
-    });
-
-    // Close dialog when clicking CANCEL
-    cancelQuit.addEventListener("click", function () {
-        quitDialog.style.display = "none";
-    });
-
-    // Redirect to workout page when clicking QUIT
-    confirmQuit.addEventListener("click", function () {
-        window.location.href = "workout.html"; // Update with actual workout page URL
-    });
-
-    // Pause button functionality
-    pauseButton.addEventListener("click", function () {
-        isPaused = !isPaused;
-        pauseButton.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
-    });
-
-    // Rewind button: Go back 5 seconds
-    rewindButton.addEventListener("click", function () {
-        countdown = Math.max(countdown - 5, 0);
-        timerDisplay.textContent = countdown;
-    });
-
-    // Fast-forward button: Skip ahead 5 seconds
-    fastForwardButton.addEventListener("click", function () {
-        countdown = Math.min(countdown + 5, 30);
-        timerDisplay.textContent = countdown;
-    });
-
-    startTimer(); // Start countdown on page load
-});
-
-
-
-
-        
+        startTimer(10);
     </script>
 
 </body>
