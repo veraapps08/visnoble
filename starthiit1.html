@@ -32,13 +32,13 @@
             position: relative;
         }
 
-        .progress-ring::before {
-            content: "";
+        .progress-inner {
             width: 220px;
             height: 220px;
-            background-color: black;
+            background-color: white;
             position: absolute;
             border-radius: 50%;
+            transition: width 1s linear, height 1s linear;
         }
 
         .exercise-image {
@@ -95,8 +95,9 @@
 <body>
 
     <div class="container">
-        <h2>9 of 21</h2>
+        <h2>1 of 9</h2>
         <div class="progress-ring">
+            <div class="progress-inner" id="progressInner"></div>
             <div class="exercise-image">
                 <i class="fas fa-person-praying"></i>
             </div>
@@ -111,7 +112,7 @@
     </div>
 
     <script>
-        let timeLeft = 10; 
+        let timeLeft = 10;
         let isRunning = false;
         let interval;
 
@@ -121,14 +122,23 @@
                 if (timeLeft > 0) {
                     timeLeft--;
                     document.getElementById("timer").innerText = timeLeft;
+                    updateProgress(timeLeft);
                 } else {
                     clearInterval(interval);
                     if (timeLeft === 0) {
                         timeLeft = 30;  // Switch to 30 seconds after reaching 0
+                        updateProgress(timeLeft);
                         startTimer();
                     }
                 }
             }, 1000);
+        }
+
+        function updateProgress(seconds) {
+            let maxTime = seconds > 10 ? 30 : 10;
+            let size = (seconds / maxTime) * 220; // Shrinking effect
+            document.getElementById("progressInner").style.width = size + "px";
+            document.getElementById("progressInner").style.height = size + "px";
         }
 
         function toggleTimer() {
@@ -150,10 +160,13 @@
             clearInterval(interval);
             timeLeft = seconds;
             document.getElementById("timer").innerText = timeLeft;
+            updateProgress(timeLeft);
             isRunning = false;
             document.getElementById("playPauseIcon").classList.remove("fa-pause");
             document.getElementById("playPauseIcon").classList.add("fa-play");
         }
+
+        updateProgress(timeLeft);
     </script>
 
 </body>
