@@ -38,7 +38,7 @@
             background-color: white;
             position: absolute;
             border-radius: 50%;
-            transition: width 1s linear, height 1s linear;
+            transition: all 0.8s linear; /* Slows down the shrinking effect */
         }
 
         .exercise-image {
@@ -113,6 +113,7 @@
 
     <script>
         let timeLeft = 10;
+        let maxTime = 10;
         let isRunning = false;
         let interval;
 
@@ -122,23 +123,23 @@
                 if (timeLeft > 0) {
                     timeLeft--;
                     document.getElementById("timer").innerText = timeLeft;
-                    updateProgress(timeLeft);
+                    updateProgress();
                 } else {
                     clearInterval(interval);
                     if (timeLeft === 0) {
-                        timeLeft = 30;  // Switch to 30 seconds after reaching 0
-                        updateProgress(timeLeft);
+                        maxTime = 30; // Change max time to 30
+                        timeLeft = 30;
+                        updateProgress();
                         startTimer();
                     }
                 }
             }, 1000);
         }
 
-        function updateProgress(seconds) {
-            let maxTime = seconds > 10 ? 30 : 10;
-            let size = (seconds / maxTime) * 220; // Shrinking effect
-            document.getElementById("progressInner").style.width = size + "px";
-            document.getElementById("progressInner").style.height = size + "px";
+        function updateProgress() {
+            let newSize = (timeLeft / maxTime) * 220; // Reduce size based on remaining time
+            document.getElementById("progressInner").style.width = newSize + "px";
+            document.getElementById("progressInner").style.height = newSize + "px";
         }
 
         function toggleTimer() {
@@ -159,14 +160,15 @@
         function resetTimer(seconds) {
             clearInterval(interval);
             timeLeft = seconds;
+            maxTime = seconds; // Adjust max time accordingly
             document.getElementById("timer").innerText = timeLeft;
-            updateProgress(timeLeft);
+            updateProgress();
             isRunning = false;
             document.getElementById("playPauseIcon").classList.remove("fa-pause");
             document.getElementById("playPauseIcon").classList.add("fa-play");
         }
 
-        updateProgress(timeLeft);
+        updateProgress(); // Initial state
     </script>
 
 </body>
