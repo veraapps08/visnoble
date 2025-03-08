@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Timer</title>
-    <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             background-color: black;
@@ -98,19 +98,63 @@
         <h2>9 of 21</h2>
         <div class="progress-ring">
             <div class="exercise-image">
-                <i class="fas fa-person-praying"></i>  <!-- Font Awesome Yoga Icon -->
+                <i class="fas fa-person-praying"></i>
             </div>
         </div>
         <div class="exercise-name">Downward Dog</div>
-        <div class="timer">0:30</div>
+        <div class="timer" id="timer">10</div>
         <div class="controls">
-            <button><i class="fas fa-backward"></i></button>
-            <button><i class="fas fa-play"></i></button>
-            <button><i class="fas fa-forward"></i></button>
+            <button onclick="resetTimer(10)"><i class="fas fa-backward"></i></button>
+            <button onclick="toggleTimer()"><i class="fas fa-play" id="playPauseIcon"></i></button>
+            <button onclick="resetTimer(30)"><i class="fas fa-forward"></i></button>
         </div>
     </div>
 
+    <script>
+        let timeLeft = 10; 
+        let isRunning = false;
+        let interval;
+
+        function startTimer() {
+            isRunning = true;
+            interval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById("timer").innerText = timeLeft;
+                } else {
+                    clearInterval(interval);
+                    if (timeLeft === 0) {
+                        timeLeft = 30;  // Switch to 30 seconds after reaching 0
+                        startTimer();
+                    }
+                }
+            }, 1000);
+        }
+
+        function toggleTimer() {
+            const playPauseIcon = document.getElementById("playPauseIcon");
+
+            if (isRunning) {
+                clearInterval(interval);
+                isRunning = false;
+                playPauseIcon.classList.remove("fa-pause");
+                playPauseIcon.classList.add("fa-play");
+            } else {
+                startTimer();
+                playPauseIcon.classList.remove("fa-play");
+                playPauseIcon.classList.add("fa-pause");
+            }
+        }
+
+        function resetTimer(seconds) {
+            clearInterval(interval);
+            timeLeft = seconds;
+            document.getElementById("timer").innerText = timeLeft;
+            isRunning = false;
+            document.getElementById("playPauseIcon").classList.remove("fa-pause");
+            document.getElementById("playPauseIcon").classList.add("fa-play");
+        }
+    </script>
+
 </body>
 </html>
-
-
