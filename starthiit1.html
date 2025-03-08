@@ -3,157 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Workout Timer</title>
+    <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: black;
+            color: white;
             text-align: center;
+            font-family: Arial, sans-serif;
         }
+
         .container {
+            width: 90%;
             max-width: 400px;
-            margin: 50px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: auto;
+            padding-top: 50px;
         }
-        .exercise-image {
-            width: 100%;
-            height: 200px;
-            background-color: #ddd;
+
+        .progress-ring {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 10px solid purple;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
-            overflow: hidden;
+            margin: auto;
+            position: relative;
         }
-        .exercise-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
+
+        .progress-ring::before {
+            content: "";
+            width: 220px;
+            height: 220px;
+            background-color: black;
+            position: absolute;
+            border-radius: 50%;
         }
-        .exercise-text {
-            color: purple;
+
+        .exercise-image {
+            width: 180px;
+            height: 180px;
+            background-color: purple;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            font-size: 50px;
+        }
+
+        .exercise-name {
+            margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
+        }
+
+        .timer {
+            font-size: 36px;
+            margin: 10px 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
         }
-        .timer-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 20px auto;
-        }
-        .timer-circle {
-            width: 150px;
-            height: 150px;
+
+        .controls button {
+            background-color: purple;
+            border: none;
+            padding: 15px;
             border-radius: 50%;
-            border: 6px solid purple;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            font-weight: bold;
-            color: purple;
-            background-color: white;
         }
-        .controls {
-            margin-top: 20px;
-        }
-        .controls button {
-            background: purple;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 18px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+
         .controls button:hover {
-            background: #6a0dad;
+            background-color: #800080;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="exercise-image">
-            <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Exercise Image">
+        <h2>9 of 21</h2>
+        <div class="progress-ring">
+            <div class="exercise-image">
+                <i class="fas fa-person-praying"></i>  <!-- Font Awesome Yoga Icon -->
+            </div>
         </div>
-        <div class="exercise-text">SQAUTS</div>
-        <div class="timer-container">
-            <div class="timer-circle" id="timer">10</div>
-        </div>
+        <div class="exercise-name">Downward Dog</div>
+        <div class="timer">0:30</div>
         <div class="controls">
-            <button onclick="rewind()"><i class="fas fa-backward"></i></button>
-            <button id="pausePlayButton" onclick="togglePausePlay()">
-                <i class="fas fa-pause"></i>
-            </button>
-            <button onclick="fastForward()"><i class="fas fa-forward"></i></button>
+            <button><i class="fas fa-backward"></i></button>
+            <button><i class="fas fa-play"></i></button>
+            <button><i class="fas fa-forward"></i></button>
         </div>
     </div>
-
-    <script>
-        let time = 10;
-        let timerElement = document.getElementById("timer");
-        let interval;
-        let isPaused = false;
-        let pausePlayButton = document.getElementById("pausePlayButton");
-
-        function startTimer(duration) {
-            clearInterval(interval);
-            time = duration;
-            timerElement.textContent = time;
-            interval = setInterval(() => {
-                if (time > 0) {
-                    time--;
-                    timerElement.textContent = time;
-                } else {
-                    clearInterval(interval);
-                    if (duration === 10) {
-                        startTimer(30);
-                    }
-                }
-            }, 1000);
-        }
-
-        function togglePausePlay() {
-            if (isPaused) {
-                resumeTimer();
-                pausePlayButton.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                pauseTimer();
-                pausePlayButton.innerHTML = '<i class="fas fa-play"></i>';
-            }
-            isPaused = !isPaused;
-        }
-
-        function pauseTimer() {
-            clearInterval(interval);
-        }
-
-        function resumeTimer() {
-            startTimer(time);
-        }
-
-        function rewind() {
-            startTimer(10);
-            pausePlayButton.innerHTML = '<i class="fas fa-pause"></i>';
-            isPaused = false;
-        }
-
-        function fastForward() {
-            startTimer(30);
-            pausePlayButton.innerHTML = '<i class="fas fa-pause"></i>';
-            isPaused = false;
-        }
-
-        window.onload = () => startTimer(10);
-    </script>
 
 </body>
 </html>
