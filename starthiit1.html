@@ -3,108 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Timer</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: black;
-            color: white;
-        }
+    <title>Jumping Jacks Timer</title>
+   <style>
 
-        .container {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
 
-        .title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+       body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
 
-        .image-container img {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-        }
+.container {
+    position: relative;
+    padding: 20px;
+}
 
-        .timer {
-            font-size: 40px;
-            font-weight: bold;
-            color: purple;
-            margin: 20px 0;
-        }
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
 
-        .next-text {
-            font-size: 18px;
-            margin-top: 20px;
-        }
+.exercise {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
 
-        .hidden {
-            display: none;
-        }
-    </style>
+.exercise-img {
+    width: 200px;
+}
+
+.settings-icons {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.text-section {
+    margin-top: 10px;
+}
+
+.ready-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e91e63;
+}
+
+.exercise-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.info-icon {
+    font-size: 14px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.timer-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.timer {
+    font-size: 32px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+    stroke: #e91e63;
+    stroke-dasharray: 125.6;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+   </style>
 </head>
 <body>
 
-    <!-- First Screen -->
-    <div id="screen1" class="container">
-        <div class="title">Ready to go!</div>
-        <div class="image-container">
-            <img src="image1.png" alt="Workout Step 1">
+    <div class="container">
+        <button class="back-button">&#x2190;</button>
+
+        <div class="exercise">
+            <img src="exercise-image.png" alt="Jumping Jacks" class="exercise-img">
+            <div class="settings-icons">
+                <button class="icon">⚙️</button>
+                <button class="icon">🎥</button>
+                <button class="icon">🎵</button>
+            </div>
         </div>
-        <div id="timer1" class="timer">10 SEC</div>
-        <div class="next-text">NEXT 1/20<br>Jumping Jack</div>
+
+        <div class="text-section">
+            <h2 class="ready-text">Ready to go!</h2>
+            <p class="exercise-name">JUMPING JACKS <span class="info-icon">❓</span></p>
+        </div>
+
+        <div class="timer-container">
+            <svg class="progress-ring" width="50" height="50">
+                <circle class="progress-ring-circle" cx="25" cy="25" r="20" stroke-width="4" fill="none"/>
+            </svg>
+            <div class="timer" id="timer">7</div>
+        </div>
     </div>
 
-    <!-- Second Screen -->
-    <div id="screen2" class="container hidden">
-        <div class="title">Jumping Jack</div>
-        <div class="image-container">
-            <img src="image2.png" alt="Workout Step 2">
-        </div>
-        <div id="timer2" class="timer">30 SEC</div>
-    </div>
+    <script>  
 
-    <script>
-        let timer1 = 10;
-        let timer2 = 30;
 
-        function startFirstTimer() {
-            const interval = setInterval(() => {
-                document.getElementById("timer1").textContent = timer1 + " SEC";
-                if (timer1 === 0) {
-                    clearInterval(interval);
-                    switchToSecondScreen();
-                }
-                timer1--;
-            }, 1000);
-        }
 
-        function switchToSecondScreen() {
-            document.getElementById("screen1").classList.add("hidden");
-            document.getElementById("screen2").classList.remove("hidden");
+        let timeLeft = 7;
+const timerElement = document.getElementById('timer');
+const progressCircle = document.querySelector('.progress-ring-circle');
+const circumference = 125.6;
 
-            const interval = setInterval(() => {
-                document.getElementById("timer2").textContent = timer2 + " SEC";
-                if (timer2 === 0) {
-                    clearInterval(interval);
-                }
-                timer2--;
-            }, 1000);
-        }
+function updateTimer() {
+    if (timeLeft >= 0) {
+        timerElement.textContent = timeLeft;
+        let offset = circumference - (timeLeft / 7) * circumference;
+        progressCircle.style.strokeDashoffset = offset;
+        timeLeft--;
+        setTimeout(updateTimer, 1000);
+    }
+}
 
-        startFirstTimer();
+updateTimer();
+
     </script>
-
 </body>
 </html>
-
 
 
