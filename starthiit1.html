@@ -38,7 +38,7 @@
             background-color: white;
             position: absolute;
             border-radius: 50%;
-            transition: width 1s linear, height 1s linear; /* Slower shrink animation */
+            transition: width 1s linear, height 1s linear; /* Slow shrinking effect */
         }
 
         .exercise-image {
@@ -137,9 +137,14 @@
         }
 
         function updateProgress() {
+            let progressInner = document.getElementById("progressInner");
             let newSize = (timeLeft / maxTime) * 220; // Reduce size based on remaining time
-            document.getElementById("progressInner").style.width = newSize + "px";
-            document.getElementById("progressInner").style.height = newSize + "px";
+            progressInner.style.width = newSize + "px";
+            progressInner.style.height = newSize + "px";
+
+            // Slow down transition by making it proportional to time
+            let transitionSpeed = timeLeft / maxTime;
+            progressInner.style.transition = `width ${transitionSpeed}s linear, height ${transitionSpeed}s linear`;
         }
 
         function toggleTimer() {
