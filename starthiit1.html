@@ -3,179 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Exercise Timer</title>
     <style>
+
         body {
-            background-color: black;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white;
+}
 
-        .container {
-            width: 90%;
-            max-width: 400px;
-            margin: auto;
-            padding-top: 50px;
-        }
+.timer-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+}
 
-        .progress-ring {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            border: 10px solid purple;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-            position: relative;
-        }
+.circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    overflow: hidden;
+    border: 5px solid purple;
+    transition: all 1s ease;
+}
 
-        .progress-inner {
-            width: 220px;
-            height: 220px;
-            background-color: white;
-            position: absolute;
-            border-radius: 50%;
-            transition: width 1s linear, height 1s linear; /* Slow shrinking effect */
-        }
+.time-display {
+    font-size: 2em;
+    color: purple;
+    position: absolute;
+}
 
-        .exercise-image {
-            width: 180px;
-            height: 180px;
-            background-color: purple;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            font-size: 50px;
-        }
+.timer-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 5px solid purple;
+    animation: shrink 10s linear infinite;
+}
 
-        .exercise-name {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
+@keyframes shrink {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
 
-        .timer {
-            font-size: 36px;
-            margin: 10px 0;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .controls button {
-            background-color: purple;
-            border: none;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 20px;
-            color: white;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .controls button:hover {
-            background-color: #800080;
-        }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h2>1 of 9</h2>
-        <div class="progress-ring">
-            <div class="progress-inner" id="progressInner"></div>
-            <div class="exercise-image">
-                <i class="fas fa-person-praying"></i>
-            </div>
-        </div>
-        <div class="exercise-name">Downward Dog</div>
-        <div class="timer" id="timer">10</div>
-        <div class="controls">
-            <button onclick="resetTimer(10)"><i class="fas fa-backward"></i></button>
-            <button onclick="toggleTimer()"><i class="fas fa-play" id="playPauseIcon"></i></button>
-            <button onclick="resetTimer(30)"><i class="fas fa-forward"></i></button>
+    <div class="timer-container">
+        <div id="circle" class="circle">
+            <span id="time-display" class="time-display">10</span>
         </div>
     </div>
-
     <script>
-        let timeLeft = 10;
-        let maxTime = 10;
-        let isRunning = false;
-        let interval;
 
-        function startTimer() {
-            isRunning = true;
-            interval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    document.getElementById("timer").innerText = timeLeft;
-                    updateProgress();
-                } else {
-                    clearInterval(interval);
-                    if (timeLeft === 0) {
-                        maxTime = 30; // Change max time to 30
-                        timeLeft = 30;
-                        updateProgress();
-                        startTimer();
-                    }
-                }
+        let timeLeft = 10; // Timer duration in seconds
+let timerDisplay = document.getElementById("time-display");
+let circle = document.getElementById("circle");
+
+function startTimer() {
+    const countdown = setInterval(function () {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        
+        // Shrinking the circle by changing its scale
+        circle.style.transform = `scale(${timeLeft / 10})`;
+
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            setTimeout(() => {
+                timeLeft = 10; // Reset timer
+                startTimer(); // Restart timer
             }, 1000);
         }
+    }, 1000);
+}
 
-        function updateProgress() {
-            let progressInner = document.getElementById("progressInner");
-            let newSize = (timeLeft / maxTime) * 220; // Reduce size based on remaining time
-            progressInner.style.width = newSize + "px";
-            progressInner.style.height = newSize + "px";
+startTimer(); // Start the timer when page loads
 
-            // Slow down transition by making it proportional to time
-            let transitionSpeed = timeLeft / maxTime;
-            progressInner.style.transition = `width ${transitionSpeed}s linear, height ${transitionSpeed}s linear`;
-        }
-
-        function toggleTimer() {
-            const playPauseIcon = document.getElementById("playPauseIcon");
-
-            if (isRunning) {
-                clearInterval(interval);
-                isRunning = false;
-                playPauseIcon.classList.remove("fa-pause");
-                playPauseIcon.classList.add("fa-play");
-            } else {
-                startTimer();
-                playPauseIcon.classList.remove("fa-play");
-                playPauseIcon.classList.add("fa-pause");
-            }
-        }
-
-        function resetTimer(seconds) {
-            clearInterval(interval);
-            timeLeft = seconds;
-            maxTime = seconds; // Adjust max time accordingly
-            document.getElementById("timer").innerText = timeLeft;
-            updateProgress();
-            isRunning = false;
-            document.getElementById("playPauseIcon").classList.remove("fa-pause");
-            document.getElementById("playPauseIcon").classList.add("fa-play");
-        }
-
-        updateProgress(); // Initial state
     </script>
-
 </body>
 </html>
-
