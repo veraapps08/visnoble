@@ -5,102 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise Timer</title>
     <style>
-
         body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    color: white;
-}
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            text-align: center;
+        }
 
-.timer-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 200px;
-}
+        .timer-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+        }
 
-.circle {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    overflow: hidden;
-    border: 5px solid purple;
-    transition: all 1s ease;
-}
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            overflow: hidden;
+            border: 5px solid purple;
+            transition: all 1s ease;
+        }
 
-.time-display {
-    font-size: 2em;
-    color: purple;
-    position: absolute;
-}
+        .timer-image {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            opacity: 0.2;
+        }
 
-.timer-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50%;
-    border: 5px solid purple;
-    animation: shrink 10s linear infinite;
-}
+        .time-display {
+            font-size: 2em;
+            color: purple;
+            position: absolute;
+        }
 
-@keyframes shrink {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(0);
-    }
-}
+        .text-container {
+            margin-top: 20px;
+        }
 
+        #timer-text {
+            font-size: 1.5em;
+            color: purple;
+        }
+
+        .timer-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            border: 5px solid purple;
+            animation: shrink 10s linear infinite;
+        }
+
+        @keyframes shrink {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="timer-container">
         <div id="circle" class="circle">
+            <img src="your-image-url.jpg" alt="Exercise Image" class="timer-image">
             <span id="time-display" class="time-display">10</span>
         </div>
     </div>
+    <div class="text-container">
+        <p id="timer-text">Starting Exercise...</p>
+    </div>
+
     <script>
+        let timeLeft = 10; // Initial 10-second timer
+        let timerDisplay = document.getElementById("time-display");
+        let circle = document.getElementById("circle");
+        let timerText = document.getElementById("timer-text");
 
-        let timeLeft = 10; // Timer duration in seconds
-let timerDisplay = document.getElementById("time-display");
-let circle = document.getElementById("circle");
+        function startTimer() {
+            const countdown = setInterval(function () {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
 
-function startTimer() {
-    const countdown = setInterval(function () {
-        timeLeft--;
-        timerDisplay.textContent = timeLeft;
-        
-        // Shrinking the circle by changing its scale
-        circle.style.transform = `scale(${timeLeft / 10})`;
+                // Shrinking the circle by changing its scale
+                circle.style.transform = `scale(${timeLeft / 10})`;
 
-        if (timeLeft <= 0) {
-            clearInterval(countdown);
-            setTimeout(() => {
-                timeLeft = 10; // Reset timer
-                startTimer(); // Restart timer
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+
+                    // Switch to 30-second timer after 10 seconds
+                    if (timeLeft === 0) {
+                        timeLeft = 30; // Set to 30-second timer
+                        timerText.textContent = "New Timer: 30 Seconds!";
+                        setTimeout(() => {
+                            startTimer(); // Restart the 30-second timer
+                        }, 1000);
+                    }
+                }
             }, 1000);
         }
-    }, 1000);
-}
 
-startTimer(); // Start the timer when page loads
-
+        startTimer(); // Start the timer when page loads
     </script>
 </body>
 </html>
+
