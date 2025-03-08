@@ -3,131 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise Timer</title>
+    <title>Workout Timer</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            color: white;
+            font-family: Arial, sans-serif;
             text-align: center;
+            background-color: black;
+            color: white;
         }
 
-        .timer-container {
-            position: relative;
+        .container {
+            width: 100%;
+            height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            width: 200px;
-            height: 200px;
-        }
-
-        .circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
             justify-content: center;
-            align-items: center;
-            position: absolute;
-            overflow: hidden;
-            border: 5px solid purple;
-            transition: all 1s ease;
         }
 
-        .timer-image {
-            position: absolute;
-            width: 120%;
-            height: 120%;
-            object-fit: cover;
-            opacity: 0.2;
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .time-display {
-            font-size: 2em;
+        .image-container img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .timer {
+            font-size: 40px;
+            font-weight: bold;
             color: purple;
-            position: absolute;
+            margin: 20px 0;
         }
 
-        .text-container {
+        .next-text {
+            font-size: 18px;
             margin-top: 20px;
         }
 
-        #timer-text {
-            font-size: 1.5em;
-            color: purple;
-        }
-
-        .timer-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            border: 5px solid purple;
-            animation: shrink 10s linear infinite;
-        }
-
-        @keyframes shrink {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(0);
-            }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="timer-container">
-        <div id="circle" class="circle">
-            <img src="https://www.example.com/your-image.jpg" alt="Exercise Image" class="timer-image">
-            <span id="time-display" class="time-display">10</span>
+
+    <!-- First Screen -->
+    <div id="screen1" class="container">
+        <div class="title">Ready to go!</div>
+        <div class="image-container">
+            <img src="image1.png" alt="Workout Step 1">
         </div>
+        <div id="timer1" class="timer">10 SEC</div>
+        <div class="next-text">NEXT 1/20<br>Jumping Jack</div>
     </div>
-    <div class="text-container">
-        <p id="timer-text">Starting Exercise...</p>
+
+    <!-- Second Screen -->
+    <div id="screen2" class="container hidden">
+        <div class="title">Jumping Jack</div>
+        <div class="image-container">
+            <img src="image2.png" alt="Workout Step 2">
+        </div>
+        <div id="timer2" class="timer">30 SEC</div>
     </div>
 
     <script>
-        let timeLeft = 10; // Initial 10-second timer
-        let timerDisplay = document.getElementById("time-display");
-        let circle = document.getElementById("circle");
-        let timerText = document.getElementById("timer-text");
+        let timer1 = 10;
+        let timer2 = 30;
 
-        function startTimer() {
-            const countdown = setInterval(function () {
-                timeLeft--;
-                timerDisplay.textContent = timeLeft;
-
-                // Shrinking the circle by changing its scale
-                circle.style.transform = `scale(${timeLeft / 10})`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(countdown);
-
-                    // Switch to 30-second timer after 10 seconds
-                    if (timeLeft === 0) {
-                        timeLeft = 30; // Set to 30-second timer
-                        timerText.textContent = "New Timer: 30 Seconds!";
-                        setTimeout(() => {
-                            startTimer(); // Restart the 30-second timer
-                        }, 1000);
-                    }
+        function startFirstTimer() {
+            const interval = setInterval(() => {
+                document.getElementById("timer1").textContent = timer1 + " SEC";
+                if (timer1 === 0) {
+                    clearInterval(interval);
+                    switchToSecondScreen();
                 }
+                timer1--;
             }, 1000);
         }
 
-        startTimer(); // Start the timer when page loads
+        function switchToSecondScreen() {
+            document.getElementById("screen1").classList.add("hidden");
+            document.getElementById("screen2").classList.remove("hidden");
+
+            const interval = setInterval(() => {
+                document.getElementById("timer2").textContent = timer2 + " SEC";
+                if (timer2 === 0) {
+                    clearInterval(interval);
+                }
+                timer2--;
+            }, 1000);
+        }
+
+        startFirstTimer();
     </script>
+
 </body>
 </html>
+
 
 
