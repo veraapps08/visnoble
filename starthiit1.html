@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIIT Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
 
-    <style>
 
-        body {
+       body {
     background: #0A021A;
     color: #fff;
     font-family: 'Arial', sans-serif;
@@ -117,7 +116,9 @@ button i {
     font-size: 18px;
 }
 
-    </style>
+   </style>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -137,13 +138,12 @@ button i {
 
         <div class="timer-section">
             <div class="timer-display">
-                <span id="time-display">0:04</span>
+                <span id="time-display">0:10</span>
             </div>
 
             <div class="controls">
                 <button id="rewind-btn"><i class="fas fa-backward"></i> Rewind</button>
-                <button id="start-btn"><i class="fas fa-play"></i> Start</button>
-                <button id="pause-btn"><i class="fas fa-pause"></i> Pause</button>
+                <button id="play-pause-btn"><i class="fas fa-play"></i> Start</button>
                 <button id="reset-btn"><i class="fas fa-undo"></i> Reset</button>
                 <button id="forward-btn">Forward <i class="fas fa-forward"></i></button>
             </div>
@@ -152,40 +152,57 @@ button i {
     <script>
 
 
-        let countdown = 4;
+
+        let countdown = 10; // Start with 10-second timer
 let timer;
+let isPlaying = false;
 const timeDisplay = document.getElementById('time-display');
-const mainTimer = document.getElementById('main-timer');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
 
 function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 }
 
+// Timer logic with 10s + 30s functionality
 function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => {
         if (countdown > 0) {
             countdown--;
             updateDisplay();
-        } else {
+        } else if (countdown === 0) {
             clearInterval(timer);
-            alert("Time’s up!");
+            countdown = 30; // Switch to 30-second countdown
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
         }
     }, 1000);
 }
 
-function pauseTimer() {
-    clearInterval(timer);
+function togglePlayPause() {
+    if (isPlaying) {
+        clearInterval(timer);
+        playPauseIcon.className = 'fas fa-play'; // Switch back to play icon
+        playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
+    } else {
+        startTimer();
+        playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
+        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+    }
+    isPlaying = !isPlaying;
 }
 
 function resetTimer() {
     clearInterval(timer);
-    countdown = 4;
+    countdown = 10;
     updateDisplay();
+    isPlaying = false;
+    playPauseIcon.className = 'fas fa-play';
+    playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
 }
 
-document.getElementById('start-btn').addEventListener('click', startTimer);
-document.getElementById('pause-btn').addEventListener('click', pauseTimer);
+document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
 document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
 document.getElementById('rewind-btn').addEventListener('click', () => {
