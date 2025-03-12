@@ -1,74 +1,185 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIIT Timer</title>
+    <style>
 
-export default function HIITTimer() {
-    const [time, setTime] = useState(4);
-    const [isActive, setIsActive] = useState(false);
-
-    useEffect(() => {
-        let timer;
-        if (isActive && time > 0) {
-            timer = setInterval(() => setTime(time - 1), 1000);
-        } else if (time === 0) {
-            setIsActive(false);
-        }
-        return () => clearInterval(timer);
-    }, [isActive, time]);
-
-    const handleStartPause = () => setIsActive(!isActive);
-    const handleReset = () => {
-        setIsActive(false);
-        setTime(4);
-    };
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.backArrow}>&#x2190;</Text>
-                <Text style={styles.title}>HIIT</Text>
-                <Text style={styles.timerDisplay}>5:00</Text>
-            </View>
-
-            <View style={styles.content}>
-                <Text style={styles.exerciseTitle}>Prisoner's Squat</Text>
-                <Text style={styles.getReady}>Get Ready</Text>
-                <View style={styles.timerCircle}>
-                    <Text style={styles.countdown}>{`0:0${time}`}</Text>
-                </View>
-
-                <View style={styles.controls}>
-                    <TouchableOpacity onPress={handleReset} style={styles.controlButton}>
-                        <Text>&#x23EA;</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={handleStartPause} style={styles.controlButton}>
-                        <Text>{isActive ? 'Pause' : 'Start'}</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={handleReset} style={styles.controlButton}>
-                        <Text>&#x23E9;</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-    );
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#121212', color: '#9C27B0' },
-    header: { flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#9C27B0', color: '#fff' },
-    backArrow: { fontSize: 24, color: '#fff' },
-    title: { fontSize: 20, color: '#fff' },
-    timerDisplay: { fontSize: 18, color: '#FF5722' },
-    content: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-    exerciseTitle: { fontSize: 22, color: '#fff', marginBottom: 5 },
-    getReady: { color: '#9C27B0', fontSize: 16, marginBottom: 20 },
-    timerCircle: { width: 100, height: 100, borderRadius: 50, borderWidth: 4, borderColor: '#9C27B0', alignItems: 'center', justifyContent: 'center' },
-    countdown: { fontSize: 28, color: '#9C27B0' },
-    controls: { flexDirection: 'row', marginTop: 20 },
-    controlButton: { backgroundColor: '#9C27B0', padding: 10, borderRadius: 10, marginHorizontal: 10, color: '#fff' }
+.header {
+    background-color: #6A0DAD;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    font-size: 18px;
+}
+
+.content {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.get-ready {
+    color: #A32CC4;
+}
+
+.exercise-image img {
+    width: 150px;
+    height: auto;
+    margin: 20px 0;
+    border: 3px solid #A32CC4;
+    border-radius: 10px;
+}
+
+.timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #A32CC4;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+.circle-timer {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #A32CC4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #A32CC4;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.time {
+    color: #A32CC4;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+#start-btn, #pause-btn, #reset-btn {
+    background-color: #6A0DAD;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#start-btn:hover, #pause-btn:hover, #reset-btn:hover {
+    background-color: #A32CC4;
+}
+
+    </style>
+    <script>
+
+
+
+        let countdown = 4;
+let timer;
+const timeDisplay = document.getElementById('time-display');
+
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+}
+
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else {
+            clearInterval(timer);
+            alert("Time’s up!");
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(timer);
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    countdown = 4;
+    updateDisplay();
+}
+
+document.getElementById('start-btn').addEventListener('click', startTimer);
+document.getElementById('pause-btn').addEventListener('click', pauseTimer);
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+document.getElementById('rewind-btn').addEventListener('click', () => {
+    countdown = Math.max(countdown - 1, 0);
+    updateDisplay();
 });
 
+document.getElementById('forward-btn').addEventListener('click', () => {
+    countdown++;
+    updateDisplay();
+});
 
+window.onload = updateDisplay;
 
+    </script>
+</head>
+<body>
+    <div class="header">
+        <span class="back-arrow">&#x2190;</span>
+        <h1>HIIT</h1>
+        <span class="time">5:00</span>
+    </div>
 
+    <div class="content">
+        <h2>Prisoner's Squat</h2>
+        <p class="get-ready">Get Ready</p>
+        <div class="exercise-image">
+            <img src="exercise-demo.gif" alt="Squat Exercise">
+        </div>
+        
+        <div class="timer-container">
+            <button id="rewind-btn" class="control-btn">&#x23EA;</button>
+            <div class="circle-timer">
+                <span id="time-display">0:04</span>
+            </div>
+            <button id="forward-btn" class="control-btn">&#x23E9;</button>
+        </div>
+
+        <div class="controls">
+            <button id="start-btn">Start</button>
+            <button id="pause-btn">Pause</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+    </div>
+</body>
+</html>
