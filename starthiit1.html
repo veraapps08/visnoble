@@ -3,159 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jumping Jacks Timer</title>
+    <title>HIIT Timer</title>
    <style>
-
-
-       body {
+body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #fff;
     margin: 0;
     padding: 0;
-}
-
-.container {
-    position: relative;
-    padding: 20px;
-}
-
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.exercise {
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-.exercise-img {
-    width: 200px;
-}
-
-.settings-icons {
-    position: absolute;
-    right: 20px;
-    top: 10px;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
-}
-
-.icon {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-.text-section {
-    margin-top: 10px;
-}
-
-.ready-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #e91e63;
-}
-
-.exercise-name {
-    font-size: 18px;
-    font-weight: bold;
+    height: 100vh;
     color: #000;
 }
 
-.info-icon {
-    font-size: 14px;
-    vertical-align: middle;
-    cursor: pointer;
+.header {
+    background-color: #1E5DAC;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    font-size: 18px;
+}
+
+.content {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.get-ready {
+    color: #1E5DAC;
+}
+
+.exercise-image img {
+    width: 150px;
+    height: auto;
+    margin: 20px 0;
 }
 
 .timer-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
 }
 
-.timer {
-    font-size: 32px;
+.control-btn {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #1E5DAC;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+.circle-timer {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #FF5722;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF5722;
     font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    font-size: 20px;
 }
 
-.progress-ring {
-    transform: rotate(-90deg);
+.time {
+    color: #FF5722;
 }
 
-.progress-ring-circle {
-    stroke: #e91e63;
-    stroke-dasharray: 125.6;
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s linear;
-}
 
+       
    </style>
-</head>
-<body>
-
-    <div class="container">
-        <button class="back-button">&#x2190;</button>
-
-        <div class="exercise">
-            <img src="1920x1200-woman-doing-squats-8161438-6561561.gif" alt="Jumping Jacks" class="exercise-img">
-            <div class="settings-icons">
-                <button class="icon">⚙️</button>
-                <button class="icon">🎥</button>
-                <button class="icon">🎵</button>
-            </div>
-        </div>
-
-        <div class="text-section">
-            <h2 class="ready-text">Ready to go!</h2>
-            <p class="exercise-name">JUMPING JACKS <span class="info-icon">❓</span></p>
-        </div>
-
-        <div class="timer-container">
-            <svg class="progress-ring" width="50" height="50">
-                <circle class="progress-ring-circle" cx="25" cy="25" r="20" stroke-width="4" fill="none"/>
-            </svg>
-            <div class="timer" id="timer">7</div>
-        </div>
-    </div>
-
-    <script>  
+    <script>
 
 
+        let countdown = 4;
+const timeDisplay = document.getElementById('time-display');
 
-        let timeLeft = 7;
-const timerElement = document.getElementById('timer');
-const progressCircle = document.querySelector('.progress-ring-circle');
-const circumference = 125.6;
-
-function updateTimer() {
-    if (timeLeft >= 0) {
-        timerElement.textContent = timeLeft;
-        let offset = circumference - (timeLeft / 7) * circumference;
-        progressCircle.style.strokeDashoffset = offset;
-        timeLeft--;
-        setTimeout(updateTimer, 1000);
-    }
+function startTimer() {
+    const timer = setInterval(() => {
+        countdown--;
+        timeDisplay.textContent = `0:0${countdown}`;
+        
+        if (countdown === 0) {
+            clearInterval(timer);
+            alert('Time’s up!');
+        }
+    }, 1000);
 }
 
-updateTimer();
+window.onload = startTimer;
 
     </script>
+</head>
+<body>
+    <div class="header">
+        <span class="back-arrow">&#x2190;</span>
+        <h1>HIIT</h1>
+        <span class="time">5:00</span>
+    </div>
+
+    <div class="content">
+        <h2>Prisoner's Squat</h2>
+        <p class="get-ready">Get Ready</p>
+        <div class="exercise-image">
+            <img src="exercise-demo.gif" alt="Squat Exercise">
+        </div>
+        
+        <div class="timer-container">
+            <button class="control-btn">&#x23EA;</button>
+            <div class="circle-timer">
+                <span id="time-display">0:04</span>
+            </div>
+            <button class="control-btn">&#x23E9;</button>
+        </div>
+    </div>
 </body>
 </html>
+
 
 
