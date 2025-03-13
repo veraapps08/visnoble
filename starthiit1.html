@@ -24,7 +24,7 @@
     width: 90%;
     max-width: 400px;
     background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
-    border-radius: 50px;
+    border-radius: 20px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     text-align: center;
@@ -65,7 +65,7 @@ header h1 {
 .exercise-gif img {
     width: 100px;
     height: 100px;
-    border-radius: 10px;
+    border-radius: 50px;
     border: 3px solid #A32CC4;
 }
 
@@ -124,7 +124,9 @@ button i {
 <body>
     <div class="container">
         <header>
-            <i class="fas fa-arrow-left back-arrow"></i>
+            <a href="hiit.html">
+    <i class="fas fa-arrow-left back-arrow"></i>
+</a>
             <h1>HIIT Workout</h1>
             <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
         </header>
@@ -151,7 +153,7 @@ button i {
         </div>
     </div>
    <script>
-    let countdown = 10; // Start with 10-second timer
+        let countdown = 10; // Start with 10-second timer
     let timer;
     let isPlaying = true; // Start in playing mode to avoid manual play press
     const timeDisplay = document.getElementById('time-display');
@@ -200,7 +202,11 @@ button i {
         playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
     }
 
-    document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+    document.getElementById('play-pause-btn').addEventListener('click', () => {
+        // Redirect to another page when the button is clicked
+        window.location.href = "your-page.html"; // Replace "your-page.html" with the actual URL you want to navigate to
+    });
+
     document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
     document.getElementById('rewind-btn').addEventListener('click', () => {
@@ -213,6 +219,7 @@ button i {
         updateDisplay();
     });
 
+    // Start the timer automatically when the page loads
     window.onload = () => {
         updateDisplay();
         startTimer(); // Automatically start the 10-second timer on page load
