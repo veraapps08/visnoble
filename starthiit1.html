@@ -4,225 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIIT Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <style>
-       body {
-            background: #0A021A;
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #121212;
             color: #fff;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            height: 100vh;
             display: flex;
-            align-items: center;
+            height: 100vh;
             justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
         .container {
+            text-align: center;
             width: 90%;
             max-width: 400px;
-            background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-            text-align: center;
         }
 
-        header {
+        .header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 20px;
+            color: #A020F0;
         }
 
-        header h1 {
-            margin: 0;
-            color: #A32CC4;
+        .header h1 {
+            flex-grow: 1;
         }
 
-        .back-arrow {
+        .exercise-info h2 {
             font-size: 24px;
-            color: #A32CC4;
-            cursor: pointer;
+            color: #A020F0;
         }
 
-        .time-remaining {
-            color: #fff;
+        .status {
+            color: #A020F0;
         }
 
-        .exercise-section h2 {
-            color: #A32CC4;
-            margin-top: 0;
-        }
-
-        .get-ready {
-            color: #A32CC4;
-            font-style: italic;
-            font-size: 20px;
-        }
-
-        .exercise-gif img {
-            width: 200px;
-            height: 200px;
+        .image-container img {
+            width: 100%;
             border-radius: 10px;
-            border: 3px solid #A32CC4;
-        }
-
-        .timer-section {
-            margin-top: 20px;
-        }
-
-        .timer-display {
-            background-color: #1E052B;
-            color: #A32CC4;
-            border: 3px solid #A32CC4;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: 10px auto;
-            box-shadow: 0 0 20px #A32CC4;
+            background-color: #1a1a1a;
+            padding: 10px;
         }
 
         .controls {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-around;
-            margin-top: 10px;
-        }
-
-        button {
-            background: #6A0DAD;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
             align-items: center;
-            gap: 5px;
-            transition: background 0.3s ease;
+            margin-top: 20px;
         }
 
-        button:hover {
-            background: #A32CC4;
+        .timer {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background: #000;
+            border: 3px solid #A020F0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        button i {
-            font-size: 18px;
+        #time {
+            color: #A020F0;
+            font-size: 20px;
+            font-weight: bold;
         }
-   </style>
+
+        .play-pause, .rewind {
+            font-size: 28px;
+            color: #A020F0;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <a href="hiit.html">
-  <i class="fas fa-arrow-left back-arrow"></i>
-</a>
-
-            
+        <div class="header">
+            <i class="fas fa-arrow-left back-button"></i>
             <h1>HIIT Workout</h1>
-            <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
-        </header>
-
-        <div class="exercise-section">
-            <h2> Squat</h2>
-            <p class="get-ready">Get Ready!</p>
-            <div class="exercise-gif">
-                <img src="44.gif" alt="Squat Demo" id="exercise-img">
-            </div>
         </div>
-        
-
-        <div class="timer-section">
-            <div class="timer-display">
-                <span id="time-display">0:10</span>
+        <div class="exercise-info">
+            <h2>Prisoner’s Squat</h2>
+            <p class="status">Get Ready</p>
+        </div>
+        <div class="image-container">
+            <img src="squat.png" alt="Prisoner's Squat">
+        </div>
+        <div class="controls">
+            <i class="fas fa-backward rewind"></i>
+            <div class="timer">
+                <span id="time">00:10</span>
             </div>
-
-            <div class="controls">
-                <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
-                <button id="play-pause-btn"><i class="fas fa-play"></i> </button>
-                <button id="forward-btn"> <i class="fas fa-forward"></i></button>
-            </div>
+            <i class="fas fa-play play-pause" id="playPauseBtn"></i>
         </div>
     </div>
+
     <script>
-        let countdown = 10; // Start with 10-second timer
-        let timer;
-        let isPlaying = false;
-        const timeDisplay = document.getElementById('time-display');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const playPauseIcon = playPauseBtn.querySelector('i');
-        const exerciseImg = document.getElementById('exercise-img');
-        const exerciseSection = document.querySelector('.exercise-section');
+        const timerDisplay = document.getElementById('time');
+        const playPauseBtn = document.getElementById('playPauseBtn');
 
-        function updateDisplay() {
-            timeDisplay.textContent = countdown < 10 ? 0:0${countdown} : 0:${countdown};
-        }
+        let time = 10;
+        let countdown;
+        let isPaused = true;
 
-        // Timer logic with 10s + 30s functionality
-        function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(() => {
-                if (countdown > 0) {
-                    countdown--;
-                    updateDisplay();
-                } else if (countdown === 0) {
-                    clearInterval(timer);
-                    countdown = 30; // Switch to 30-second countdown
-                    updateDisplay();
-                    // Show image for 30s
-                    exerciseSection.querySelector('p').style.display = "none"; // Hide "Get Ready"
-                    exerciseImg.style.display = "block"; // Show image
-                    startTimer(); // Auto-start 30-second timer
-                }
-            }, 1000);
+        function updateTimerDisplay() {
+            timerDisplay.textContent = `00:${time < 10 ? '0' : ''}${time}`;
         }
 
         function togglePlayPause() {
-            if (isPlaying) {
-                clearInterval(timer);
-                playPauseIcon.className = 'fas fa-play'; // Switch back to play icon
-                playPauseBtn.innerHTML = <i class="fas fa-play"></i> Start;
+            if (isPaused) {
+                playPauseBtn.classList.remove('fa-play');
+                playPauseBtn.classList.add('fa-pause');
+                countdown = setInterval(() => {
+                    if (time > 0) {
+                        time--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(countdown);
+                        time = 30;
+                        updateTimerDisplay();
+                    }
+                }, 1000);
             } else {
-                startTimer();
-                playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
-                playPauseBtn.innerHTML = <i class="fas fa-pause"></i> Pause;
+                playPauseBtn.classList.remove('fa-pause');
+                playPauseBtn.classList.add('fa-play');
+                clearInterval(countdown);
             }
-            isPlaying = !isPlaying;
+            isPaused = !isPaused;
         }
 
-        function resetTimer() {
-            clearInterval(timer);
-            countdown = 10;
-            updateDisplay();
-            exerciseSection.querySelector('p').style.display = "inline"; // Show "Get Ready"
-            exerciseImg.style.display = "none"; // Hide image
-            isPlaying = false;
-            playPauseIcon.className = 'fas fa-play';
-            playPauseBtn.innerHTML = <i class="fas fa-play"></i> Start;
-        }
-
-        document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
-        document.getElementById('rewind-btn').addEventListener('click', () => {
-            countdown = Math.max(countdown - 1, 0);
-            updateDisplay();
-        });
-
-        document.getElementById('forward-btn').addEventListener('click', () => {
-            countdown++;
-            updateDisplay();
-        });
-
-        // Start the timer immediately when the page loads
-        window.onload = function() {
-            updateDisplay();
-            startTimer(); // Start the timer on page load
-        };
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        updateTimerDisplay();
     </script>
 </body>
 </html>
