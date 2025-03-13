@@ -214,6 +214,10 @@ document.getElementById('forward-btn').addEventListener('click', () => {
 });
 
 window.onload = updateDisplay;
+window.onload = function() {
+    updateDisplay(); 
+    startTimer(); // Start the timer automatically on page load
+};
 
     </script>
 </body>
