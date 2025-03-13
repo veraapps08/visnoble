@@ -128,6 +128,29 @@ input:checked + .slider::before {
     font-weight: bold;
 }
 
+
+    /* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: gray;
+    text-align: center;
+}
+
+.bottom-nav a.active {
+    color: blue;
+}
+
+
 </style>
 </head>
 <body>
@@ -171,7 +194,16 @@ input:checked + .slider::before {
             
         </div>
     </div>
-
+<!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+         
+        <div class="bottom-nav">
+    <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
+    <a href="calendar.html" class="active"><i class="fas fa-calendar-alt"></i> Calendar</a>
+            <a href="workouts.html" class="active"><i class="fas fa-dumbbell"></i> Workouts</a>
+    <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+</div>
+    </nav>
     <script>
 const themeToggle = document.getElementById("themeToggle");
 
