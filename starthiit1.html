@@ -143,10 +143,10 @@ button i {
             </div>
 
             <div class="controls">
-                <button id="rewind-btn"><i class="fas fa-backward"></i> Rewind</button>
-                <button id="play-pause-btn"><i class="fas fa-play"></i> Start</button>
+                <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
+                <button id="play-pause-btn"><i class="fas fa-play"></i> </button>
                 
-                <button id="forward-btn">Forward <i class="fas fa-forward"></i></button>
+                <button id="forward-btn"> <i class="fas fa-forward"></i></button>
             </div>
         </div>
     </div>
@@ -217,6 +217,13 @@ document.getElementById('forward-btn').addEventListener('click', () => {
 });
 
 window.onload = updateDisplay;
+
+
+        window.onload = () => {
+    updateDisplay();
+    startTimer(); // Start the timer when the page loads
+};
+
 
     </script>
 </body>
