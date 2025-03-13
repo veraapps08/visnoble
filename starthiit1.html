@@ -76,7 +76,7 @@
             font-weight: bold;
         }
 
-        .play-pause, .rewind {
+        .play-pause, .rewind, .fast-forward {
             font-size: 28px;
             color: #A020F0;
             cursor: pointer;
@@ -90,24 +90,27 @@
             <h1>HIIT Workout</h1>
         </div>
         <div class="exercise-info">
-            <h2>Prisoner’s Squat</h2>
+            <h2>Squat</h2>
             <p class="status">Get Ready</p>
         </div>
         <div class="image-container">
-            <img src="squat.png" alt="Prisoner's Squat">
+            <img src="44.html" alt="Prisoner's Squat">
         </div>
         <div class="controls">
-            <i class="fas fa-backward rewind"></i>
+            <i class="fas fa-backward rewind" id="rewindBtn"></i>
             <div class="timer">
                 <span id="time">00:10</span>
             </div>
             <i class="fas fa-play play-pause" id="playPauseBtn"></i>
+            <i class="fas fa-forward fast-forward" id="fastForwardBtn"></i>
         </div>
     </div>
 
     <script>
         const timerDisplay = document.getElementById('time');
         const playPauseBtn = document.getElementById('playPauseBtn');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const fastForwardBtn = document.getElementById('fastForwardBtn');
 
         let time = 10;
         let countdown;
@@ -127,8 +130,9 @@
                         updateTimerDisplay();
                     } else {
                         clearInterval(countdown);
-                        time = 30;
+                        time = time === 10 ? 30 : 10;
                         updateTimerDisplay();
+                        togglePlayPause();  // Auto-start next timer
                     }
                 }, 1000);
             } else {
@@ -139,8 +143,19 @@
             isPaused = !isPaused;
         }
 
+        rewindBtn.addEventListener('click', () => {
+            time = 10;
+            updateTimerDisplay();
+        });
+
+        fastForwardBtn.addEventListener('click', () => {
+            time = 30;
+            updateTimerDisplay();
+        });
+
         playPauseBtn.addEventListener('click', togglePlayPause);
         updateTimerDisplay();
     </script>
 </body>
 </html>
+
