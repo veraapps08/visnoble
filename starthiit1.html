@@ -150,7 +150,7 @@
             </div>
         </div>
     </div>
-    <script>
+  <script>
 let countdown = 10; // Start with 10-second timer
 let timer;
 let isPlaying = true; // Set to true so the timer starts automatically
@@ -216,11 +216,12 @@ document.getElementById('forward-btn').addEventListener('click', () => {
 
 // Automatically start the timer when the page loads
 window.onload = function() {
-    updateDisplay(); 
+    updateDisplay();
     startTimer(); 
+    playPauseIcon.className = 'fas fa-pause'; // Set the play button to show as paused (since it's already running)
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`; // Set the button text to "Pause"
 };
+</script>
 
-
-    </script>
 </body>
 </html>
