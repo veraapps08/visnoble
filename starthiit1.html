@@ -24,7 +24,7 @@
     width: 90%;
     max-width: 400px;
     background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
-    border-radius: 20px;
+    border-radius: 50px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     text-align: center;
@@ -150,72 +150,74 @@ button i {
             </div>
         </div>
     </div>
-     <script>
+   <script>
+    let countdown = 10; // Start with 10-second timer
+    let timer;
+    let isPlaying = true; // Start in playing mode to avoid manual play press
+    const timeDisplay = document.getElementById('time-display');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const playPauseIcon = playPauseBtn.querySelector('i');
 
-         let countdown = 10; // Start with 10-second timer
-let timer;
-let isPlaying = false;
-const timeDisplay = document.getElementById('time-display');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
-
-function updateDisplay() {
-    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-}
-
-// Timer logic with 10s + 30s functionality
-function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (countdown > 0) {
-            countdown--;
-            updateDisplay();
-        } else if (countdown === 0) {
-            clearInterval(timer);
-            countdown = 30; // Switch to 30-second countdown
-            updateDisplay();
-            startTimer(); // Auto-start 30-second timer
-        }
-    }, 1000);
-}
-
-function togglePlayPause() {
-    if (isPlaying) {
-        clearInterval(timer);
-        playPauseIcon.className = 'fas fa-play'; // Switch back to play icon
-        playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
-    } else {
-        startTimer();
-        playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
-        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+    function updateDisplay() {
+        timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
     }
-    isPlaying = !isPlaying;
-}
 
-function resetTimer() {
-    clearInterval(timer);
-    countdown = 10;
-    updateDisplay();
-    isPlaying = false;
-    playPauseIcon.className = 'fas fa-play';
-    playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
-}
+    // Timer logic with 10s + 30s functionality
+    function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            if (countdown > 0) {
+                countdown--;
+                updateDisplay();
+            } else if (countdown === 0) {
+                clearInterval(timer);
+                countdown = 30; // Switch to 30-second countdown
+                updateDisplay();
+                startTimer(); // Auto-start 30-second timer
+            }
+        }, 1000);
+    }
 
-document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
-document.getElementById('reset-btn').addEventListener('click', resetTimer);
+    function togglePlayPause() {
+        if (isPlaying) {
+            clearInterval(timer);
+            playPauseIcon.className = 'fas fa-play'; // Switch back to play icon
+            playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
+        } else {
+            startTimer();
+            playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
+            playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+        }
+        isPlaying = !isPlaying;
+    }
 
-document.getElementById('rewind-btn').addEventListener('click', () => {
-    countdown = Math.max(countdown - 1, 0);
-    updateDisplay();
-});
+    function resetTimer() {
+        clearInterval(timer);
+        countdown = 10;
+        updateDisplay();
+        isPlaying = false;
+        playPauseIcon.className = 'fas fa-play';
+        playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
+    }
 
-document.getElementById('forward-btn').addEventListener('click', () => {
-    countdown++;
-    updateDisplay();
-});
+    document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+    document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
-window.onload = updateDisplay;
+    document.getElementById('rewind-btn').addEventListener('click', () => {
+        countdown = Math.max(countdown - 1, 0);
+        updateDisplay();
+    });
 
-     </script>
+    document.getElementById('forward-btn').addEventListener('click', () => {
+        countdown++;
+        updateDisplay();
+    });
+
+    window.onload = () => {
+        updateDisplay();
+        startTimer(); // Automatically start the 10-second timer on page load
+    };
+</script>
+
 </body>
 </html>
