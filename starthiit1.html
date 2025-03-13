@@ -11,11 +11,21 @@
             text-align: center;
             font-family: Arial, sans-serif;
         }
+        .header {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #a020f0;
+        }
+        .exercise-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
         .timer-container {
             position: relative;
             width: 200px;
             height: 200px;
-            margin: 50px auto;
+            margin: 30px auto;
             border-radius: 50%;
             background: conic-gradient(purple 0% 0%, grey 0%);
             display: flex;
@@ -55,40 +65,47 @@
 </head>
 <body>
 
-    <h1>Workout Timer</h1>
+    <div class="header">HIIT Workout</div>
+    <div class="exercise-name">Running In Place</div>
+    <div id="status-text" style="color: lightgray; font-size: 20px;">Get Ready</div>
+    
     <div class="timer-container" id="timer-circle">
-        <span id="time">30</span>
+        <span id="time">10</span>
     </div>
+    
     <div class="buttons">
-        <button onclick="setTimer(10)">10s</button>
-        <button onclick="setTimer(30)">30s</button>
-        <button onclick="rewind()">⏪</button>
-        <button onclick="toggleTimer()">⏯</button>
-        <button onclick="fastForward()">⏩</button>
+        <button onclick="resetTimer()">Reset</button>
+        <button onclick="toggleTimer()">⏯ Play/Pause</button>
     </div>
 
     <audio id="startSound" src="https://www.soundjay.com/button/sounds/beep-07.mp3"></audio>
     <audio id="endSound" src="https://www.soundjay.com/button/sounds/beep-09.mp3"></audio>
 
     <script>
-        let timer;
-        let timeLeft = 30;
+        let timeLeft = 10;
         let isRunning = false;
+        let timer;
+        let isWorkoutPhase = false;  
+        let statusText = document.getElementById("status-text");
         let timerCircle = document.getElementById("timer-circle");
         let startSound = document.getElementById("startSound");
         let endSound = document.getElementById("endSound");
 
         function updateTimerDisplay() {
             document.getElementById("time").textContent = timeLeft;
-            timerCircle.style.background = `conic-gradient(purple ${(timeLeft / 30) * 360}deg, grey 0)`;
+            let percentage = isWorkoutPhase ? (timeLeft / 30) * 360 : (timeLeft / 10) * 360;
+            timerCircle.style.background = `conic-gradient(purple ${percentage}deg, grey 0)`;
 
             if (timeLeft === 0) {
                 clearInterval(timer);
-                timerCircle.classList.add("flash");
-                endSound.play();
                 isRunning = false;
-            } else {
-                timerCircle.classList.remove("flash");
+
+                if (!isWorkoutPhase) {
+                    startWorkoutPhase();
+                } else {
+                    endSound.play();
+                    timerCircle.classList.add("flash");
+                }
             }
         }
 
@@ -107,23 +124,28 @@
             isRunning = !isRunning;
         }
 
-        function setTimer(seconds) {
-            timeLeft = seconds;
+        function startWorkoutPhase() {
+            isWorkoutPhase = true;
+            timeLeft = 30;
+            statusText.textContent = "Workout";
+            updateTimerDisplay();
+            toggleTimer();
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            isWorkoutPhase = false;
+            timeLeft = 10;
+            statusText.textContent = "Get Ready";
             updateTimerDisplay();
         }
 
-        function rewind() {
-            timeLeft = Math.max(timeLeft - 5, 0);
-            updateTimerDisplay();
-        }
-
-        function fastForward() {
-            timeLeft = Math.min(timeLeft + 5, 30);
-            updateTimerDisplay();
-        }
+        updateTimerDisplay();
     </script>
 
 </body>
 </html>
+
 
 
