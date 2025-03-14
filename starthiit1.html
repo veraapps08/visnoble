@@ -61,8 +61,8 @@
         }
 
         .exercise-gif img {
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             border-radius: 50px;
             border: 3px solid #A32CC4;
         }
@@ -131,16 +131,18 @@
 
         // Timer logic with 10s + 30s functionality
         function startTimer() {
-            clearInterval(timer);
+            clearInterval(timer); // Ensure the previous interval is cleared
             timer = setInterval(() => {
                 if (countdown > 0) {
                     countdown--;
                     updateDisplay();
                 } else if (countdown === 0) {
-                    clearInterval(timer);
-                    countdown = 30; // Switch to 30-second countdown
-                    updateDisplay();
-                    startTimer(); // Auto-start 30-second timer
+                    clearInterval(timer); // Stop 10s countdown
+                    if (countdown === 0) {
+                        countdown = 30; // Switch to 30-second countdown
+                        updateDisplay();
+                        startTimer(); // Start 30s countdown
+                    }
                 }
             }, 1000);
         }
@@ -160,7 +162,7 @@
 
         function resetTimer() {
             clearInterval(timer);
-            countdown = 10;
+            countdown = 10; // Reset to 10 seconds
             updateDisplay();
             isPlaying = false;
             playPauseIcon.className = 'fas fa-play';
@@ -205,10 +207,10 @@
             </div>
 
             <div class="controls">
-                <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
-                <button id="play-pause-btn"><i class="fas fa-play"></i> </button>
-                <button id="reset-btn"><i class="fas fa-undo"></i> </button>
-                <button id="forward-btn"> <i class="fas fa-forward"></i></button>
+                <button id="rewind-btn"><i class="fas fa-backward"></i></button>
+                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="reset-btn"><i class="fas fa-undo"></i></button>
+                <button id="forward-btn"><i class="fas fa-forward"></i></button>
             </div>
         </div>
     </div>
