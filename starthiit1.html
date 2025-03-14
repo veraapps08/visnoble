@@ -4,188 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIIT Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <style>
+
+
+
+
+
+
         body {
-            background: #0A021A;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    background: #0A021A;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .container {
-            width: 90%;
-            max-width: 400px;
-            background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-            text-align: center;
-        }
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
 
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
 
-        header h1 {
-            margin: 0;
-            color: #A32CC4;
-        }
+header h1 {
+    margin: 0;
+    color: #A32CC4;
+}
 
-        .back-arrow {
-            font-size: 24px;
-            color: #A32CC4;
-            cursor: pointer;
-        }
+.back-arrow {
+    font-size: 24px;
+    color: #A32CC4;
+    cursor: pointer;
+}
 
-        .time-remaining {
-            color: #fff;
-        }
+.time-remaining {
+    color: #fff;
+}
 
-        .exercise-section h2 {
-            color: #A32CC4;
-            margin-top: 0;
-        }
+.exercise-section h2 {
+    color: #A32CC4;
+    margin-top: 0;
+}
 
-        .get-ready {
-            color: #A32CC4;
-            font-style: italic;
-        }
+.get-ready {
+    color: #A32CC4;
+    font-style: italic;
+}
 
-        .exercise-gif img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50px;
-            border: 3px solid #A32CC4;
-        }
+.exercise-gif img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    border: 3px solid #A32CC4;
+}
 
-        .timer-section {
-            margin-top: 20px;
-        }
+.timer-section {
+    margin-top: 20px;
+}
 
-        .timer-display {
-            background-color: #1E052B;
-            color: #A32CC4;
-            border: 3px solid #A32CC4;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: 10px auto;
-            box-shadow: 0 0 20px #A32CC4;
-        }
+.timer-display {
+    background-color: #1E052B;
+    color: #A32CC4;
+    border: 3px solid #A32CC4;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 10px auto;
+    box-shadow: 0 0 20px #A32CC4;
+}
 
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 10px;
-        }
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+}
 
-        button {
-            background: #6A0DAD;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: background 0.3s ease;
-        }
+button {
+    background: #6A0DAD;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+}
 
-        button:hover {
-            background: #A32CC4;
-        }
+button:hover {
+    background: #A32CC4;
+}
 
-        button i {
-            font-size: 18px;
-        }
+button i {
+    font-size: 18px;
+}
+
     </style>
-
-    <script>
-        let countdown = 10; // Start with 10-second timer
-        let timer;
-        let isPlaying = false;
-        const timeDisplay = document.getElementById('time-display');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const playPauseIcon = playPauseBtn.querySelector('i');
-
-        function updateDisplay() {
-            // Update the timer display to reflect countdown
-            timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-        }
-
-        // Timer logic with 10s + 30s functionality
-        function startTimer() {
-            clearInterval(timer); // Ensure any previous timer is cleared
-            timer = setInterval(() => {
-                if (countdown > 0) {
-                    countdown--; // Countdown
-                    updateDisplay();
-                } else {
-                    clearInterval(timer); // Stop the timer after countdown reaches 0
-                    // Switch to 30-second countdown and start it
-                    countdown = 30; // Switch to 30-second countdown
-                    updateDisplay();
-                    startTimer();
-                }
-            }, 1000);
-        }
-
-        function togglePlayPause() {
-            if (isPlaying) {
-                clearInterval(timer); // Pause timer
-                playPauseIcon.className = 'fas fa-play'; // Switch to play icon
-                playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
-            } else {
-                startTimer(); // Start timer
-                playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
-                playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
-            }
-            isPlaying = !isPlaying;
-        }
-
-        function resetTimer() {
-            clearInterval(timer); // Stop timer
-            countdown = 10; // Reset countdown to 10 seconds
-            updateDisplay();
-            isPlaying = false;
-            playPauseIcon.className = 'fas fa-play'; // Switch to play icon
-            playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
-            document.getElementById('reset-btn').addEventListener('click', resetTimer);
-
-            document.getElementById('rewind-btn').addEventListener('click', () => {
-                countdown = Math.max(countdown - 1, 0);
-                updateDisplay();
-            });
-
-            document.getElementById('forward-btn').addEventListener('click', () => {
-                countdown++;
-                updateDisplay();
-            });
-
-            updateDisplay(); // Initialize display
-        });
-    </script>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -196,10 +133,10 @@
         </header>
 
         <div class="exercise-section">
-            <h2> Squat</h2>
+            <h2>Prisoner's Squat</h2>
             <p class="get-ready">Get Ready!</p>
             <div class="exercise-gif">
-                <img src="44.gif" alt="Squat Demo">
+                <img src="exercise-demo.gif" alt="Squat Demo">
             </div>
         </div>
 
@@ -209,13 +146,82 @@
             </div>
 
             <div class="controls">
-                <button id="rewind-btn"><i class="fas fa-backward"></i></button>
-                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
-                <button id="reset-btn"><i class="fas fa-undo"></i></button>
-                <button id="forward-btn"><i class="fas fa-forward"></i></button>
+                <button id="rewind-btn"><i class="fas fa-backward"></i> Rewind</button>
+                <button id="play-pause-btn"><i class="fas fa-play"></i> Start</button>
+                <button id="reset-btn"><i class="fas fa-undo"></i> Reset</button>
+                <button id="forward-btn">Forward <i class="fas fa-forward"></i></button>
             </div>
         </div>
     </div>
+    <script>
+
+
+let countdown = 10; // Start with 10-second timer
+let timer;
+let isPlaying = false;
+const timeDisplay = document.getElementById('time-display');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+}
+
+// Timer logic with 10s + 30s functionality
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0) {
+            clearInterval(timer);
+            countdown = 30; // Switch to 30-second countdown
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
+        }
+    }, 1000);
+}
+
+function togglePlayPause() {
+    if (isPlaying) {
+        clearInterval(timer);
+        playPauseIcon.className = 'fas fa-play'; // Switch back to play icon
+        playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
+    } else {
+        startTimer();
+        playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
+        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+    }
+    isPlaying = !isPlaying;
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    countdown = 10;
+    updateDisplay();
+    isPlaying = false;
+    playPauseIcon.className = 'fas fa-play';
+    playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
+}
+
+document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+document.getElementById('rewind-btn').addEventListener('click', () => {
+    countdown = Math.max(countdown - 1, 0);
+    updateDisplay();
+});
+
+document.getElementById('forward-btn').addEventListener('click', () => {
+    countdown++;
+    updateDisplay();
+});
+
+window.onload = updateDisplay;
+
+        
+    </script>
 </body>
 </html>
 
