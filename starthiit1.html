@@ -1,67 +1,457 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIIT Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
-        body { background-color: black; color: purple; font-family: Arial, sans-serif; text-align: center; }
-        .container { padding: 20px; }
-        .timer { font-size: 48px; margin: 20px 0; }
-        .controls i { font-size: 36px; cursor: pointer; margin: 0 10px; }
-        .workout { margin-top: 20px; font-size: 28px; }
+
+
+
+
+
+
+        body {
+    background: #0A021A;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    color: #A32CC4;
+}
+
+.back-arrow {
+    font-size: 24px;
+    color: #A32CC4;
+    cursor: pointer;
+}
+
+.time-remaining {
+    color: #fff;
+}
+
+.exercise-section h2 {
+    color: #A32CC4;
+    margin-top: 0;
+}
+
+.get-ready {
+    color: #A32CC4;
+    font-style: italic;
+}
+
+.exercise-gif img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+    border: 3px solid #A32CC4;
+}
+
+.timer-section {
+    margin-top: 20px;
+}
+
+.timer-display {
+    background-color: #1E052B;
+    color: #A32CC4;
+    border: 3px solid #A32CC4;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 10px auto;
+    box-shadow: 0 0 20px #A32CC4;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+button {
+    background: #6A0DAD;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #A32CC4;
+}
+
+button i {
+    font-size: 18px;
+}
+
     </style>
+    
+    
 </head>
 <body>
     <div class="container">
-        <h1>HIIT Workout Timer</h1>
-        <div class="workout" id="workout-display">Jumping Jacks</div>
-        <div class="timer" id="timer">10</div>
-        <div class="controls">
-            <i class="fas fa-backward" id="rewind"></i>
-            <i class="fas fa-play" id="play-pause"></i>
-            <i class="fas fa-forward" id="fast-forward"></i>
+        <header>
+            <i class="fas fa-arrow-left back-arrow"></i>
+            <h1>HIIT Workout</h1>
+            <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
+        </header>
+
+        <div class="exercise-section">
+            <h2>Prisoner's Squat</h2>
+            <p class="get-ready">Get Ready!</p>
+            <div class="exercise-gif">
+                <img src="44.gif" alt="Squat Demo">
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-display">
+                <span id="time-display">0:10</span>
+            </div>
+
+            <div class="controls">
+                
+                 <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
+                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="reset-btn"><i class="fas fa-undo"></i> </button>
+                <button id="forward-btn"><i class="fas fa-forward"></i></button>
+            </div>
         </div>
     </div>
-
     <script>
-        let time = 10;
-        let isPlaying = false;
-        let interval;
-        let currentWorkout = 'Jumping Jacks';
 
-        const timerDisplay = document.getElementById('timer');
-        const playPauseBtn = document.getElementById('play-pause');
-        const workoutDisplay = document.getElementById('workout-display');
+let countdown = 10; // Start with 10-second timer
+let timer;
+const timeDisplay = document.getElementById('time-display');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
 
-        function startTimer(duration, nextWorkout) {
-            time = duration;
-            timerDisplay.textContent = time;
-            interval = setInterval(() => {
-                time--;
-                timerDisplay.textContent = time;
-                if (time <= 0) {
-                    clearInterval(interval);
-                    if (nextWorkout) {
-                        workoutDisplay.textContent = 'Burpees';
-                        startTimer(30, false);
-                    }
-                }
-            }, 1000);
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+}
+
+// Timer logic with 10s + 30s functionality
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0) {
+            clearInterval(timer);
+            countdown = 30; // Switch to 30-second countdown
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
         }
+    }, 1000);
+}
 
-        playPauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                clearInterval(interval);
-                playPauseBtn.classList.replace('fa-pause', 'fa-play');
-            } else {
-                startTimer(10, true);
-                playPauseBtn.classList.replace('fa-play', 'fa-pause');
-            }
-            isPlaying = !isPlaying;
-        });
+// Reset Timer Function
+function resetTimer() {
+    clearInterval(timer);
+    countdown = 10;
+    updateDisplay();
+    startTimer(); // Automatically restart the timer
+}
+
+// Button Controls
+document.getElementById('play-pause-btn').addEventListener('click', () => {
+    clearInterval(timer);
+    startTimer();
+    playPauseIcon.className = 'fas fa-pause';
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+});
+
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+document.getElementById('rewind-btn').addEventListener('click', () => {
+    countdown = Math.max(countdown - 1, 0);
+    updateDisplay();
+});
+
+document.getElementById('forward-btn').addEventListener('click', () => {
+    countdown++;
+    updateDisplay();
+});
+
+// Automatically start the timer when the page loads
+window.onload = function() {
+    updateDisplay();
+    startTimer(); // Auto-start 10s timer followed by 30s timer
+};
+
+        
+        
     </script>
 </body>
 </html>
 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIIT Timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+
+
+
+
+
+
+        body {
+    background: #0A021A;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    color: #A32CC4;
+}
+
+.back-arrow {
+    font-size: 24px;
+    color: #A32CC4;
+    cursor: pointer;
+}
+
+.time-remaining {
+    color: #fff;
+}
+
+.exercise-section h2 {
+    color: #A32CC4;
+    margin-top: 0;
+}
+
+.get-ready {
+    color: #A32CC4;
+    font-style: italic;
+}
+
+.exercise-gif img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+    border: 3px solid #A32CC4;
+}
+
+.timer-section {
+    margin-top: 20px;
+}
+
+.timer-display {
+    background-color: #1E052B;
+    color: #A32CC4;
+    border: 3px solid #A32CC4;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 10px auto;
+    box-shadow: 0 0 20px #A32CC4;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+button {
+    background: #6A0DAD;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #A32CC4;
+}
+
+button i {
+    font-size: 18px;
+}
+
+    </style>
+    
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <i class="fas fa-arrow-left back-arrow"></i>
+            <h1>HIIT Workout</h1>
+            <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
+        </header>
+
+        <div class="exercise-section">
+            <h2>Prisoner's Squat</h2>
+            <p class="get-ready">Get Ready!</p>
+            <div class="exercise-gif">
+                <img src="44.gif" alt="Squat Demo">
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-display">
+                <span id="time-display">0:10</span>
+            </div>
+
+            <div class="controls">
+                
+                 <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
+                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="reset-btn"><i class="fas fa-undo"></i> </button>
+                <button id="forward-btn"><i class="fas fa-forward"></i></button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+let countdown = 10; // Start with 10-second timer
+let timer;
+const timeDisplay = document.getElementById('time-display');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+}
+
+// Timer logic with 10s + 30s functionality
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0) {
+            clearInterval(timer);
+            countdown = 30; // Switch to 30-second countdown
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
+        }
+    }, 1000);
+}
+
+// Reset Timer Function
+function resetTimer() {
+    clearInterval(timer);
+    countdown = 10;
+    updateDisplay();
+    startTimer(); // Automatically restart the timer
+}
+
+// Button Controls
+document.getElementById('play-pause-btn').addEventListener('click', () => {
+    clearInterval(timer);
+    startTimer();
+    playPauseIcon.className = 'fas fa-pause';
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+});
+
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+document.getElementById('rewind-btn').addEventListener('click', () => {
+    countdown = Math.max(countdown - 1, 0);
+    updateDisplay();
+});
+
+document.getElementById('forward-btn').addEventListener('click', () => {
+    countdown++;
+    updateDisplay();
+});
+
+// Automatically start the timer when the page loads
+window.onload = function() {
+    updateDisplay();
+    startTimer(); // Auto-start 10s timer followed by 30s timer
+};
+
+        
+        
+    </script>
+</body>
+</html>
 
 
