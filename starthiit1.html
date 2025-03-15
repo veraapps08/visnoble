@@ -133,16 +133,11 @@
             </div>
         </div>
 
-
-
-        
         <div class="timer-section">
             <div class="timer-display">
                 <span id="time-display">0:10</span>
             </div>
 
-
-           
             <div class="controls">
                 <button id="rewind-btn"><i class="fas fa-backward"></i></button>
                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
@@ -167,15 +162,16 @@
             timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
         }
 
-        // Function to transition between exercises
+        // Function to transition between exercises (from Squats to Burpees)
         function transitionExercise() {
-            if (exerciseName.textContent === "Prisoner's Squat") {
-                exerciseName.textContent = "Burpees";
-                exerciseGif.src = "working out how to GIF by 8fit.gif"; // Change to your Burpees GIF
-                countdown = 10; // Reset to 10 seconds for Burpees
-                updateDisplay();
-                startTimer();
-            }
+            // Change exercise name and GIF
+            exerciseName.textContent = "Burpees";
+            exerciseGif.src = "burpees.gif"; // Replace with the path to the Burpees GIF
+
+            // Reset the timer for Burpees
+            countdown = 10;
+            updateDisplay();
+            startTimer();
         }
 
         // Timer logic with 10s + 30s functionality
@@ -188,9 +184,9 @@
                 } else if (countdown === 0) {
                     clearInterval(timer);
                     if (exerciseName.textContent === "Prisoner's Squat") {
-                        countdown = 30; // Switch to 30-second countdown
+                        countdown = 30; // Switch to 30-second countdown for Burpees
                         updateDisplay();
-                        startTimer(); // Auto-start 30-second timer
+                        startTimer(); // Auto-start 30-second timer for Burpees
                     } else {
                         transitionExercise(); // Transition to the next exercise
                     }
@@ -229,12 +225,11 @@
         // Automatically start the timer when the page loads
         window.onload = function() {
             updateDisplay();
-            startTimer(); // Auto-start 10s timer followed by 30s timer
+            startTimer(); // Auto-start 10s timer for Squats, then transition to Burpees
         };
     </script>
 </body>
 </html>
-
 
 
 
