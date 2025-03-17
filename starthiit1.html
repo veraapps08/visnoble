@@ -67,9 +67,9 @@ header h1 {
 }
 
 .exercise-gif img {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
     border: 3px solid #A32CC4;
 }
 
@@ -124,13 +124,15 @@ button i {
 
     </style>
     
+    
 </head>
 <body>
     <div class="container">
         <header>
-<a href="hiit.html">
+          <a href="your-target-link.html">
     <i class="fas fa-arrow-left back-arrow"></i>
 </a>
+
             <h1>HIIT Workout</h1>
             <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
         </header>
@@ -149,8 +151,9 @@ button i {
             </div>
 
             <div class="controls">
-                <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
-                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                
+                 <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
+                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
                 <button id="reset-btn"><i class="fas fa-undo"></i> </button>
                 <button id="forward-btn"><i class="fas fa-forward"></i></button>
             </div>
@@ -161,7 +164,6 @@ button i {
 
 let countdown = 10; // Start with 10-second timer
 let timer;
-let isPlaying = false;
 const timeDisplay = document.getElementById('time-display');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
@@ -186,29 +188,22 @@ function startTimer() {
     }, 1000);
 }
 
-function togglePlayPause() {
-    if (isPlaying) {
-        clearInterval(timer);
-        playPauseIcon.className = 'fas fa-play'; // Switch back to play icon
-        playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
-    } else {
-        startTimer();
-        playPauseIcon.className = 'fas fa-pause'; // Switch to pause icon
-        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
-    }
-    isPlaying = !isPlaying;
-}
-
+// Reset Timer Function
 function resetTimer() {
     clearInterval(timer);
     countdown = 10;
     updateDisplay();
-    isPlaying = false;
-    playPauseIcon.className = 'fas fa-play';
-    playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Start`;
+    startTimer(); // Automatically restart the timer
 }
 
-document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+// Button Controls
+document.getElementById('play-pause-btn').addEventListener('click', () => {
+    clearInterval(timer);
+    startTimer();
+    playPauseIcon.className = 'fas fa-pause';
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+});
+
 document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
 document.getElementById('rewind-btn').addEventListener('click', () => {
@@ -221,12 +216,19 @@ document.getElementById('forward-btn').addEventListener('click', () => {
     updateDisplay();
 });
 
-window.onload = updateDisplay;
+// Automatically start the timer when the page loads
+window.onload = function() {
+    updateDisplay();
+    startTimer(); // Auto-start 10s timer followed by 30s timer
+};
 
         
     </script>
 </body>
 </html>
+
+
+
 
 
 
