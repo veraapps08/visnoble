@@ -157,29 +157,24 @@
         const playPauseBtn = document.getElementById('play-pause-btn');
         const playPauseIcon = playPauseBtn.querySelector('i');
 
-        function updateDisplay() {
-            timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-        }
-
-        // Timer logic with redirection feature
-        function startTimer() {
+       function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => {
         if (countdown > 0) {
             countdown--;
             updateDisplay();
-        } else if (countdown === 0) {
+        } else if (countdown === 0 && timeDisplay.textContent === "0:10") {
             clearInterval(timer);
-            if (countdown === 0 && timeDisplay.textContent === "0:30") {
-                window.location.href = 'workouts.html'; // Change to your desired page
-            } else {
-                countdown = 30; // Switch to 30-second countdown
-                updateDisplay();
-                startTimer(); // Auto-start 30-second timer
-            }
+            countdown = 30; // Switch to 30-second countdown
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
+        } else if (countdown === 0 && timeDisplay.textContent === "0:30") {
+            clearInterval(timer);
+            window.location.href = 'hiit.html'; // Redirect after 30-second countdown
         }
     }, 1000);
 }
+
 
 
         // Reset Timer Function
