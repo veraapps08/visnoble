@@ -142,7 +142,11 @@
             </div>
 
             <div class="controls">
-                <button id="rewind-btn"><i class="fas fa-backward"></i></button>
+                <button id="rewind-btn" onclick="window.location.href='starthiit1.html';">
+  <i class="fas fa-backward"></i>
+</button>
+
+            
                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
                 <button id="reset-btn"><i class="fas fa-undo"></i></button>
                 <button id="forward-btn"><i class="fas fa-forward"></i></button>
@@ -196,7 +200,7 @@ document.getElementById('play-pause-btn').addEventListener('click', () => {
     clearInterval(timer);
     startTimer();
     playPauseIcon.className = 'fas fa-pause';
-    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> ’;
 });
 
 document.getElementById('reset-btn').addEventListener('click', resetTimer);
