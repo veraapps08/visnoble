@@ -7,131 +7,122 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-
-
-
-
-
-
         body {
-    background: #0A021A;
-    color: #fff;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+            background: #0A021A;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.container {
-    width: 90%;
-    max-width: 400px;
-    background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-    text-align: center;
-}
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
 
-header h1 {
-    margin: 0;
-    color: #A32CC4;
-}
+        header h1 {
+            margin: 0;
+            color: #A32CC4;
+        }
 
-.back-arrow {
-    font-size: 24px;
-    color: #A32CC4;
-    cursor: pointer;
-}
+        .back-arrow {
+            font-size: 24px;
+            color: #A32CC4;
+            cursor: pointer;
+        }
 
-.time-remaining {
-    color: #fff;
-}
+        .time-remaining {
+            color: #fff;
+        }
 
-.exercise-section h2 {
-    color: #A32CC4;
-    margin-top: 0;
-}
+        .exercise-section h2 {
+            color: #A32CC4;
+            margin-top: 0;
+        }
 
-.get-ready {
-    color: #A32CC4;
-    font-style: italic;
-}
+        .get-ready {
+            color: #A32CC4;
+            font-style: italic;
+        }
 
-.exercise-gif img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50px;
-    border: 3px solid #A32CC4;
-}
+        .exercise-gif img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50px;
+            border: 3px solid #A32CC4;
+        }
 
-.timer-section {
-    margin-top: 20px;
-}
+        .timer-section {
+            margin-top: 20px;
+        }
 
-.timer-display {
-    background-color: #1E052B;
-    color: #A32CC4;
-    border: 3px solid #A32CC4;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    margin: 10px auto;
-    box-shadow: 0 0 20px #A32CC4;
-}
+        .timer-display {
+            background-color: #1E052B;
+            color: #A32CC4;
+            border: 3px solid #A32CC4;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 10px auto;
+            box-shadow: 0 0 20px #A32CC4;
+        }
 
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 10px;
-}
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
 
-button {
-    background: #6A0DAD;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.3s ease;
-}
+        button {
+            background: #6A0DAD;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s ease;
+        }
 
-button:hover {
-    background: #A32CC4;
-}
+        button:hover {
+            background: #A32CC4;
+        }
 
-button i {
-    font-size: 18px;
-}
-
+        button i {
+            font-size: 18px;
+        }
     </style>
-    
-    
 </head>
 <body>
     <div class="container">
         <header>
-          <a href="your-target-link.html">
-    <i class="fas fa-arrow-left back-arrow"></i>
-</a>
+            <a href="your-target-link.html">
+                <i class="fas fa-arrow-left back-arrow"></i>
+            </a>
 
             <h1>HIIT Workout</h1>
             <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
@@ -151,83 +142,82 @@ button i {
             </div>
 
             <div class="controls">
-                
-                 <button id="rewind-btn"><i class="fas fa-backward"></i> </button>
-                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
-                <button id="reset-btn"><i class="fas fa-undo"></i> </button>
+                <button id="rewind-btn"><i class="fas fa-backward"></i></button>
+                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="reset-btn"><i class="fas fa-undo"></i></button>
                 <button id="forward-btn"><i class="fas fa-forward"></i></button>
             </div>
         </div>
     </div>
+
     <script>
+        let countdown = 10; // Start with 10-second timer
+        let timer;
+        const timeDisplay = document.getElementById('time-display');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn.querySelector('i');
 
-
-let countdown = 10; // Start with 10-second timer
-let timer;
-const timeDisplay = document.getElementById('time-display');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
-
-function updateDisplay() {
-    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-}
-
-// Timer logic with 10s + 30s functionality
-function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (countdown > 0) {
-            countdown--;
-            updateDisplay();
-        } else if (countdown === 0) {
-            clearInterval(timer);
-            countdown = 30; // Switch to 30-second countdown
-            updateDisplay();
-            startTimer(); // Auto-start 30-second timer
+        function updateDisplay() {
+            timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
         }
-    }, 1000);
-}
 
-// Reset Timer Function
-function resetTimer() {
-    clearInterval(timer);
-    countdown = 10;
-    updateDisplay();
-    startTimer(); // Automatically restart the timer
-}
+        // Timer logic with redirection feature
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    updateDisplay();
+                } else if (countdown === 0) {
+                    clearInterval(timer);
 
-// Button Controls
-document.getElementById('play-pause-btn').addEventListener('click', () => {
-    clearInterval(timer);
-    startTimer();
-    playPauseIcon.className = 'fas fa-pause';
-    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
-});
+                    if (timeDisplay.textContent === "0:30") {
+                        window.location.href = 'burpees.html'; // Redirect after 30-second timer
+                    } else {
+                        countdown = 30; // Switch to 30-second countdown
+                        updateDisplay();
+                        startTimer(); // Auto-start 30-second timer
+                    }
+                }
+            }, 1000);
+        }
 
-document.getElementById('reset-btn').addEventListener('click', resetTimer);
+        // Reset Timer Function
+        function resetTimer() {
+            clearInterval(timer);
+            countdown = 10;
+            updateDisplay();
+            startTimer(); // Automatically restart the timer
+        }
 
-document.getElementById('rewind-btn').addEventListener('click', () => {
-    countdown = Math.max(countdown - 1, 0);
-    updateDisplay();
-});
+        // Button Controls
+        document.getElementById('play-pause-btn').addEventListener('click', () => {
+            clearInterval(timer);
+            startTimer();
+            playPauseIcon.className = 'fas fa-pause';
+            playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+        });
 
-document.getElementById('forward-btn').addEventListener('click', () => {
-    countdown++;
-    updateDisplay();
-});
+        document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
-// Automatically start the timer when the page loads
-window.onload = function() {
-    updateDisplay();
-    startTimer(); // Auto-start 10s timer followed by 30s timer
-};
+        document.getElementById('rewind-btn').addEventListener('click', () => {
+            countdown = Math.max(countdown - 1, 0);
+            updateDisplay();
+        });
 
-        
+        document.getElementById('forward-btn').addEventListener('click', () => {
+            countdown++;
+            updateDisplay();
+        });
+
+        // Automatically start the timer when the page loads
+        window.onload = function() {
+            updateDisplay();
+            startTimer(); // Auto-start 10s timer followed by 30s timer
+        };
     </script>
 </body>
 </html>
-
-
 
 
 
