@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Burpees Workout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIIT Timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         body {
             background: #0A021A;
@@ -115,41 +118,105 @@
     </style>
 </head>
 <body>
-    <h1>Time for Burpees!</h1>
-    <div class="timer-display" id="burpee-timer">0:10</div>
+    <div class="container">
+        <header>
+            <a href="your-target-link.html">
+                <i class="fas fa-arrow-left back-arrow"></i>
+            </a>
+
+            <h1>HIIT Workout</h1>
+            <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
+        </header>
+
+        <div class="exercise-section">
+            <h2>Prisoner's Squat</h2>
+            <p class="get-ready">Get Ready!</p>
+            <div class="exercise-gif">
+                <img src="burpees.html" alt="Squat Demo">
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-display">
+                <span id="time-display">0:10</span>
+            </div>
+
+            <div class="controls">
+                <button id="rewind-btn"><i class="fas fa-backward"></i></button>
+                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="reset-btn"><i class="fas fa-undo"></i></button>
+                <button id="forward-btn"><i class="fas fa-forward"></i></button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        let countdown = 10;
-        let phase = 'first'; // Track current phase (10s or 30s)
-        const timerDisplay = document.getElementById('burpee-timer');
+        let countdown = 10; // Start with 10-second timer
+let timer;
+const timeDisplay = document.getElementById('time-display');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+let phase = 'first'; // Tracks the current phase (10s or 30s)
 
-        function updateDisplay() {
-            timerDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-        }
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+}
 
-        function startTimer() {
-            const timer = setInterval(() => {
-                if (countdown > 0) {
-                    countdown--;
-                    updateDisplay();
-                } else if (countdown === 0 && phase === 'first') {
-                    clearInterval(timer);
-                    countdown = 30; // Switch to 30-second countdown
-                    phase = 'second'; // Move to next phase
-                    updateDisplay();
-                    startTimer(); // Auto-start 30-second timer
-                } else if (countdown === 0 && phase === 'second') {
-                    clearInterval(timer);
-                    timerDisplay.textContent = "Done!";
-                }
-            }, 1000);
-        }
-
-        // Automatically start the timers when the page loads
-        window.onload = function () {
+// Timer logic with redirection after 30s countdown
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
             updateDisplay();
-            startTimer();
-        };
+        } else if (countdown === 0 && phase === 'first') {
+            clearInterval(timer);
+            countdown = 30; // Start the 30-second timer
+            phase = 'second'; // Move to next phase
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
+        } else if (countdown === 0 && phase === 'second') {
+            clearInterval(timer);
+            window.location.href = 'twisted mountain climbers.html'; // Redirect after 30s countdown
+        }
+    }, 1000);
+}
+
+// Reset Timer Function
+function resetTimer() {
+    clearInterval(timer);
+    countdown = 10;
+    phase = 'first'; // Reset to the first phase
+    updateDisplay();
+    startTimer(); // Automatically restart the timer
+}
+
+// Button Controls
+document.getElementById('play-pause-btn').addEventListener('click', () => {
+    clearInterval(timer);
+    startTimer();
+    playPauseIcon.className = 'fas fa-pause';
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+});
+
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+document.getElementById('rewind-btn').addEventListener('click', () => {
+    countdown = Math.max(countdown - 1, 0);
+    updateDisplay();
+});
+
+document.getElementById('forward-btn').addEventListener('click', () => {
+    countdown++;
+    updateDisplay();
+});
+
+// Automatically start the timer when the page loads
+window.onload = function() {
+    updateDisplay();
+    startTimer(); // Auto-start 10s timer followed by 30s timer
+};
+
     </script>
 </body>
 </html>
