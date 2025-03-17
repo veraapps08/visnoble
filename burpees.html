@@ -7,19 +7,150 @@
         body {
             background: #0A021A;
             color: #fff;
-            display: flex;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
             height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif;
         }
-        h1 {
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
             color: #A32CC4;
+        }
+
+        .back-arrow {
+            font-size: 24px;
+            color: #A32CC4;
+            cursor: pointer;
+        }
+
+        .time-remaining {
+            color: #fff;
+        }
+
+        .exercise-section h2 {
+            color: #A32CC4;
+            margin-top: 0;
+        }
+
+        .get-ready {
+            color: #A32CC4;
+            font-style: italic;
+        }
+
+        .exercise-gif img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50px;
+            border: 3px solid #A32CC4;
+        }
+
+        .timer-section {
+            margin-top: 20px;
+        }
+
+        .timer-display {
+            background-color: #1E052B;
+            color: #A32CC4;
+            border: 3px solid #A32CC4;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 10px auto;
+            box-shadow: 0 0 20px #A32CC4;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #6A0DAD;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #A32CC4;
+        }
+
+        button i {
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <h1>Time for Burpees!</h1>
-    <p>Get ready for your next workout!</p>
+    <div class="timer-display" id="burpee-timer">0:10</div>
+
+    <script>
+        let countdown = 10;
+        let phase = 'first'; // Track current phase (10s or 30s)
+        const timerDisplay = document.getElementById('burpee-timer');
+
+        function updateDisplay() {
+            timerDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+        }
+
+        function startTimer() {
+            const timer = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    updateDisplay();
+                } else if (countdown === 0 && phase === 'first') {
+                    clearInterval(timer);
+                    countdown = 30; // Switch to 30-second countdown
+                    phase = 'second'; // Move to next phase
+                    updateDisplay();
+                    startTimer(); // Auto-start 30-second timer
+                } else if (countdown === 0 && phase === 'second') {
+                    clearInterval(timer);
+                    timerDisplay.textContent = "Done!";
+                }
+            }, 1000);
+        }
+
+        // Automatically start the timers when the page loads
+        window.onload = function () {
+            updateDisplay();
+            startTimer();
+        };
+    </script>
 </body>
 </html>
+
