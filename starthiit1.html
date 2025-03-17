@@ -163,24 +163,24 @@
 
         // Timer logic with redirection feature
         function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0) {
             clearInterval(timer);
-            timer = setInterval(() => {
-                if (countdown > 0) {
-                    countdown--;
-                    updateDisplay();
-                } else if (countdown === 0) {
-                    clearInterval(timer);
-
-                    if (timeDisplay.textContent === "0:30") {
-                        window.location.href = 'burpees.html'; // Redirect after 30-second timer
-                    } else {
-                        countdown = 30; // Switch to 30-second countdown
-                        updateDisplay();
-                        startTimer(); // Auto-start 30-second timer
-                    }
-                }
-            }, 1000);
+            if (countdown === 0 && timeDisplay.textContent === "0:30") {
+                window.location.href = 'workouts.html'; // Change to your desired page
+            } else {
+                countdown = 30; // Switch to 30-second countdown
+                updateDisplay();
+                startTimer(); // Auto-start 30-second timer
+            }
         }
+    }, 1000);
+}
+
 
         // Reset Timer Function
         function resetTimer() {
