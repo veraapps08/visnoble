@@ -59,6 +59,10 @@
             color: #A32CC4;
             font-style: italic;
         }
+         .start {
+            color: #A32CC4;
+            font-style: italic;
+        }
 
         .exercise-gif img {
             width: 200px;
@@ -156,12 +160,11 @@
     </div>
 
     <script>
- let countdown = 10; // Start with 10-second timer
+  let countdown = 10; // Start with 10-second timer
 let timer;
 const timeDisplay = document.getElementById('time-display');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
-let isPaused = false; // Track pause state
 let phase = 'first'; // Tracks the current phase (10s or 30s)
 
 function updateDisplay() {
@@ -172,18 +175,18 @@ function updateDisplay() {
 function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => {
-        if (!isPaused) {
-            if (countdown > 0) {
-                countdown--;
-                updateDisplay();
-            } else if (countdown === 0 && phase === 'first') {
-                countdown = 30;
-                phase = 'second';
-                updateDisplay();
-            } else if (countdown === 0 && phase === 'second') {
-                clearInterval(timer);
-                window.location.href = 'burpees.html';
-            }
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0 && phase === 'first') {
+            clearInterval(timer);
+            countdown = 30; // Start the 30-second timer
+            phase = 'second'; // Move to next phase
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
+        } else if (countdown === 0 && phase === 'second') {
+            clearInterval(timer);
+            window.location.href = 'burpees.html'; // Redirect after 30s countdown
         }
     }, 1000);
 }
@@ -192,25 +195,17 @@ function startTimer() {
 function resetTimer() {
     clearInterval(timer);
     countdown = 10;
-    phase = 'first';
-    isPaused = false;
+    phase = 'first'; // Reset to the first phase
     updateDisplay();
-    startTimer();
-    playPauseIcon.className = 'fas fa-pause';
-    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
+    startTimer(); // Automatically restart the timer
 }
 
 // Button Controls
-playPauseBtn.addEventListener('click', () => {
-    if (isPaused) {
-        isPaused = false;
-        playPauseIcon.className = 'fas fa-pause';
-        playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
-    } else {
-        isPaused = true;
-        playPauseIcon.className = 'fas fa-play';
-        playPauseBtn.innerHTML = `<i class="fas fa-play"></i> Play`;
-    }
+document.getElementById('play-pause-btn').addEventListener('click', () => {
+    clearInterval(timer);
+    startTimer();
+    playPauseIcon.className = 'fas fa-pause';
+    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
 });
 
 document.getElementById('reset-btn').addEventListener('click', resetTimer);
@@ -228,7 +223,7 @@ document.getElementById('forward-btn').addEventListener('click', () => {
 // Automatically start the timer when the page loads
 window.onload = function() {
     updateDisplay();
-    startTimer();
+    startTimer(); // Auto-start 10s timer followed by 30s timer
 };
     </script>
 </body>
