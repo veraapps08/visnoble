@@ -160,9 +160,9 @@
     </div>
 
     <script>
-       let countdown = 10;
+ let countdown = 10;
 let timer;
-let isPaused = false; // Track if the timer is paused
+let isPaused = false;
 const timeDisplay = document.getElementById('time-display');
 const getReadyText = document.querySelector('.get-ready');
 const startText = document.querySelector('.start');
@@ -174,11 +174,11 @@ function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 }
 
-// Timer function (only starts if not paused)
+// Timer function (only runs if not paused)
 function startTimer() {
-    if (isPaused) return; // Do nothing if paused
+    if (isPaused) return;
 
-    clearInterval(timer); // Prevent multiple timers from running
+    clearInterval(timer);
     timer = setInterval(() => {
         if (countdown > 0) {
             countdown--;
@@ -190,7 +190,7 @@ function startTimer() {
             getReadyText.style.display = 'none';
             startText.style.display = 'block';
             updateDisplay();
-            startTimer(); // Auto-start 30-second timer
+            startTimer();
         } else if (countdown === 0 && phase === 'second') {
             clearInterval(timer);
             window.location.href = 'burpees.html';
@@ -198,16 +198,16 @@ function startTimer() {
     }, 1000);
 }
 
-// Play/Pause Button Functionality
+// Play/Pause Button Fix
 playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
         isPaused = false;
         startTimer(); // Resume timer
-        playPauseIcon.className = 'fas fa-pause';
+        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
     } else {
         isPaused = true;
         clearInterval(timer); // Stop timer
-        playPauseIcon.className = 'fas fa-play';
+        playPauseIcon.className = 'fas fa-play'; // Show play icon
     }
 });
 
@@ -217,6 +217,7 @@ function resetTimer() {
     countdown = 10;
     phase = 'first';
     isPaused = false;
+    playPauseIcon.className = 'fas fa-pause'; // Reset button to pause
     getReadyText.style.display = 'block';
     startText.style.display = 'none';
     updateDisplay();
@@ -233,6 +234,7 @@ window.onload = function() {
     updateDisplay();
     startTimer();
 };
+
 
     </script>
 </body>
