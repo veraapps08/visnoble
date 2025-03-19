@@ -160,64 +160,80 @@
     </div>
 
     <script>
-         let countdown = 10; // Start with 10-second timer
-  let timer;
-  const timeDisplay = document.getElementById('time-display');
-  const getReadyText = document.querySelector('.get-ready'); // Get Ready! element
-  const startText = document.querySelector('.start'); // Start! element
-  const playPauseBtn = document.getElementById('play-pause-btn');
-  const playPauseIcon = playPauseBtn.querySelector('i');
-  let phase = 'first'; // Tracks the current phase (10s or 30s)
+       let countdown = 10;
+let timer;
+let isPaused = false; // Track if the timer is paused
+const timeDisplay = document.getElementById('time-display');
+const getReadyText = document.querySelector('.get-ready');
+const startText = document.querySelector('.start');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+let phase = 'first';
 
-  function updateDisplay() {
-      timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-  }
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+}
 
-  function startTimer() {
-      clearInterval(timer);
-      timer = setInterval(() => {
-          if (countdown > 0) {
-              countdown--;
-              updateDisplay();
-          } else if (countdown === 0 && phase === 'first') {
-              clearInterval(timer);
-              countdown = 30; // Switch to 30-second timer
-              phase = 'second';
-              getReadyText.style.display = 'none'; // Hide "Get Ready!"
-              startText.style.display = 'block'; // Show "Start!"
-              updateDisplay();
-              startTimer();
-          } else if (countdown === 0 && phase === 'second') {
-              clearInterval(timer);
-              window.location.href = 'burpees.html'; // Redirect after 30s countdown
-          }
-      }, 1000);
-  }
+// Timer function (only starts if not paused)
+function startTimer() {
+    if (isPaused) return; // Do nothing if paused
 
-  function resetTimer() {
-      clearInterval(timer);
-      countdown = 10;
-      phase = 'first';
-      getReadyText.style.display = 'block'; // Show "Get Ready!"
-      startText.style.display = 'none'; // Hide "Start!"
-      updateDisplay();
-      startTimer();
-  }
+    clearInterval(timer); // Prevent multiple timers from running
+    timer = setInterval(() => {
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0 && phase === 'first') {
+            clearInterval(timer);
+            countdown = 30;
+            phase = 'second';
+            getReadyText.style.display = 'none';
+            startText.style.display = 'block';
+            updateDisplay();
+            startTimer(); // Auto-start 30-second timer
+        } else if (countdown === 0 && phase === 'second') {
+            clearInterval(timer);
+            window.location.href = 'burpees.html';
+        }
+    }, 1000);
+}
 
-  document.getElementById('play-pause-btn').addEventListener('click', () => {
-      clearInterval(timer);
-      startTimer();
-      playPauseIcon.className = 'fas fa-pause';
-  });
+// Play/Pause Button Functionality
+playPauseBtn.addEventListener('click', () => {
+    if (isPaused) {
+        isPaused = false;
+        startTimer(); // Resume timer
+        playPauseIcon.className = 'fas fa-pause';
+    } else {
+        isPaused = true;
+        clearInterval(timer); // Stop timer
+        playPauseIcon.className = 'fas fa-play';
+    }
+});
 
-  document.getElementById('reset-btn').addEventListener('click', resetTimer);
+// Reset Function (Resets Everything)
+function resetTimer() {
+    clearInterval(timer);
+    countdown = 10;
+    phase = 'first';
+    isPaused = false;
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+}
 
-  window.onload = function() {
-      getReadyText.style.display = 'block'; // Show "Get Ready!" at the start
-      startText.style.display = 'none'; // Hide "Start!"
-      updateDisplay();
-      startTimer();
-  };
+// Reset Button
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+// Start Timer on Page Load
+window.onload = function() {
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+};
+
     </script>
 </body>
 </html>
