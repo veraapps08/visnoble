@@ -160,71 +160,64 @@
     </div>
 
     <script>
-  let countdown = 10; // Start with 10-second timer
-let timer;
-const timeDisplay = document.getElementById('time-display');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
-let phase = 'first'; // Tracks the current phase (10s or 30s)
+         let countdown = 10; // Start with 10-second timer
+  let timer;
+  const timeDisplay = document.getElementById('time-display');
+  const getReadyText = document.querySelector('.get-ready'); // Get Ready! element
+  const startText = document.querySelector('.start'); // Start! element
+  const playPauseBtn = document.getElementById('play-pause-btn');
+  const playPauseIcon = playPauseBtn.querySelector('i');
+  let phase = 'first'; // Tracks the current phase (10s or 30s)
 
-function updateDisplay() {
-    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-}
+  function updateDisplay() {
+      timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+  }
 
-// Timer logic with redirection after 30s countdown
-function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (countdown > 0) {
-            countdown--;
-            updateDisplay();
-        } else if (countdown === 0 && phase === 'first') {
-            clearInterval(timer);
-            countdown = 30; // Start the 30-second timer
-            phase = 'second'; // Move to next phase
-            updateDisplay();
-            startTimer(); // Auto-start 30-second timer
-        } else if (countdown === 0 && phase === 'second') {
-            clearInterval(timer);
-            window.location.href = 'burpees.html'; // Redirect after 30s countdown
-        }
-    }, 1000);
-}
+  function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+          if (countdown > 0) {
+              countdown--;
+              updateDisplay();
+          } else if (countdown === 0 && phase === 'first') {
+              clearInterval(timer);
+              countdown = 30; // Switch to 30-second timer
+              phase = 'second';
+              getReadyText.style.display = 'none'; // Hide "Get Ready!"
+              startText.style.display = 'block'; // Show "Start!"
+              updateDisplay();
+              startTimer();
+          } else if (countdown === 0 && phase === 'second') {
+              clearInterval(timer);
+              window.location.href = 'burpees.html'; // Redirect after 30s countdown
+          }
+      }, 1000);
+  }
 
-// Reset Timer Function
-function resetTimer() {
-    clearInterval(timer);
-    countdown = 10;
-    phase = 'first'; // Reset to the first phase
-    updateDisplay();
-    startTimer(); // Automatically restart the timer
-}
+  function resetTimer() {
+      clearInterval(timer);
+      countdown = 10;
+      phase = 'first';
+      getReadyText.style.display = 'block'; // Show "Get Ready!"
+      startText.style.display = 'none'; // Hide "Start!"
+      updateDisplay();
+      startTimer();
+  }
 
-// Button Controls
-document.getElementById('play-pause-btn').addEventListener('click', () => {
-    clearInterval(timer);
-    startTimer();
-    playPauseIcon.className = 'fas fa-pause';
-    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> Pause`;
-});
+  document.getElementById('play-pause-btn').addEventListener('click', () => {
+      clearInterval(timer);
+      startTimer();
+      playPauseIcon.className = 'fas fa-pause';
+  });
 
-document.getElementById('reset-btn').addEventListener('click', resetTimer);
+  document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
-document.getElementById('rewind-btn').addEventListener('click', () => {
-    countdown = Math.max(countdown - 1, 0);
-    updateDisplay();
-});
-
-document.getElementById('forward-btn').addEventListener('click', () => {
-    countdown++;
-    updateDisplay();
-});
-
-// Automatically start the timer when the page loads
-window.onload = function() {
-    updateDisplay();
-    startTimer(); // Auto-start 10s timer followed by 30s timer
-};
+  window.onload = function() {
+      getReadyText.style.display = 'block'; // Show "Get Ready!" at the start
+      startText.style.display = 'none'; // Hide "Start!"
+      updateDisplay();
+      startTimer();
+  };
     </script>
 </body>
 </html>
