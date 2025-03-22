@@ -174,9 +174,9 @@ function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 }
 
-// Timer function (only runs if not paused)
+// Timer function (only runs if not played)
 function startTimer() {
-    if (isPaused) return;
+    if (isPlayed) return;
 
     clearInterval(timer);
     timer = setInterval(() => {
