@@ -171,43 +171,12 @@
 
         function updateDisplay() {
             timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-            let minutes = Math.floor(mainTimer / 60);
-            let seconds = mainTimer % 60;
-            mainTimerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (phase === 'second') {
+                let minutes = Math.floor(mainTimer / 60);
+                let seconds = mainTimer % 60;
+                mainTimerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
         }
-
-        function startTimer() {
-            if (isPaused) return;
-
-            clearInterval(timer);
-            timer = setInterval(() => {
-                if (countdown > 0) {
-                    countdown--;
-                    mainTimer--;
-                    updateDisplay();
-                } else if (countdown === 0 && phase === 'first') {
-                    countdown = 30;
-                    phase = 'second';
-                    getReadyText.style.display = 'none';
-                    startText.style.display = 'block';
-                    updateDisplay();
-                } else if (countdown === 0 && phase === 'second') {
-                    clearInterval(timer);
-                    window.location.href = 'burpees.html';
-                }
-            }, 1000);
-        }
-
-        playPauseBtn.addEventListener('click', () => {
-            isPaused = !isPaused;
-            isPaused ? clearInterval(timer) : startTimer();
-            playPauseIcon.className = isPaused ? 'fas fa-play' : 'fas fa-pause';
-        });
-
-        window.onload = function() {
-            updateDisplay();
-            startTimer();
-        };
     </script>
 </body>
 </html>
