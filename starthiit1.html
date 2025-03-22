@@ -129,7 +129,7 @@
             </a>
 
             <h1>HIIT Workout</h1>
-            <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
+            <p class="time-remaining">Time Left: <span id="main-timer">0:30</span></p>
         </header>
 
         <div class="exercise-section">
@@ -157,30 +157,50 @@
     </div>
 
     <script>
-        let countdown = 10;
-        let mainTimer = 300;
-        let timer;
-        let isPaused = false;
-        const timeDisplay = document.getElementById('time-display');
-        const mainTimerDisplay = document.getElementById('main-timer');
-        const getReadyText = document.querySelector('.get-ready');
-        const startText = document.querySelector('.start');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const playPauseIcon = playPauseBtn.querySelector('i');
-        let phase = 'first';
+    let countdown = 10;
+    let mainCountdown = 30;
+    let timer;
+    let isPaused = false; 
+    const timeDisplay = document.getElementById('time-display');
+    const mainTimerDisplay = document.getElementById('main-timer');
+    const getReadyText = document.querySelector('.get-ready');
+    const startText = document.querySelector('.start');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const playPauseIcon = playPauseBtn.querySelector('i');
+    let phase = 'first';
 
-        function updateDisplay() {
-            timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-            if (phase === 'second') {
-                let minutes = Math.floor(mainTimer / 60);
-                let seconds = mainTimer % 60;
-                mainTimerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    function updateDisplay() {
+        timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+        mainTimerDisplay.textContent = `0:${mainCountdown}`;
+    }
+
+    function startTimer() {
+        if (isPaused) return;
+
+        clearInterval(timer);
+        timer = setInterval(() => {
+            if (countdown > 0) {
+                countdown--;
+                updateDisplay();
+            } else if (countdown === 0 && phase === 'first') {
+                clearInterval(timer);
+                countdown = 30;
+                mainCountdown = 30;
+                phase = 'second';
+                getReadyText.style.display = 'none';
+                startText.style.display = 'block';
+                updateDisplay();
+                startTimer();
+            } else if (countdown === 0 && phase === 'second') {
+                clearInterval(timer);
+                window.location.href = 'burpees.html';
             }
-        }
+        }, 1000);
+    }
+
     </script>
 </body>
 </html>
-
 
 
 
