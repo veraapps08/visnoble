@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,98 +147,71 @@
             </div>
 
             <div class="controls">
-                
                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
                 <button id="reset-btn"><i class="fas fa-undo"></i></button>
-                
-                  <button id="forward-btn" onclick="window.location.href='burpees.html';">
-  <i class="fas fa-forward"></i>
-</button>
-               
+                <button id="forward-btn" onclick="window.location.href='burpees.html';">
+                    <i class="fas fa-forward"></i>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
- let countdown = 10;
-let timer;
-let isPaused = false;
-const timeDisplay = document.getElementById('time-display');
-const getReadyText = document.querySelector('.get-ready');
-const startText = document.querySelector('.start');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
-let phase = 'first';
+        let countdown = 10;
+        let mainTimer = 300;
+        let timer;
+        let isPaused = false;
+        const timeDisplay = document.getElementById('time-display');
+        const mainTimerDisplay = document.getElementById('main-timer');
+        const getReadyText = document.querySelector('.get-ready');
+        const startText = document.querySelector('.start');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn.querySelector('i');
+        let phase = 'first';
 
-function updateDisplay() {
-    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-}
+        function updateDisplay() {
+            timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+            let minutes = Math.floor(mainTimer / 60);
+            let seconds = mainTimer % 60;
+            mainTimerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
 
-// Timer function (only runs if not paused)
-function startTimer() {
-    if (isPaused) return;
+        function startTimer() {
+            if (isPaused) return;
 
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (countdown > 0) {
-            countdown--;
-            updateDisplay();
-        } else if (countdown === 0 && phase === 'first') {
             clearInterval(timer);
-            countdown = 30;
-            phase = 'second';
-            getReadyText.style.display = 'none';
-            startText.style.display = 'block';
+            timer = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    mainTimer--;
+                    updateDisplay();
+                } else if (countdown === 0 && phase === 'first') {
+                    countdown = 30;
+                    phase = 'second';
+                    getReadyText.style.display = 'none';
+                    startText.style.display = 'block';
+                    updateDisplay();
+                } else if (countdown === 0 && phase === 'second') {
+                    clearInterval(timer);
+                    window.location.href = 'burpees.html';
+                }
+            }, 1000);
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+            isPaused = !isPaused;
+            isPaused ? clearInterval(timer) : startTimer();
+            playPauseIcon.className = isPaused ? 'fas fa-play' : 'fas fa-pause';
+        });
+
+        window.onload = function() {
             updateDisplay();
             startTimer();
-        } else if (countdown === 0 && phase === 'second') {
-            clearInterval(timer);
-            window.location.href = 'burpees.html';
-        }
-    }, 1000);
-}
-
-// Play/Pause Button Fix
-playPauseBtn.addEventListener('click', () => {
-    if (isPaused) {
-        isPaused = false;
-        startTimer(); // Resume timer
-        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
-    } else {
-        isPaused = true;
-        clearInterval(timer); // Stop timer
-        playPauseIcon.className = 'fas fa-play'; // Show play icon
-    }
-});
-
-// Reset Function (Resets Everything)
-function resetTimer() {
-    clearInterval(timer);
-    countdown = 10;
-    phase = 'first';
-    isPaused = false;
-    playPauseIcon.className = 'fas fa-pause'; // Reset button to pause
-    getReadyText.style.display = 'block';
-    startText.style.display = 'none';
-    updateDisplay();
-    startTimer();
-}
-
-// Reset Button
-document.getElementById('reset-btn').addEventListener('click', resetTimer);
-
-// Start Timer on Page Load
-window.onload = function() {
-    getReadyText.style.display = 'block';
-    startText.style.display = 'none';
-    updateDisplay();
-    startTimer();
-};
-
-
+        };
     </script>
 </body>
 </html>
+
 
 
 
