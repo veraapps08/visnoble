@@ -203,11 +203,11 @@ playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
         isPaused = false;
         startTimer(); // Resume timer
-        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
+        playPauseIcon.className = 'fas fa-play'; // Show play icon
     } else {
         isPaused = true;
         clearInterval(timer); // Stop timer
-        playPauseIcon.className = 'fas fa-play'; // Show play icon
+        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
     }
 });
 
