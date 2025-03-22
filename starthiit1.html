@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,9 +176,9 @@ function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 }
 
-// Timer function (only runs if not played)
+// Timer function (only runs if not paused)
 function startTimer() {
-    if (isPlayed) return;
+    if (isPaused) return;
 
     clearInterval(timer);
     timer = setInterval(() => {
@@ -203,11 +205,11 @@ playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
         isPaused = false;
         startTimer(); // Resume timer
-        playPauseIcon.className = 'fas fa-play'; // Show play icon
+        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
     } else {
         isPaused = true;
         clearInterval(timer); // Stop timer
-        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
+        playPauseIcon.className = 'fas fa-play'; // Show play icon
     }
 });
 
@@ -239,9 +241,6 @@ window.onload = function() {
     </script>
 </body>
 </html>
-
-
-
 
 
 
