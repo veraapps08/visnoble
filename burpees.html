@@ -59,11 +59,15 @@
             color: #A32CC4;
             font-style: italic;
         }
+         .start {
+            color: #A32CC4;
+            font-style: italic;
+        }
 
         .exercise-gif img {
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50px;
             border: 3px solid #A32CC4;
         }
 
@@ -120,7 +124,7 @@
 <body>
     <div class="container">
         <header>
-            <a href="hiit.html">
+            <a href="hitt.html">
                 <i class="fas fa-arrow-left back-arrow"></i>
             </a>
 
@@ -131,7 +135,8 @@
         <div class="exercise-section">
             <h2>Burpees</h2>
             <p class="get-ready">Get Ready!</p>
-            <div class="burpees.html">
+            <p class="start">start!</p>
+            <div class="exercise-gif">
                 <img src="working out how to GIF by 8fit.gif" alt="Squat Demo">
             </div>
         </div>
@@ -142,32 +147,37 @@
             </div>
 
             <div class="controls">
-                <button id="rewind-btn" onclick="window.location.href='starthiit1.html';">
-  <i class="fas fa-backward"></i>
-</button>
-
-            
+                
                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
                 <button id="reset-btn"><i class="fas fa-undo"></i></button>
-                <button id="forward-btn"><i class="fas fa-forward"></i></button>
+                
+                  <button id="forward-btn" onclick="window.location.href='burpees.html';">
+  <i class="fas fa-forward"></i>
+</button>
+               
             </div>
         </div>
     </div>
 
     <script>
-        let countdown = 10; // Start with 10-second timer
+ let countdown = 10;
 let timer;
+let isPaused = false;
 const timeDisplay = document.getElementById('time-display');
+const getReadyText = document.querySelector('.get-ready');
+const startText = document.querySelector('.start');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
-let phase = 'first'; // Tracks the current phase (10s or 30s)
+let phase = 'first';
 
 function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 }
 
-// Timer logic with redirection after 30s countdown
+// Timer function (only runs if not paused)
 function startTimer() {
+    if (isPaused) return;
+
     clearInterval(timer);
     timer = setInterval(() => {
         if (countdown > 0) {
@@ -175,51 +185,56 @@ function startTimer() {
             updateDisplay();
         } else if (countdown === 0 && phase === 'first') {
             clearInterval(timer);
-            countdown = 30; // Start the 30-second timer
-            phase = 'second'; // Move to next phase
+            countdown = 30;
+            phase = 'second';
+            getReadyText.style.display = 'none';
+            startText.style.display = 'block';
             updateDisplay();
-            startTimer(); // Auto-start 30-second timer
+            startTimer();
         } else if (countdown === 0 && phase === 'second') {
             clearInterval(timer);
-            window.location.href = 'twisted mountain climbers.html'; // Redirect after 30s countdown
+            window.location.href = 'burpees.html';
         }
     }, 1000);
 }
 
-// Reset Timer Function
+// Play/Pause Button Fix
+playPauseBtn.addEventListener('click', () => {
+    if (isPaused) {
+        isPaused = false;
+        startTimer(); // Resume timer
+        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
+    } else {
+        isPaused = true;
+        clearInterval(timer); // Stop timer
+        playPauseIcon.className = 'fas fa-play'; // Show play icon
+    }
+});
+
+// Reset Function (Resets Everything)
 function resetTimer() {
     clearInterval(timer);
     countdown = 10;
-    phase = 'first'; // Reset to the first phase
+    phase = 'first';
+    isPaused = false;
+    playPauseIcon.className = 'fas fa-pause'; // Reset button to pause
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
     updateDisplay();
-    startTimer(); // Automatically restart the timer
+    startTimer();
 }
 
-// Button Controls
-document.getElementById('play-pause-btn').addEventListener('click', () => {
-    clearInterval(timer);
-    startTimer();
-    playPauseIcon.className = 'fas fa-pause';
-    playPauseBtn.innerHTML = `<i class="fas fa-pause"></i> ’;
-});
-
+// Reset Button
 document.getElementById('reset-btn').addEventListener('click', resetTimer);
 
-document.getElementById('rewind-btn').addEventListener('click', () => {
-    countdown = Math.max(countdown - 1, 0);
-    updateDisplay();
-});
-
-document.getElementById('forward-btn').addEventListener('click', () => {
-    countdown++;
-    updateDisplay();
-});
-
-// Automatically start the timer when the page loads
+// Start Timer on Page Load
 window.onload = function() {
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
     updateDisplay();
-    startTimer(); // Auto-start 10s timer followed by 30s timer
+    startTimer();
 };
+
 
     </script>
 </body>
