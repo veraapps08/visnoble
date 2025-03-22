@@ -147,95 +147,52 @@
             </div>
 
             <div class="controls">
-                
                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
                 <button id="reset-btn"><i class="fas fa-undo"></i></button>
-                
-                  <button id="forward-btn" onclick="window.location.href='burpees.html';">
-  <i class="fas fa-forward"></i>
-</button>
-               
+                <button id="forward-btn" onclick="window.location.href='burpees.html';">
+                    <i class="fas fa-forward"></i>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
- let countdown = 10;
-let timer;
-let isPaused = false;
-const timeDisplay = document.getElementById('time-display');
-const getReadyText = document.querySelector('.get-ready');
-const startText = document.querySelector('.start');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
-let phase = 'first';
+        let countdown = 10;
+        let timer;
+        let isPaused = true;
+        const timeDisplay = document.getElementById('time-display');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn.querySelector('i');
 
-function updateDisplay() {
-    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-}
-
-// Timer function (only runs if not paused)
-function startTimer() {
-    if (isPaused) return;
-
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (countdown > 0) {
-            countdown--;
-            updateDisplay();
-        } else if (countdown === 0 && phase === 'first') {
-            clearInterval(timer);
-            countdown = 30;
-            phase = 'second';
-            getReadyText.style.display = 'none';
-            startText.style.display = 'block';
-            updateDisplay();
-            startTimer();
-        } else if (countdown === 0 && phase === 'second') {
-            clearInterval(timer);
-            window.location.href = 'burpees.html';
+        function updateDisplay() {
+            timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
         }
-    }, 1000);
-}
 
-// Play/Pause Button Fix
-playPauseBtn.addEventListener('click', () => {
-    if (isPaused) {
-        isPaused = false;
-        startTimer(); // Resume timer
-        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
-    } else {
-        isPaused = true;
-        clearInterval(timer); // Stop timer
-        playPauseIcon.className = 'fas fa-play'; // Show play icon
-    }
-});
+        function startTimer() {
+            if (!isPaused) {
+                timer = setInterval(() => {
+                    if (countdown > 0) {
+                        countdown--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(timer);
+                    }
+                }, 1000);
+            }
+        }
 
-// Reset Function (Resets Everything)
-function resetTimer() {
-    clearInterval(timer);
-    countdown = 10;
-    phase = 'first';
-    isPaused = false;
-    playPauseIcon.className = 'fas fa-pause'; // Reset button to pause
-    getReadyText.style.display = 'block';
-    startText.style.display = 'none';
-    updateDisplay();
-    startTimer();
-}
+        playPauseBtn.addEventListener('click', () => {
+            isPaused = !isPaused;
+            if (isPaused) {
+                clearInterval(timer);
+                playPauseIcon.className = 'fas fa-play';
+            } else {
+                startTimer();
+                playPauseIcon.className = 'fas fa-pause';
+            }
+        });
 
-// Reset Button
-document.getElementById('reset-btn').addEventListener('click', resetTimer);
-
-// Start Timer on Page Load
-window.onload = function() {
-    getReadyText.style.display = 'block';
-    startText.style.display = 'none';
-    updateDisplay();
-    startTimer();
-};
-
-
+        updateDisplay();
     </script>
 </body>
 </html>
