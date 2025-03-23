@@ -158,7 +158,9 @@
             </div>
         </div>
     </div>
-
+<audio id="ding-sound">
+    <source src="ding-126626.mp3" type="audio/mp3">
+</audio>
     <script>
 let countdown = 10;
 let timer;
@@ -169,11 +171,12 @@ const getReadyText = document.querySelector('.get-ready');
 const startText = document.querySelector('.start');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
+const dingSound = document.getElementById('ding-sound');
 let phase = 'first';
 
 function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-    mainTimer.textContent = timeDisplay.textContent; // Sync "Time Left" with the countdown timer
+    mainTimer.textContent = timeDisplay.textContent;
 }
 
 // Timer function (only runs if not paused)
@@ -182,6 +185,10 @@ function startTimer() {
 
     clearInterval(timer);
     timer = setInterval(() => {
+        if (countdown === 3) {
+            dingSound.play(); // Play ding sound at 3 seconds left
+        }
+        
         if (countdown > 0) {
             countdown--;
             updateDisplay();
@@ -200,26 +207,26 @@ function startTimer() {
     }, 1000);
 }
 
-// Play/Pause Button Fix
+// Play/Pause Button
 playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
         isPaused = false;
-        startTimer(); // Resume timer
-        playPauseIcon.className = 'fas fa-pause'; // Show pause icon
+        startTimer();
+        playPauseIcon.className = 'fas fa-pause';
     } else {
         isPaused = true;
-        clearInterval(timer); // Stop timer
-        playPauseIcon.className = 'fas fa-play'; // Show play icon
+        clearInterval(timer);
+        playPauseIcon.className = 'fas fa-play';
     }
 });
 
-// Reset Function (Resets Everything)
+// Reset Timer
 function resetTimer() {
     clearInterval(timer);
     countdown = 10;
     phase = 'first';
     isPaused = false;
-    playPauseIcon.className = 'fas fa-pause'; // Reset button to pause
+    playPauseIcon.className = 'fas fa-pause';
     getReadyText.style.display = 'block';
     startText.style.display = 'none';
     updateDisplay();
@@ -236,6 +243,7 @@ window.onload = function() {
     updateDisplay();
     startTimer();
 };
+
 
     </script>
 </body>
