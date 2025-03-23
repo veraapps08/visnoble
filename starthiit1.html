@@ -160,10 +160,11 @@
     </div>
 
     <script>
- let countdown = 10;
+let countdown = 10;
 let timer;
 let isPaused = false;
 const timeDisplay = document.getElementById('time-display');
+const mainTimer = document.getElementById('main-timer');
 const getReadyText = document.querySelector('.get-ready');
 const startText = document.querySelector('.start');
 const playPauseBtn = document.getElementById('play-pause-btn');
@@ -172,6 +173,7 @@ let phase = 'first';
 
 function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+    mainTimer.textContent = timeDisplay.textContent; // Sync "Time Left" with the countdown timer
 }
 
 // Timer function (only runs if not paused)
@@ -234,7 +236,6 @@ window.onload = function() {
     updateDisplay();
     startTimer();
 };
-
 
     </script>
 </body>
