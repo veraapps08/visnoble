@@ -163,7 +163,7 @@
 
     <script>
 let countdown = 10;
-let mainCountdown = 300; // 4:30 minutes
+let mainCountdown = 270; // 4 minutes 30 seconds
 let timer, mainTimerInterval;
 let isPaused = false;
 const timeDisplay = document.getElementById('time-display');
@@ -186,7 +186,7 @@ function updateDisplay() {
     }
 }
 
-// Start the main 5-minute countdown (only when 30s phase starts)
+// Start the main 4:30 countdown (only when 30s phase starts)
 function startMainTimer() {
     if (mainTimerStarted) return; // Prevent multiple intervals
     mainTimerStarted = true;
@@ -221,7 +221,7 @@ function startTimer() {
             getReadyText.style.display = 'none';
             startText.style.display = 'block';
             updateDisplay();
-            startMainTimer(); // Start main 5-min countdown when 30s phase begins
+            startMainTimer(); // Start main 4:30 countdown when 30s phase begins
             startTimer();
         } else if (countdown === 0 && phase === 'second') {
             clearInterval(timer);
@@ -250,7 +250,7 @@ function resetTimer() {
     clearInterval(timer);
     clearInterval(mainTimerInterval);
     countdown = 10;
-    mainCountdown = 300; // Reset main countdown to 5 minutes
+    mainCountdown = 270; // Reset main countdown to 4 minutes 30 seconds
     phase = 'first';
     isPaused = false;
     mainTimerStarted = false;
@@ -271,6 +271,7 @@ window.onload = function() {
     updateDisplay();
     startTimer();
 };
+
 
     </script>
 </body>
