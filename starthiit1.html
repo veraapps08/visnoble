@@ -124,7 +124,7 @@
 <body>
     <div class="container">
         <header>
-            <a href="hitt.html">
+            <a href="hiit.html">
                 <i class="fas fa-arrow-left back-arrow"></i>
             </a>
 
@@ -162,8 +162,9 @@
     <source src="ding-126626.mp3" type="audio/mp3">
 </audio>
     <script>
-let countdown =10;
-let timer;
+let countdown = 10;
+let mainCountdown = 300; // 5 minutes
+let timer, mainTimerInterval;
 let isPaused = false;
 const timeDisplay = document.getElementById('time-display');
 const mainTimer = document.getElementById('main-timer');
@@ -176,10 +177,25 @@ let phase = 'first';
 
 function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-    mainTimer.textContent = timeDisplay.textContent;
+
+    let minutes = Math.floor(mainCountdown / 60);
+    let seconds = mainCountdown % 60;
+    mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-// Timer function (only runs if not paused)
+// Start the main 5-minute countdown
+function startMainTimer() {
+    mainTimerInterval = setInterval(() => {
+        if (mainCountdown > 0) {
+            mainCountdown--;
+            updateDisplay();
+        } else {
+            clearInterval(mainTimerInterval);
+        }
+    }, 1000);
+}
+
+// HIIT Timer function (only runs if not paused)
 function startTimer() {
     if (isPaused) return;
 
@@ -212,10 +228,12 @@ playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
         isPaused = false;
         startTimer();
+        startMainTimer();
         playPauseIcon.className = 'fas fa-pause';
     } else {
         isPaused = true;
         clearInterval(timer);
+        clearInterval(mainTimerInterval);
         playPauseIcon.className = 'fas fa-play';
     }
 });
@@ -223,7 +241,9 @@ playPauseBtn.addEventListener('click', () => {
 // Reset Timer
 function resetTimer() {
     clearInterval(timer);
+    clearInterval(mainTimerInterval);
     countdown = 10;
+    mainCountdown = 300; // Reset main countdown to 5 minutes
     phase = 'first';
     isPaused = false;
     playPauseIcon.className = 'fas fa-pause';
@@ -231,6 +251,7 @@ function resetTimer() {
     startText.style.display = 'none';
     updateDisplay();
     startTimer();
+    startMainTimer();
 }
 
 // Reset Button
@@ -242,7 +263,9 @@ window.onload = function() {
     startText.style.display = 'none';
     updateDisplay();
     startTimer();
+    startMainTimer();
 };
+
 
 
     </script>
