@@ -174,17 +174,23 @@ const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
 const dingSound = document.getElementById('ding-sound');
 let phase = 'first';
+let mainTimerStarted = false; // Track if main timer has started
 
 function updateDisplay() {
     timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 
-    let minutes = Math.floor(mainCountdown / 60);
-    let seconds = mainCountdown % 60;
-    mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    if (mainTimerStarted) {
+        let minutes = Math.floor(mainCountdown / 60);
+        let seconds = mainCountdown % 60;
+        mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
 }
 
-// Start the main 5-minute countdown
+// Start the main 5-minute countdown (only when 30s phase starts)
 function startMainTimer() {
+    if (mainTimerStarted) return; // Prevent multiple intervals
+    mainTimerStarted = true;
+
     mainTimerInterval = setInterval(() => {
         if (mainCountdown > 0) {
             mainCountdown--;
@@ -215,6 +221,7 @@ function startTimer() {
             getReadyText.style.display = 'none';
             startText.style.display = 'block';
             updateDisplay();
+            startMainTimer(); // Start main 5-min countdown when 30s phase begins
             startTimer();
         } else if (countdown === 0 && phase === 'second') {
             clearInterval(timer);
@@ -228,7 +235,7 @@ playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
         isPaused = false;
         startTimer();
-        startMainTimer();
+        if (mainTimerStarted) startMainTimer();
         playPauseIcon.className = 'fas fa-pause';
     } else {
         isPaused = true;
@@ -246,12 +253,12 @@ function resetTimer() {
     mainCountdown = 300; // Reset main countdown to 5 minutes
     phase = 'first';
     isPaused = false;
+    mainTimerStarted = false;
     playPauseIcon.className = 'fas fa-pause';
     getReadyText.style.display = 'block';
     startText.style.display = 'none';
     updateDisplay();
     startTimer();
-    startMainTimer();
 }
 
 // Reset Button
@@ -263,9 +270,7 @@ window.onload = function() {
     startText.style.display = 'none';
     updateDisplay();
     startTimer();
-    startMainTimer();
 };
-
 
 
     </script>
