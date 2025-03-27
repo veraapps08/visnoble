@@ -161,38 +161,121 @@
 <audio id="ding-sound">
     <source src="ding-126626.mp3" type="audio/mp3">
 </audio>
-
-    <audio id="bg-music" loop>
-    <source src="background-music.mp3" type="audio/mp3">
-</audio>
-<button id="music-toggle"><i class="fas fa-volume-up"></i></button>
     <script>
-const bgMusic = document.getElementById('bg-music');
-const musicToggleBtn = document.getElementById('music-toggle');
-const musicIcon = musicToggleBtn.querySelector('i');
+let countdown = 10;
+let mainCountdown = 300; // 5 minutes
+let timer, mainTimerInterval;
+let isPaused = false;
+const timeDisplay = document.getElementById('time-display');
+const mainTimer = document.getElementById('main-timer');
+const getReadyText = document.querySelector('.get-ready');
+const startText = document.querySelector('.start');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+const dingSound = document.getElementById('ding-sound');
+let phase = 'first';
+let mainTimerStarted = false; // Track if main timer has started
 
-// Auto-play music on load (some browsers might require user interaction first)
-window.addEventListener('load', () => {
-    bgMusic.play().catch(() => console.log("Autoplay blocked by browser"));
-});
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
 
-// Toggle Music
-musicToggleBtn.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        bgMusic.play();
-        musicIcon.className = 'fas fa-volume-up';
+    if (mainTimerStarted) {
+        let minutes = Math.floor(mainCountdown / 60);
+        let seconds = mainCountdown % 60;
+        mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+}
+
+// Start the main 5-minute countdown (only when 30s phase starts)
+function startMainTimer() {
+    if (mainTimerStarted) return; // Prevent multiple intervals
+    mainTimerStarted = true;
+
+    mainTimerInterval = setInterval(() => {
+        if (mainCountdown > 0) {
+            mainCountdown--;
+            updateDisplay();
+        } else {
+            clearInterval(mainTimerInterval);
+        }
+    }, 1000);
+}
+
+// HIIT Timer function (only runs if not paused)
+function startTimer() {
+    if (isPaused) return;
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown === 3) {
+            dingSound.play(); // Play ding sound at 3 seconds left
+        }
+        
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0 && phase === 'first') {
+            clearInterval(timer);
+            countdown = 30;
+            phase = 'second';
+            getReadyText.style.display = 'none';
+            startText.style.display = 'block';
+            updateDisplay();
+            startMainTimer(); // Start main 5-min countdown when 30s phase begins
+            startTimer();
+        } else if (countdown === 0 && phase === 'second') {
+            clearInterval(timer);
+            window.location.href = 'burpees.html';
+        }
+    }, 1000);
+}
+
+// Play/Pause Button
+playPauseBtn.addEventListener('click', () => {
+    if (isPaused) {
+        isPaused = false;
+        startTimer();
+        if (mainTimerStarted) startMainTimer();
+        playPauseIcon.className = 'fas fa-pause';
     } else {
-        bgMusic.pause();
-        musicIcon.className = 'fas fa-volume-mute';
+        isPaused = true;
+        clearInterval(timer);
+        clearInterval(mainTimerInterval);
+        playPauseIcon.className = 'fas fa-play';
     }
 });
 
+// Reset Timer
+function resetTimer() {
+    clearInterval(timer);
+    clearInterval(mainTimerInterval);
+    countdown = 10;
+    mainCountdown = 300; // Reset main countdown to 5 minutes
+    phase = 'first';
+    isPaused = false;
+    mainTimerStarted = false;
+    playPauseIcon.className = 'fas fa-pause';
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+}
+
+// Reset Button
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+// Start Timer on Page Load
+window.onload = function() {
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+};
 
 
     </script>
 </body>
-</html>
-
+</html> im thinking of adding back ground music to exercise website
 
 
 
