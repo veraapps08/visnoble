@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIIT Timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            background: #0A021A;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #2C0E4D, #6A0DAD);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #A32CC4;
+        }
+
+        .back-arrow {
+            font-size: 24px;
+            color: #A32CC4;
+            cursor: pointer;
+        }
+
+        .time-remaining {
+            color: #fff;
+        }
+
+        .exercise-section h2 {
+            color: #A32CC4;
+            margin-top: 0;
+        }
+
+        .get-ready {
+            color: #A32CC4;
+            font-style: italic;
+        }
+         .start {
+            color: #A32CC4;
+            font-style: italic;
+        }
+
+        .exercise-gif img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50px;
+            border: 3px solid #A32CC4;
+        }
+
+        .timer-section {
+            margin-top: 20px;
+        }
+
+        .timer-display {
+            background-color: #1E052B;
+            color: #A32CC4;
+            border: 3px solid #A32CC4;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 10px auto;
+            box-shadow: 0 0 20px #A32CC4;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #6A0DAD;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #A32CC4;
+        }
+
+        button i {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="hiit.html">
+                <i class="fas fa-arrow-left back-arrow"></i>
+            </a>
+
+            <h1>HIIT Workout</h1>
+            <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
+        </header>
+
+        <div class="exercise-section">
+            <h2>Jumping Jacks</h2>
+            <p class="get-ready">Get Ready!</p>
+            <p class="start">start!</p>
+            <div class="exercise-gif">
+                <img src="GIF by 8fit.gif" alt="Squat Demo">
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-display">
+                <span id="time-display">0:10</span>
+            </div>
+
+            <div class="controls">
+                 <button id="forward-btn" onclick="window.location.href='starthiit1.html';">
+  <i class="fas fa-backward"></i>
+               
+                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button id="reset-btn"><i class="fas fa-undo"></i></button>
+                
+                  <button id="forward-btn" onclick="window.location.href='highjumps.html';">
+  <i class="fas fa-forward"></i>
+</button>
+               
+            </div>
+        </div>
+    </div>
+<audio id="ding-sound">
+    <source src="ding-126626.mp3" type="audio/mp3">
+</audio>
+    <script>
+let countdown = 10;
+let mainCountdown = 270; // 4 minutes 30 seconds
+let timer, mainTimerInterval;
+let isPaused = false;
+const timeDisplay = document.getElementById('time-display');
+const mainTimer = document.getElementById('main-timer');
+const getReadyText = document.querySelector('.get-ready');
+const startText = document.querySelector('.start');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+const dingSound = document.getElementById('ding-sound');
+let phase = 'first';
+let mainTimerStarted = false; // Track if main timer has started
+
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+
+    if (mainTimerStarted) {
+        let minutes = Math.floor(mainCountdown / 60);
+        let seconds = mainCountdown % 60;
+        mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    } else {
+        mainTimer.textContent = "4:30"; // Keep 4:30 displayed until the countdown starts
+    }
+}
+
+// Start the main 4:30-minute countdown (only when 30s phase starts)
+function startMainTimer() {
+    if (mainTimerStarted) return; // Prevent multiple intervals
+    mainTimerStarted = true;
+
+    mainTimerInterval = setInterval(() => {
+        if (mainCountdown > 0) {
+            mainCountdown--;
+            updateDisplay();
+        } else {
+            clearInterval(mainTimerInterval);
+        }
+    }, 1000);
+}
+
+// HIIT Timer function (only runs if not paused)
+function startTimer() {
+    if (isPaused) return;
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown === 3) {
+            dingSound.play(); // Play ding sound at 3 seconds left
+        }
+        
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0 && phase === 'first') {
+            clearInterval(timer);
+            countdown = 30;
+            phase = 'second';
+            getReadyText.style.display = 'none';
+            startText.style.display = 'block';
+            updateDisplay();
+            startMainTimer(); // Start main 4:30-min countdown when 30s phase begins
+            startTimer();
+        } else if (countdown === 0 && phase === 'second') {
+            clearInterval(timer);
+            window.location.href = 'burpees.html';
+        }
+    }, 1000);
+}
+
+// Play/Pause Button
+playPauseBtn.addEventListener('click', () => {
+    if (isPaused) {
+        isPaused = false;
+        startTimer();
+        if (mainTimerStarted) startMainTimer();
+        playPauseIcon.className = 'fas fa-pause';
+    } else {
+        isPaused = true;
+        clearInterval(timer);
+        clearInterval(mainTimerInterval);
+        playPauseIcon.className = 'fas fa-play';
+    }
+});
+
+// Reset Timer
+function resetTimer() {
+    clearInterval(timer);
+    clearInterval(mainTimerInterval);
+    countdown = 10;
+    mainCountdown = 270; // Reset main countdown to 4:30
+    phase = 'first';
+    isPaused = false;
+    mainTimerStarted = false;
+    playPauseIcon.className = 'fas fa-pause';
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+}
+
+// Reset Button
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+// Start Timer on Page Load
+window.onload = function() {
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+};
+
+
+
+    </script>
+</body>
+</html>
