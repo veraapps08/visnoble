@@ -95,7 +95,6 @@
             flex-wrap: wrap;
             justify-content: space-around;
             margin-top: 10px;
-            align-items: center;
         }
 
         button {
@@ -148,14 +147,16 @@
             </div>
 
             <div class="controls">
-                <button id="forward-btn" onclick="window.location.href='burpees.html';">
-                    <i class="fas fa-backward"></i>
-                </button>
+                 <button id="forward-btn" onclick="window.location.href='burpees.html';">
+  <i class="fas fa-backward"></i>
+               
                 <button id="play-pause-btn"><i class="fas fa-play"></i></button>
                 <button id="reset-btn"><i class="fas fa-undo"></i></button>
-                <button id="forward-btn" onclick="window.location.href='jumpingjacks.html';">
-                    <i class="fas fa-forward"></i> Skip
-                </button>
+                
+                  <button id="forward-btn" onclick="window.location.href='jumpingjacks.html';">
+  <i class="fas fa-forward"></i>
+</button>
+               
             </div>
         </div>
     </div>
@@ -163,7 +164,120 @@
     <source src="ding-126626.mp3" type="audio/mp3">
 </audio>
     <script>
-        // Existing JavaScript remains unchanged
+let countdown = 10;
+let mainCountdown = 240; // 4 minutes 
+let timer, mainTimerInterval;
+let isPaused = false;
+const timeDisplay = document.getElementById('time-display');
+const mainTimer = document.getElementById('main-timer');
+const getReadyText = document.querySelector('.get-ready');
+const startText = document.querySelector('.start');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = playPauseBtn.querySelector('i');
+const dingSound = document.getElementById('ding-sound');
+let phase = 'first';
+let mainTimerStarted = false; // Track if main timer has started
+
+function updateDisplay() {
+    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
+
+    if (mainTimerStarted) {
+        let minutes = Math.floor(mainCountdown / 60);
+        let seconds = mainCountdown % 60;
+        mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    } else {
+        mainTimer.textContent = "4:00"; // Keep 4:00 displayed until the countdown starts
+    }
+}
+
+// Start the main 4-minute countdown (only when 30s phase starts)
+function startMainTimer() {
+    if (mainTimerStarted) return; // Prevent multiple intervals
+    mainTimerStarted = true;
+
+    mainTimerInterval = setInterval(() => {
+        if (mainCountdown > 0) {
+            mainCountdown--;
+            updateDisplay();
+        } else {
+            clearInterval(mainTimerInterval);
+        }
+    }, 1000);
+}
+
+// HIIT Timer function (only runs if not paused)
+function startTimer() {
+    if (isPaused) return;
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (countdown === 3) {
+            dingSound.play(); // Play ding sound at 3 seconds left
+        }
+        
+        if (countdown > 0) {
+            countdown--;
+            updateDisplay();
+        } else if (countdown === 0 && phase === 'first') {
+            clearInterval(timer);
+            countdown = 30;
+            phase = 'second';
+            getReadyText.style.display = 'none';
+            startText.style.display = 'block';
+            updateDisplay();
+            startMainTimer(); // Start main 4-min countdown when 30s phase begins
+            startTimer();
+        } else if (countdown === 0 && phase === 'second') {
+            clearInterval(timer);
+            window.location.href = 'burpees.html';
+        }
+    }, 1000);
+}
+
+// Play/Pause Button
+playPauseBtn.addEventListener('click', () => {
+    if (isPaused) {
+        isPaused = false;
+        startTimer();
+        if (mainTimerStarted) startMainTimer();
+        playPauseIcon.className = 'fas fa-pause';
+    } else {
+        isPaused = true;
+        clearInterval(timer);
+        clearInterval(mainTimerInterval);
+        playPauseIcon.className = 'fas fa-play';
+    }
+});
+
+// Reset Timer
+function resetTimer() {
+    clearInterval(timer);
+    clearInterval(mainTimerInterval);
+    countdown = 10;
+    mainCountdown = 270; // Reset main countdown to 4
+    phase = 'first';
+    isPaused = false;
+    mainTimerStarted = false;
+    playPauseIcon.className = 'fas fa-pause';
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+}
+
+// Reset Button
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+// Start Timer on Page Load
+window.onload = function() {
+    getReadyText.style.display = 'block';
+    startText.style.display = 'none';
+    updateDisplay();
+    startTimer();
+};
+
+
+
     </script>
 </body>
-</html>
+</html> 
