@@ -120,7 +120,7 @@
             </a>
 
             <h1>HIIT Workout</h1>
-            <p class="time-remaining">Time Left: <span id="main-timer">4:30</span></p>
+            <span id="main-timer">4:30</span></p>
         </header>
 
         <div class="exercise-section">
@@ -146,10 +146,10 @@
         </div>
     </div>
 
-    <script>
+   <script>
 let mainCountdown = 150; // 2 minutes 30 seconds
 let mainTimerInterval;
-let isPaused = false;
+let isPaused = true; // Start in paused state
 const mainTimer = document.getElementById('main-timer');
 const playPauseBtn = document.getElementById('play-pause-btn');
 const playPauseIcon = playPauseBtn.querySelector('i');
@@ -161,8 +161,11 @@ function updateDisplay() {
 }
 
 function startMainTimer() {
-    if (isPaused) return;
-    clearInterval(mainTimerInterval);
+    if (!isPaused) return; // Prevent multiple intervals
+
+    isPaused = false;
+    playPauseIcon.className = 'fas fa-pause'; // Change icon to "pause"
+    
     mainTimerInterval = setInterval(() => {
         if (mainCountdown > 0) {
             mainCountdown--;
@@ -175,18 +178,17 @@ function startMainTimer() {
 
 playPauseBtn.addEventListener('click', () => {
     if (isPaused) {
-        isPaused = false;
         startMainTimer();
-        playPauseIcon.className = 'fas fa-pause';
     } else {
         isPaused = true;
         clearInterval(mainTimerInterval);
-        playPauseIcon.className = 'fas fa-play';
+        playPauseIcon.className = 'fas fa-play'; // Change icon to "play"
     }
 });
 
+// Ensure the display is correct initially
 updateDisplay();
-startMainTimer();
-    </script>
+</script>
+
 </body>
 </html>
