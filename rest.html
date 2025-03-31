@@ -28,44 +28,6 @@
             text-align: center;
         }
 
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            color: #A32CC4;
-        }
-
-        .back-arrow {
-            font-size: 24px;
-            color: #A32CC4;
-            cursor: pointer;
-        }
-
-        .time-remaining {
-            color: #fff;
-        }
-
-        .exercise-section h2 {
-            color: #A32CC4;
-            margin-top: 0;
-        }
-
-        .exercise-gif img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50px;
-            border: 3px solid #A32CC4;
-        }
-
-        .timer-section {
-            margin-top: 20px;
-        }
-
         .timer-display {
             background-color: #1E052B;
             color: #A32CC4;
@@ -80,115 +42,72 @@
             margin: 10px auto;
             box-shadow: 0 0 20px #A32CC4;
         }
-
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 10px;
-        }
-
-        button {
-            background: #6A0DAD;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: background 0.3s ease;
-        }
-
-        button:hover {
-            background: #A32CC4;
-        }
-
-        button i {
-            font-size: 18px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <a href="hiit.html">
-                <i class="fas fa-arrow-left back-arrow"></i>
-            </a>
+        <h1>HIIT Workout</h1>
+        <h2>Jumping Jacks</h2>
 
-            <h1>HIIT Workout</h1>
-            <span id="main-timer">4:30</span></p>
-        </header>
-
-        <div class="exercise-section">
-            
-            <h2>REST!!!!</h2>
+        <p>Time Left: <span id="main-timer">0:30</span></p>
+        <div class="timer-display">
+            <span id="time-display">0:30</span>
         </div>
-
-        <div class="timer-section">
-            <div class="timer-display">
-               <p class="time-remaining">Time Left: <span id="main-timer">5:00</span></p>
-            </div>
-
-            <div class="controls">
-                 <button id="backward-btn" onclick="window.location.href='starthiit1.html';">
-                    <i class="fas fa-backward"></i>
-                 </button>
-                <button id="play-pause-btn"><i class="fas fa-play"></i></button>
-                <button id="reset-btn"><i class="fas fa-undo"></i></button>
-                <button id="forward-btn" onclick="window.location.href='twisted mountain climbers.html';">
-                    <i class="fas fa-forward"></i>
-                </button>
-            </div>
-        </div>
+        <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+        <button id="reset-btn"><i class="fas fa-undo"></i></button>
     </div>
 
-   <script>
-let mainCountdown = 150; // 2 minutes 30 seconds
-let mainTimerInterval;
-let isPaused = true; // Start in paused state
-const mainTimer = document.getElementById('main-timer');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
+    <script>
+        let countdown = 30;
+        let timer;
+        let isPaused = true;
+        const timeDisplay = document.getElementById('time-display');
+        const mainTimer = document.getElementById('main-timer');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn.querySelector('i');
 
-function updateDisplay() {
-    let minutes = Math.floor(mainCountdown / 60);
-    let seconds = mainCountdown % 60;
-    mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
-
-function startMainTimer() {
-    if (!isPaused) return; // Prevent multiple intervals
-
-    isPaused = false;
-    playPauseIcon.className = 'fas fa-pause'; // Change icon to "pause"
-    
-    mainTimerInterval = setInterval(() => {
-        if (mainCountdown > 0) {
-            mainCountdown--;
-            updateDisplay();
-        } else {
-            clearInterval(mainTimerInterval);
+        function updateDisplay() {
+            let seconds = countdown % 60;
+            timeDisplay.textContent = `0:${seconds < 10 ? '0' : ''}${seconds}`;
+            mainTimer.textContent = `0:${seconds < 10 ? '0' : ''}${seconds}`;
         }
-    }, 1000);
-}
 
-playPauseBtn.addEventListener('click', () => {
-    if (isPaused) {
-        startMainTimer();
-    } else {
-        isPaused = true;
-        clearInterval(mainTimerInterval);
-        playPauseIcon.className = 'fas fa-play'; // Change icon to "play"
-    }
-});
+        function startTimer() {
+            if (!isPaused) return;
+            isPaused = false;
+            playPauseIcon.className = 'fas fa-pause';
+            
+            timer = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timer);
+                    window.location.href = 'highjumps.html';
+                }
+            }, 1000);
+        }
 
-// Ensure the display is correct initially
-updateDisplay();
-</script>
+        playPauseBtn.addEventListener('click', () => {
+            if (isPaused) {
+                startTimer();
+            } else {
+                isPaused = true;
+                clearInterval(timer);
+                playPauseIcon.className = 'fas fa-play';
+            }
+        });
 
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            clearInterval(timer);
+            countdown = 30;
+            isPaused = true;
+            playPauseIcon.className = 'fas fa-play';
+            updateDisplay();
+        });
+
+        updateDisplay();
+    </script>
 </body>
 </html>
+
