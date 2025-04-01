@@ -49,11 +49,11 @@
         <h1>HIIT Workout</h1>
         <h2>REST!!!</h2>
 
-        <p>Time Left: <span id="main-timer">0:30</span></p>
+        <p>Time Left: <span id="main-timer">2:30</span></p>
         <div class="timer-display">
-            <span id="time-display">0:30</span>
+            <span id="time-display">2:30</span>
         </div>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <button id="play-pause-btn"><i class="fas fa-play"></i></button>
         <button id="reset-btn"><i class="fas fa-undo"></i></button>
@@ -63,120 +63,56 @@
     <source src="ding-126626.mp3" type="audio/mp3">
 </audio>
   <script>
-let countdown = 10;
-let mainCountdown = 150; // 2 minutes 30 seconds
-let timer, mainTimerInterval;
-let isPaused = false;
-const timeDisplay = document.getElementById('time-display');
-const mainTimer = document.getElementById('main-timer');
-const getReadyText = document.querySelector('.get-ready');
-const startText = document.querySelector('.start');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const playPauseIcon = playPauseBtn.querySelector('i');
-const dingSound = document.getElementById('ding-sound');
-let phase = 'first';
-let mainTimerStarted = false; // Track if main timer has started
+        let countdown = 30;
+        let timer;
+        let isPaused = true;
+        const timeDisplay = document.getElementById('time-display');
+        const mainTimer = document.getElementById('main-timer');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn.querySelector('i');
+      const dingSound = document.getElementById('ding-sound');
 
-function updateDisplay() {
-    timeDisplay.textContent = countdown < 10 ? `0:0${countdown}` : `0:${countdown}`;
-
-    if (mainTimerStarted) {
-        let minutes = Math.floor(mainCountdown / 60);
-        let seconds = mainCountdown % 60;
-        mainTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    } else {
-        mainTimer.textContent = "2:30"; // Keep 2:30 displayed until the countdown starts
-    }
-}
-
-// Start the main 4:30-minute countdown (only when 30s phase starts)
-function startMainTimer() {
-    if (mainTimerStarted) return; // Prevent multiple intervals
-    mainTimerStarted = true;
-
-    mainTimerInterval = setInterval(() => {
-        if (mainCountdown > 0) {
-            mainCountdown--;
-            updateDisplay();
-        } else {
-            clearInterval(mainTimerInterval);
+        function updateDisplay() {
+            let seconds = countdown % 60;
+            timeDisplay.textContent = `0:${seconds < 10 ? '0' : ''}${seconds}`;
+            mainTimer.textContent = `0:${seconds < 10 ? '0' : ''}${seconds}`;
         }
-    }, 1000);
-}
 
-// HIIT Timer function (only runs if not paused)
-function startTimer() {
-    if (isPaused) return;
-
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (countdown === 3) {
-            dingSound.play(); // Play ding sound at 3 seconds left
+        function startTimer() {
+            if (!isPaused) return;
+            isPaused = false;
+            playPauseIcon.className = 'fas fa-pause';
+            
+            timer = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timer);
+                    window.location.href = '';
+                }
+            }, 1000);
         }
-        
-        if (countdown > 0) {
-            countdown--;
-            updateDisplay();
-        } else if (countdown === 0 && phase === 'first') {
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPaused) {
+                startTimer();
+            } else {
+                isPaused = true;
+                clearInterval(timer);
+                playPauseIcon.className = 'fas fa-play';
+            }
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
             clearInterval(timer);
             countdown = 30;
-            phase = 'second';
-            getReadyText.style.display = 'none';
-            startText.style.display = 'block';
+            isPaused = true;
+            playPauseIcon.className = 'fas fa-play';
             updateDisplay();
-            startMainTimer(); // Start main 2:30-min countdown when 30s phase begins
-            startTimer();
-        } else if (countdown === 0 && phase === 'second') {
-            clearInterval(timer);
-            window.location.href = '';
-        }
-    }, 1000);
-}
+        });
 
-// Play/Pause Button
-playPauseBtn.addEventListener('click', () => {
-    if (isPaused) {
-        isPaused = false;
-        startTimer();
-        if (mainTimerStarted) startMainTimer();
-        playPauseIcon.className = 'fas fa-pause';
-    } else {
-        isPaused = true;
-        clearInterval(timer);
-        clearInterval(mainTimerInterval);
-        playPauseIcon.className = 'fas fa-play';
-    }
-});
-
-// Reset Timer
-function resetTimer() {
-    clearInterval(timer);
-    clearInterval(mainTimerInterval);
-    countdown = 10;
-    mainCountdown = 150; // Reset main countdown to 2:30
-    phase = 'first';
-    isPaused = false;
-    mainTimerStarted = false;
-    playPauseIcon.className = 'fas fa-pause';
-    getReadyText.style.display = 'block';
-    startText.style.display = 'none';
-    updateDisplay();
-    startTimer();
-}
-
-// Reset Button
-document.getElementById('reset-btn').addEventListener('click', resetTimer);
-
-// Start Timer on Page Load
-window.onload = function() {
-    getReadyText.style.display = 'block';
-    startText.style.display = 'none';
-    updateDisplay();
-    startTimer();
-};
-
-
-
+        updateDisplay();
     </script>
 </body>
 </html>
