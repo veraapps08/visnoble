@@ -165,7 +165,7 @@
 </audio>
     <script>
 let countdown = 10;
-let mainCountdown = 0:30; // 30 seconds
+let mainCountdown = 30; // 0 minutes 30 seconds
 let timer, mainTimerInterval;
 let isPaused = false;
 const timeDisplay = document.getElementById('time-display');
@@ -190,7 +190,7 @@ function updateDisplay() {
     }
 }
 
-// Start the main 3:00-minute countdown (only when 30s phase starts)
+// Start the main 0:30-minute countdown (only when 30s phase starts)
 function startMainTimer() {
     if (mainTimerStarted) return; // Prevent multiple intervals
     mainTimerStarted = true;
@@ -225,7 +225,7 @@ function startTimer() {
             getReadyText.style.display = 'none';
             startText.style.display = 'block';
             updateDisplay();
-            startMainTimer(); // Start main 0:30-second countdown when 30s phase begins
+            startMainTimer(); // Start main 0:30 countdown when 30s phase begins
             startTimer();
         } else if (countdown === 0 && phase === 'second') {
             clearInterval(timer);
@@ -254,7 +254,7 @@ function resetTimer() {
     clearInterval(timer);
     clearInterval(mainTimerInterval);
     countdown = 10;
-    mainCountdown = 30; // Reset main countdown to 30
+    mainCountdown = 30; // Reset main countdown to 0:30
     phase = 'first';
     isPaused = false;
     mainTimerStarted = false;
