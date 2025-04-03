@@ -12,7 +12,7 @@
         }
         .celebration {
             position: absolute;
-            top: 35%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 70px;
@@ -36,14 +36,11 @@
             background-color: purple;
             border-radius: 50%;
             animation: fall linear infinite, spin 1s infinite;
+            top: 50px;
         }
         @keyframes fall {
-            from { transform: translateY(-100vh) rotate(0deg); }
+            from { transform: translateY(-10vh) rotate(0deg); }
             to { transform: translateY(100vh) rotate(720deg); }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
         .fireworks {
             position: absolute;
@@ -85,16 +82,6 @@
             0% { opacity: 0.5; }
             100% { opacity: 1; }
         }
-        .emoji-burst {
-            font-size: 60px;
-            position: absolute;
-            animation: pop 1.5s infinite ease-in-out;
-        }
-        @keyframes pop {
-            0% { transform: scale(0.5); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.5; }
-        }
     </style>
 </head>
 <body>
@@ -105,7 +92,7 @@
     
     <script>
         function createConfetti() {
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 100; i++) {
                 let confetti = document.createElement("div");
                 confetti.className = "confetti";
                 confetti.style.left = Math.random() * 100 + "vw";
@@ -115,33 +102,8 @@
                 setTimeout(() => confetti.remove(), 7000);
             }
         }
-        function createFireworks() {
-            for (let i = 0; i < 15; i++) {
-                let firework = document.createElement("div");
-                firework.className = "fireworks";
-                firework.style.left = Math.random() * 100 + "vw";
-                firework.style.top = Math.random() * 50 + 20 + "vh";
-                firework.style.animationDuration = "1.5s";
-                document.body.appendChild(firework);
-                setTimeout(() => firework.remove(), 1500);
-            }
-        }
-        function createEmojiBurst() {
-            const emojis = ['🔥', '💪', '🎊', '✨', '🎶'];
-            for (let i = 0; i < 20; i++) {
-                let emoji = document.createElement("div");
-                emoji.className = "emoji-burst";
-                emoji.style.left = Math.random() * 100 + "vw";
-                emoji.style.top = Math.random() * 100 + "vh";
-                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                document.body.appendChild(emoji);
-                setTimeout(() => emoji.remove(), 2000);
-            }
-        }
         function startCelebration() {
             createConfetti();
-            createFireworks();
-            createEmojiBurst();
             document.getElementById("cheerSound").play();
         }
         window.onload = startCelebration;
