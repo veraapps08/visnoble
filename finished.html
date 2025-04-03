@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Celebration</title>
+    <style>
+        body {
+            background-color: black;
+            text-align: center;
+            overflow: hidden;
+        }
+        .celebration {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            font-weight: bold;
+            color: purple;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -45%) scale(1.2); }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: purple;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            from { transform: translateY(-100vh); }
+            to { transform: translateY(100vh); }
+        }
+        .dumbbell {
+            font-size: 100px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: dance 1s infinite;
+        }
+        @keyframes dance {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(20deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="celebration">Hooray! You Did It! 🎉</div>
+    <div class="dumbbell">🏋️</div>
+    <audio id="cheerSound" src="cheer.mp3"></audio>
+    <button onclick="startCelebration()" style="position: absolute; top: 80%; left: 50%; transform: translateX(-50%); font-size: 20px; padding: 10px 20px;">Replay</button>
+    
+    <script>
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                let confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+                confetti.style.backgroundColor = Math.random() > 0.5 ? "purple" : "#5500AA";
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+        function startCelebration() {
+            createConfetti();
+            document.getElementById("cheerSound").play();
+        }
+        window.onload = startCelebration;
+    </script>
+</body>
+</html>
 
