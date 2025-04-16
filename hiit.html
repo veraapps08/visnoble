@@ -258,3 +258,266 @@ p {
     
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisNoble Workout Plan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+
+       /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensures it fits the screen */
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 15px;
+    border: 4px solid purple;
+    background-color: black;
+    box-shadow: 0px 0px 15px purple;
+}
+
+/* Title */
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #b36bff;
+}
+
+/* Workout List */
+.workout-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.workout-list li {
+    display: flex;
+    align-items: center;
+    background: #222;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid purple;
+    box-shadow: 0px 0px 8px purple;
+    transition: 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.workout-list li:hover {
+    background-color: purple;
+    transform: scale(1.05);
+}
+
+/* Image */
+.workout-list img {
+    width: 55px;
+    height: 55px;
+    margin-right: 15px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Text */
+h3 {
+    margin: 0;
+    font-size: 18px;
+    color: white;
+}
+
+p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #b36bff;
+}
+
+/* GO! Button */
+.start-button {
+    background-color: purple;
+    color: white;
+    padding: 12px 25px;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+    width: 100%;
+}
+
+.start-button:hover {
+    background-color: #b36bff;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+        border-radius: 0; /* Removes rounded corners */
+    }
+
+    .workout-list li {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .workout-list img {
+        margin-bottom: 10px;
+    }
+}
+
+
+
+        /* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: gray;
+    text-align: center;
+}
+
+.bottom-nav a.active {
+    color: blue;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🔥 Beginner<br/>
+                5 min
+        </h2>
+        
+        <ul class="workout-list">
+            <li>
+                <img src="44.gif" alt="Sqauts">
+                <div>
+                    <h3>Sqauts</h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+            <li>
+                <img src="working out how to GIF by 8fit.gif" alt="burpees">
+                <div>
+                    <h3>burpees</h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+            <li>
+                <img src=" climbers.gif" alt=" Mountain climbers">
+                <div>
+                    <h3>Mountain climbers</h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+            <li>
+                <img src="GIF by 8fit.gif" alt="Jumping Jacks">
+                <div>
+                    <h3>Jumping Jacks</h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+            <li>
+                <img src="jump jumping GIF by 8fit.gif" alt="Squat jumps">
+                <div>
+                    <h3>Squat Jumps</h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+               <li>
+                
+                <div>
+                    <h3>Rest</h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+
+            <li>
+                <img src="Exercise_Library_Butt_Kicks.gif" alt=" But kickers ">
+                <div>
+                    <h3> But kickers </h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+            <li>
+                <img src="fitness jumping GIF by 8fit.gif" alt="Running in place ">
+                <div>
+                    <h3>Running in place </h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+
+             <li>
+                <img src="fitness working out GIF by 8fit.gif" alt="Planks ">
+                <div>
+                    <h3>Planks </h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+             <li>
+                <img src="oblique-twist.png" alt="Kneeling push ups ">
+                <div>
+                    <h3>Kneeling push ups </h3>
+                    <p>⏳ 30 sec</p>
+                </div>
+            </li>
+        </ul>
+<a href="starthiit1.html">
+    <button class="start-button">GO! 🚀</button>
+</a>
+        
+        
+    </div>
+
+
+  <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+         
+        <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+    <a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a>
+        
+        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+    </nav>
+    
+</body>
+</html>
+
