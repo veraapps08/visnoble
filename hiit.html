@@ -1,388 +1,119 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisNoble Workout Plan</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VisNoble Workout Plan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
-    <style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-       /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ensures it fits the screen */
-}
+    .main-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px; /* <<< Space between 5min and 10min boxes */
+      flex-wrap: wrap;
+      margin-top: 50px;
+      flex: 1;
+    }
 
-/* Container */
-.container {
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-    border-radius: 15px;
-    border: 4px solid purple;
-    background-color: black;
-    box-shadow: 0px 0px 15px purple;
-}
-
-/* Title */
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #b36bff;
-}
-
-/* Workout List */
-.workout-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.workout-list li {
-    display: flex;
-    align-items: center;
-    background: #222;
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 12px;
-    border: 2px solid purple;
-    box-shadow: 0px 0px 8px purple;
-    transition: 0.3s ease-in-out;
-}
-
-/* Hover Effect */
-.workout-list li:hover {
-    background-color: purple;
-    transform: scale(1.05);
-}
-
-/* Image */
-.workout-list img {
-    width: 55px;
-    height: 55px;
-    margin-right: 15px;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-/* Text */
-h3 {
-    margin: 0;
-    font-size: 18px;
-    color: white;
-}
-
-p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #b36bff;
-}
-
-/* GO! Button */
-.start-button {
-    background-color: purple;
-    color: white;
-    padding: 12px 25px;
-    font-size: 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: 0.3s ease-in-out;
-    font-weight: bold;
-    width: 100%;
-}
-
-.start-button:hover {
-    background-color: #b36bff;
-    transform: scale(1.05);
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
     .container {
-        width: 100%;
-        padding: 15px;
-        border-radius: 0; /* Removes rounded corners */
+      max-width: 300px;
+      padding: 20px;
+      border-radius: 15px;
+      border: 4px solid purple;
+      background-color: black;
+      box-shadow: 0px 0px 15px purple;
+      text-align: center;
     }
 
-    .workout-list li {
-        flex-direction: column;
-        text-align: center;
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #b36bff;
     }
 
-    .workout-list img {
-        margin-bottom: 10px;
+    .start-button {
+      background-color: purple;
+      color: white;
+      padding: 12px 25px;
+      font-size: 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s ease-in-out;
+      font-weight: bold;
+      width: 100%;
     }
-}
 
+    .start-button:hover {
+      background-color: #b36bff;
+      transform: scale(1.05);
+    }
 
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
 
-        /* Bottom Navigation */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
+    .bottom-nav a {
+      text-decoration: none;
+      color: gray;
+      text-align: center;
+    }
 
-.bottom-nav a {
-    text-decoration: none;
-    color: gray;
-    text-align: center;
-}
-
-.bottom-nav a.active {
-    color: blue;
-}
-
-
-        .workouts {
-  display: flex;
-  justify-content: center;
-  gap: 40px; /* adds space between the boxes */
-}
-
-.box {
-  text-align: center;
-  padding: 20px;
-  border-radius: 15px;
-  background: #1e1e2f;
-  box-shadow: 0 0 15px purple;
-  color: white;
-}
-
-    </style>
+    .bottom-nav a.active {
+      color: blue;
+    }
+  </style>
 </head>
-<body>
 
+<body>
+  <div class="main-section">
+    <!-- Beginner 5 min -->
     <div class="container">
-        <h2>🔥 Beginner<br/>
-                5 min
-        </h2>
-        
-     
-<a href="starthiit1.html">
-    <button class="start-button">GO! 🚀</button>
-</a>
-        
-        
+      <h2>🔥 Beginner<br/>5 min</h2>
+      <a href="starthiit1.html">
+        <button class="start-button">GO! 🚀</button>
+      </a>
     </div>
 
-
-  <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-         
-        <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
-        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
-    <a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a>
-        
-        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-    </nav>
-    
-  
-
-</body>
-</html>
-
- <br>  <br> 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisNoble Workout Plan</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <style>
-
-       /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ensures it fits the screen */
-}
-
-/* Container */
-.container {
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-    border-radius: 15px;
-    border: 4px solid purple;
-    background-color: black;
-    box-shadow: 0px 0px 15px purple;
-}
-
-/* Title */
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #b36bff;
-}
-
-/* Workout List */
-.workout-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.workout-list li {
-    display: flex;
-    align-items: center;
-    background: #222;
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 12px;
-    border: 2px solid purple;
-    box-shadow: 0px 0px 8px purple;
-    transition: 0.3s ease-in-out;
-}
-
-/* Hover Effect */
-.workout-list li:hover {
-    background-color: purple;
-    transform: scale(1.05);
-}
-
-/* Image */
-.workout-list img {
-    width: 55px;
-    height: 55px;
-    margin-right: 15px;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-/* Text */
-h3 {
-    margin: 0;
-    font-size: 18px;
-    color: white;
-}
-
-p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #b36bff;
-}
-
-/* GO! Button */
-.start-button {
-    background-color: purple;
-    color: white;
-    padding: 12px 25px;
-    font-size: 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: 0.3s ease-in-out;
-    font-weight: bold;
-    width: 100%;
-}
-
-.start-button:hover {
-    background-color: #b36bff;
-    transform: scale(1.05);
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-    .container {
-        width: 100%;
-        padding: 15px;
-        border-radius: 0; /* Removes rounded corners */
-    }
-
-    .workout-list li {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .workout-list img {
-        margin-bottom: 10px;
-    }
-}
-
-
-
-        /* Bottom Navigation */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.bottom-nav a {
-    text-decoration: none;
-    color: gray;
-    text-align: center;
-}
-
-.bottom-nav a.active {
-    color: blue;
-}
-
-        .beginner-5min {
-  margin-right: 40px;
-}
-
-
-    </style>
-</head>
-<body>
-
+    <!-- Beginner 10 min -->
     <div class="container">
-        <h2>🔥 Beginner<br/>
-                10 min
-        </h2>
-        
-        
-<a href="starthiit1.html">
-    <button class="start-button">GO! 🚀</button>
-</a>
-        
-        
+      <h2>🔥 Beginner<br/>10 min</h2>
+      <a href="starthiit1.html">
+        <button class="start-button">GO! 🚀</button>
+      </a>
     </div>
+  </div>
 
-    
   <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-         
-        <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
-        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+  <nav class="bottom-nav">
+    <a href="mainpage.html" class="active"><i class="fas fa-home"></i> Home</a>
+    <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
     <a href="workouts.html"><i class="fas fa-dumbbell"></i> Workouts</a>
-        
-        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-    </nav>
-
-  
-
+    <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+  </nav>
 </body>
 </html>
-
