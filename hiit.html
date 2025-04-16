@@ -148,6 +148,22 @@ p {
     color: blue;
 }
 
+
+        .workouts {
+  display: flex;
+  justify-content: center;
+  gap: 40px; /* adds space between the boxes */
+}
+
+.box {
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  background: #1e1e2f;
+  box-shadow: 0 0 15px purple;
+  color: white;
+}
+
     </style>
 </head>
 <body>
@@ -176,6 +192,19 @@ p {
         <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
     </nav>
     
+    <div class="workouts">
+  <div class="box">
+    <p>Beginner<br>5 min</p>
+    <p>15 min</p>
+    <button>GO!</button>
+  </div>
+  <div class="box">
+    <p>Beginner<br>10 min</p>
+    <p>20 min</p>
+    <button>GO!</button>
+  </div>
+</div>
+
 </body>
 </html>
 
